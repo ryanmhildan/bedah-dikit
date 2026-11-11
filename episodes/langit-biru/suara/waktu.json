@@ -1,0 +1,50 @@
+{
+  "buka-1": {
+    "hash": "a506c8e1367602a22f93400dcc484ab52d0cc37b",
+    "detik": 3.456
+  },
+  "buka-2": {
+    "hash": "1a7fd76f2b46eb8afda65ace3bb2c91615e19db5",
+    "detik": 4.848
+  },
+  "cahaya-1": {
+    "hash": "ca466cc4521690fb5d41903897baa30ffb8e33be",
+    "detik": 3.72
+  },
+  "cahaya-2": {
+    "hash": "64e5424588017b216c3839f6f50a4dec87cc6c89",
+    "detik": 4.752
+  },
+  "hamburan-1": {
+    "hash": "7b5b9f24bfa91e7a37a7f315802a1779caf64430",
+    "detik": 3.792
+  },
+  "hamburan-2": {
+    "hash": "ad4acf178e070f634d4cfb5958049ae9bbdb94a5",
+    "detik": 4.296
+  },
+  "hamburan-3": {
+    "hash": "61b0221b1fc2d66a81f69792d225b489161e305d",
+    "detik": 4.632
+  },
+  "beda-1": {
+    "hash": "bcb1d7eeec0e52a76804aabe6bd55b9d646cdd85",
+    "detik": 4.392
+  },
+  "beda-2": {
+    "hash": "940549b6c7cd316d9a6509cf4a03f026dfd0f25f",
+    "detik": 4.608
+  },
+  "beda-3": {
+    "hash": "bac940ab2ad29aca70f8171a47f1c2992e8893dc",
+    "detik": 4.632
+  },
+  "tutup-1": {
+    "hash": "fa4d79a4f5856082cd138cfad34aa1be1a7a641a",
+    "detik": 4.32
+  },
+  "tutup-2": {
+    "hash": "fd379efeed43f8ff0b22a03da398f242a558d58f",
+    "detik": 4.8
+  }
+}

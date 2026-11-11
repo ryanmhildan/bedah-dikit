@@ -1,0 +1,11 @@
+{
+  "stacks": [
+    {"text": "Ini gaji minimum setahun kalau ditumpuk!", "mood": "wave"},
+    {"text": "Tumpukan Jakarta hampir 2,5 kali lebih tinggi.", "mood": "shock"}
+  ],
+  "map": [
+    {"text": "Itu Jakarta, persis di sebelah Jawa Barat!", "mood": "shock"},
+    {"text": "Beda wilayah, beda upah minimumnya.", "mood": "think"},
+    {"text": "Semakin tinggi, semakin besar UMP-nya.", "mood": "happy"}
+  ]
+}

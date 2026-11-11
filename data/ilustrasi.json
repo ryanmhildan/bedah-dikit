@@ -1,0 +1,15 @@
+{
+  "hook": [
+    {"text": "Halo, aku Kalku!", "mood": "wave"},
+    {"text": "Yuk hitung gaji di dua dunia ini.", "mood": "wink"}
+  ],
+  "stacks": [
+    {"text": "Ini gaji minimum setahun kalau ditumpuk!", "mood": "happy"},
+    {"text": "Tumpukan Jakarta hampir 2,5 kali lebih tinggi.", "mood": "shock"}
+  ],
+  "map": [
+    {"text": "Itu Jakarta, persis di sebelah Jawa Barat!", "mood": "shock"},
+    {"text": "Beda wilayah, beda upah minimumnya.", "mood": "think"},
+    {"text": "Provinsimu setinggi apa? Tulis di komentar!", "mood": "wave"}
+  ]
+}

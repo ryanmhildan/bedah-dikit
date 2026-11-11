@@ -1,0 +1,148 @@
+{
+  "musik": {
+    "aktif": true,
+    "file": "assets/musik/vitmatnotes-pizzicato-flow-558613.mp3",
+    "judul": "Pizzicato Flow",
+    "pembuat": "VitMatNotes",
+    "sumber": "https://pixabay.com/music/cartoons-pizzicato-flow-558613/",
+    "lisensi": "Pixabay Content License",
+    "contentId": false,
+    "dicek": "2026-11-12, halaman tanpa label Content ID Registered"
+  },
+  "volume": {
+    "narasi": 0.8,
+    "musikSaatBicara": 0.2,
+    "musikSaatJeda": 0.4,
+    "efek": 0.42,
+    "efekPerJenis": {
+      "hentak": 0.5
+    }
+  },
+  "efek": [
+    {
+      "scene": "intro",
+      "jenis": "hentak",
+      "frame": 46
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 26,
+      "nada": 1
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 39,
+      "nada": 1.06
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 52,
+      "nada": 1.12
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 65,
+      "nada": 1.19
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 78,
+      "nada": 1.26
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 91,
+      "nada": 1.33
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 104,
+      "nada": 1.41
+    },
+    {
+      "scene": "ranking",
+      "jenis": "pop",
+      "frame": 117,
+      "nada": 1.5
+    },
+    {
+      "scene": "ranking",
+      "jenis": "ting",
+      "baris": 2,
+      "offset": 4
+    },
+    {
+      "scene": "stacks",
+      "jenis": "tumpukan"
+    },
+    {
+      "scene": "stacks",
+      "jenis": "pop",
+      "baris": 1,
+      "offset": 12,
+      "nada": 1.2
+    },
+    {
+      "scene": "stacks",
+      "jenis": "kaching",
+      "baris": 2,
+      "offset": 4
+    },
+    {
+      "scene": "tabungan",
+      "jenis": "pop",
+      "baris": 1,
+      "offset": 8,
+      "nada": 1.1
+    },
+    {
+      "scene": "tabungan",
+      "jenis": "pop",
+      "baris": 1,
+      "offset": 78,
+      "nada": 1.3
+    },
+    {
+      "scene": "tabungan",
+      "jenis": "ting",
+      "baris": 1,
+      "offset": 130
+    },
+    {
+      "scene": "map",
+      "jenis": "pop",
+      "frame": 38,
+      "nada": 1.2
+    },
+    {
+      "scene": "map",
+      "jenis": "pop",
+      "frame": 84,
+      "nada": 1.05
+    },
+    {
+      "scene": "map",
+      "jenis": "whoosh",
+      "persen": 0.34
+    },
+    {
+      "scene": "map",
+      "jenis": "pop",
+      "persen": 0.76,
+      "nada": 1.3
+    },
+    {
+      "scene": "outro",
+      "jenis": "hentak",
+      "baris": 1,
+      "offset": 12
+    }
+  ]
+}

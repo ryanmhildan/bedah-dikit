@@ -1,0 +1,224 @@
+{
+  "judul": "Kenapa Indonesia Sering Gempa?",
+  "tokoh": "nadia",
+  "sumber": [
+    {
+      "nama": "Kementerian ESDM",
+      "url": "https://esdm.go.id/en/media-center/news-archives/gempa-di-indonesia-akibat-interaksi-lempeng-utama-dunia"
+    },
+    {
+      "nama": "BMKG via CNBC Indonesia",
+      "url": "https://www.cnbcindonesia.com/news/20250414171731-4-625899/penyebab-ri-rawan-gempa-tsunami-siap-siaga-megathrust-menurut-bmkg"
+    },
+    {
+      "nama": "Mongabay",
+      "url": "https://mongabay.co.id/2024/10/01/mengapa-gempa-bumi-tidak-bisa-diprediksi/"
+    }
+  ],
+  "adegan": [
+    {
+      "id": "buka",
+      "jenis": "pembuka",
+      "data": {
+        "latar": "kota",
+        "judul": "Kenapa Indonesia sering gempa?"
+      },
+      "baris": [
+        {
+          "id": "buka-1",
+          "teks": "Di Indonesia, kabar gempa terasa sangat sering terdengar.",
+          "ucap": "Di Indonesia, kabar gempa terasa sangat sering terdengar."
+        },
+        {
+          "id": "buka-2",
+          "teks": "Kenapa negara kita begitu rawan?",
+          "ucap": "Kenapa negara kita begitu rawan?"
+        }
+      ]
+    },
+    {
+      "id": "lempeng",
+      "jenis": "penjelasan",
+      "data": {
+        "latar": "alam",
+        "gambar": [
+          {
+            "ikon": "bumi",
+            "label": "Kulit bumi terbagi jadi lempeng"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "lempeng-1",
+          "teks": "Kulit bumi terbagi menjadi lempeng-lempeng besar.",
+          "ucap": "Kulit bumi terbagi menjadi lempeng-lempeng besar."
+        }
+      ]
+    },
+    {
+      "id": "tiga",
+      "jenis": "peta",
+      "data": {
+        "judul": "Pertemuan tiga lempeng",
+        "fokus": {
+          "lon": 110,
+          "lat": -5
+        },
+        "tanda": [
+          {
+            "lon": 112,
+            "lat": -13.5,
+            "teks": "Indo-Australia",
+            "arah": 15
+          },
+          {
+            "lon": 103,
+            "lat": 6.5,
+            "teks": "Eurasia"
+          },
+          {
+            "lon": 134,
+            "lat": 7,
+            "teks": "Pasifik",
+            "arah": -80
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "lempeng-2",
+          "teks": "Indonesia ada di pertemuan Indo-Australia, Eurasia, dan Pasifik.",
+          "ucap": "Indonesia ada di pertemuan lempeng Indo Australia, Eurasia, dan Pasifik."
+        }
+      ]
+    },
+    {
+      "id": "kecepatan",
+      "jenis": "grafik",
+      "data": {
+        "latar": "malam",
+        "judul": "Kecepatan gerak lempeng per tahun",
+        "satuan": " cm",
+        "sorot": [
+          "Lempeng Pasifik"
+        ],
+        "item": [
+          {
+            "label": "Lempeng Pasifik",
+            "nilai": 10
+          },
+          {
+            "label": "Lempeng Indo-Australia",
+            "nilai": 7
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "kecepatan-1",
+          "teks": "Lempeng-lempeng ini terus bergerak, walau sangat pelan.",
+          "ucap": "Lempeng-lempeng ini terus bergerak, walau sangat pelan."
+        },
+        {
+          "id": "kecepatan-2",
+          "teks": "Pasifik sekitar 10 cm per tahun, Indo-Australia sekitar 7 cm.",
+          "ucap": "Pasifik sekitar sepuluh sentimeter per tahun, Indo Australia sekitar tujuh sentimeter."
+        }
+      ]
+    },
+    {
+      "id": "lama",
+      "jenis": "linimasa",
+      "data": {
+        "latar": "malam",
+        "judul": "Kalau bergerak 7 cm per tahun",
+        "titik": [
+          {
+            "waktu": "1 tahun",
+            "teks": "7 sentimeter"
+          },
+          {
+            "waktu": "10 tahun",
+            "teks": "70 sentimeter"
+          },
+          {
+            "waktu": "100 tahun",
+            "teks": "7 meter"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "lama-1",
+          "teks": "Terlihat kecil, tapi tujuh sentimeter itu terus bertambah.",
+          "ucap": "Terlihat kecil, tapi tujuh sentimeter itu terus bertambah."
+        },
+        {
+          "id": "lama-2",
+          "teks": "Dalam 100 tahun, jaraknya sudah sekitar 7 meter.",
+          "ucap": "Dalam seratus tahun, jaraknya sudah sekitar tujuh meter."
+        }
+      ]
+    },
+    {
+      "id": "proses",
+      "jenis": "rantai",
+      "data": {
+        "latar": "alam",
+        "judul": "Dari gerakan pelan jadi gempa",
+        "langkah": [
+          {
+            "ikon": "lempeng",
+            "teks": "Lempeng saling menekan"
+          },
+          {
+            "ikon": "gunung",
+            "teks": "Tekanan tersimpan di batuan"
+          },
+          {
+            "ikon": "getar",
+            "teks": "Batuan patah, lalu bumi bergetar"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "proses-1",
+          "teks": "Saat bertemu, Indo-Australia menyusup ke bawah Eurasia.",
+          "ucap": "Saat bertemu, lempeng Indo Australia menyusup ke bawah Eurasia."
+        },
+        {
+          "id": "proses-2",
+          "teks": "Tekanan menumpuk di batuan sedikit demi sedikit.",
+          "ucap": "Tekanan menumpuk di batuan sedikit demi sedikit."
+        },
+        {
+          "id": "proses-3",
+          "teks": "Saat batuan tidak kuat lagi, energinya lepas sebagai gempa.",
+          "ucap": "Saat batuan tidak kuat lagi, energinya lepas sebagai gempa."
+        }
+      ]
+    },
+    {
+      "id": "tutup",
+      "jenis": "penutup",
+      "data": {
+        "latar": "kota",
+        "pertanyaan": "Sudah tahu cara siaga gempa?"
+      },
+      "baris": [
+        {
+          "id": "tutup-1",
+          "teks": "Gempa belum bisa diprediksi, tapi kita bisa bersiap.",
+          "ucap": "Gempa belum bisa diprediksi, tapi kita bisa bersiap."
+        },
+        {
+          "id": "tutup-2",
+          "teks": "Mau dibedah cara menghadapi gempa? Tulis di komentar.",
+          "ucap": "Mau dibedah cara menghadapi gempa? Tulis di komentar."
+        }
+      ]
+    }
+  ]
+}

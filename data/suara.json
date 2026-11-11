@@ -1,0 +1,24 @@
+{
+  "pria": {
+    "voice": "en-US-BrianMultilingualNeural",
+    "rate": "+0%"
+  },
+  "wanita": {
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "+0%"
+  },
+  "raka-elevenlabs": {
+    "penyedia": "elevenlabs",
+    "voice": "eESTQeTcGUli0jYysKtx",
+    "model": "eleven_multilingual_v2",
+    "pengaturan": {
+      "stability": 0.5,
+      "similarity_boost": 0.75
+    }
+  },
+  "tokoh": {
+    "raka": "raka-elevenlabs",
+    "nadia": "wanita",
+    "bima": "pria"
+  }
+}

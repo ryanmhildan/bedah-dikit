@@ -1,0 +1,161 @@
+{
+  "judul": "Kenapa Langit Biru, tapi Senja Merah?",
+  "tokoh": "raka",
+  "sumber": [
+    {
+      "nama": "Met Office",
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/why-is-the-sky-blue"
+    },
+    {
+      "nama": "National Weather Service",
+      "url": "https://www.weather.gov/fgz/SkyBlue"
+    }
+  ],
+  "adegan": [
+    {
+      "id": "buka",
+      "jenis": "pembuka",
+      "data": {
+        "latar": "langit",
+        "judul": "Kenapa langit biru?",
+        "sub": "Padahal cahaya matahari terlihat putih"
+      },
+      "baris": [
+        {
+          "id": "buka-1",
+          "teks": "Setiap hari kita melihat langit berwarna biru.",
+          "ucap": "Setiap hari kita melihat langit berwarna biru."
+        },
+        {
+          "id": "buka-2",
+          "teks": "Padahal cahaya matahari terlihat putih. Dari mana birunya?",
+          "ucap": "Padahal cahaya matahari terlihat putih. Dari mana birunya?"
+        }
+      ]
+    },
+    {
+      "id": "cahaya",
+      "jenis": "penjelasan",
+      "data": {
+        "latar": "langit",
+        "gambar": [
+          {
+            "ikon": "matahari",
+            "label": "Cahaya putih berisi banyak warna"
+          },
+          {
+            "ikon": "udara",
+            "label": "Udara penuh molekul kecil"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "cahaya-1",
+          "teks": "Cahaya matahari sebenarnya campuran banyak warna.",
+          "ucap": "Cahaya matahari sebenarnya campuran banyak warna."
+        },
+        {
+          "id": "cahaya-2",
+          "teks": "Saat masuk atmosfer, cahaya itu menabrak molekul udara.",
+          "ucap": "Saat masuk atmosfer, cahaya itu menabrak molekul udara."
+        }
+      ]
+    },
+    {
+      "id": "hamburan",
+      "jenis": "rantai",
+      "data": {
+        "latar": "langit",
+        "judul": "Kenapa jadi biru?",
+        "langkah": [
+          {
+            "ikon": "gelombang",
+            "teks": "Cahaya biru bergelombang lebih pendek"
+          },
+          {
+            "ikon": "udara",
+            "teks": "Molekul udara lebih banyak menghamburkannya"
+          },
+          {
+            "ikon": "mata",
+            "teks": "Birunya datang dari segala arah"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "hamburan-1",
+          "teks": "Cahaya biru punya gelombang yang lebih pendek dari merah.",
+          "ucap": "Cahaya biru punya gelombang yang lebih pendek dari merah."
+        },
+        {
+          "id": "hamburan-2",
+          "teks": "Karena itu, molekul udara lebih banyak menghamburkannya.",
+          "ucap": "Karena itu, molekul udara lebih banyak menghamburkannya."
+        },
+        {
+          "id": "hamburan-3",
+          "teks": "Cahaya biru menyebar, sehingga seluruh langit terlihat biru.",
+          "ucap": "Cahaya biru menyebar, sehingga seluruh langit terlihat biru."
+        }
+      ]
+    },
+    {
+      "id": "beda",
+      "jenis": "perbandingan",
+      "data": {
+        "latar": "senja",
+        "judul": "Jarak cahaya menentukan warna",
+        "kiri": {
+          "ikon": "matahari",
+          "label": "Siang",
+          "nilai": "Jalur pendek"
+        },
+        "kanan": {
+          "ikon": "senja",
+          "label": "Senja",
+          "nilai": "Jalur panjang"
+        },
+        "latarKiri": "langit"
+      },
+      "baris": [
+        {
+          "id": "beda-1",
+          "teks": "Siang hari, matahari tinggi dan jalur cahayanya pendek.",
+          "ucap": "Siang hari, matahari tinggi dan jalur cahayanya pendek."
+        },
+        {
+          "id": "beda-2",
+          "teks": "Saat senja, cahaya menembus atmosfer jauh lebih panjang.",
+          "ucap": "Saat senja, cahaya menembus atmosfer jauh lebih panjang."
+        },
+        {
+          "id": "beda-3",
+          "teks": "Birunya habis terhambur, jadi yang tersisa jingga dan merah.",
+          "ucap": "Birunya habis terhambur, jadi yang tersisa jingga dan merah."
+        }
+      ]
+    },
+    {
+      "id": "tutup",
+      "jenis": "penutup",
+      "data": {
+        "latar": "senja",
+        "pertanyaan": "Mau dibedah apa lagi?"
+      },
+      "baris": [
+        {
+          "id": "tutup-1",
+          "teks": "Jadi, biru dan merah berasal dari cahaya yang sama.",
+          "ucap": "Jadi, biru dan merah berasal dari cahaya yang sama."
+        },
+        {
+          "id": "tutup-2",
+          "teks": "Ada hal lain yang bikin kamu penasaran? Tulis di komentar.",
+          "ucap": "Ada hal lain yang bikin kamu penasaran? Tulis di komentar."
+        }
+      ]
+    }
+  ]
+}

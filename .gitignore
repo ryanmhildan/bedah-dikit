@@ -1,0 +1,31 @@
+# Dependensi dan lingkungan lokal
+node_modules/
+.venv/
+
+# Rahasia: kunci API ElevenLabs dan lainnya
+.env
+.env.*
+!.env.example
+
+# Hasil render, frame, cadangan, dan log (besar dan bisa dibuat ulang)
+out/
+*.log
+
+# Musik berlisensi Pixabay: tidak boleh didistribusikan ulang sebagai file mentah.
+# Unduh ulang dari tautan di data/efek-suara.json.
+assets/musik/*.mp3
+
+# Suara narasi hasil TTS (bisa dibuat ulang, tetapi ElevenLabs memakai kredit berbayar).
+# Hapus dua baris ini jika ingin ikut menyimpan MP3 narasi di repo.
+episodes/*/suara/*.mp3
+public/suara/
+
+# Setelan pribadi Claude Code
+.claude/settings.local.json
+
+# Sistem operasi dan editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

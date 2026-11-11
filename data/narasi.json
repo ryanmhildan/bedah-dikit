@@ -1,0 +1,51 @@
+{
+  "tokoh": "raka",
+  "scenes": [
+    {
+      "id": "intro",
+      "lines": [
+        {"id": "intro-1", "teks": "Bayangkan kamu bekerja sebulan penuh di Jakarta.", "ucap": "Bayangkan kamu bekerja sebulan penuh di Jakarta."},
+        {"id": "intro-2", "teks": "Upah minimumnya setara 2,47 bulan kerja di Jawa Barat.", "ucap": "Upah minimumnya ternyata setara dua koma empat tujuh bulan kerja di Jawa Barat."},
+        {"id": "intro-3", "teks": "Padahal, dua wilayah ini bersebelahan. Seberapa besar sebenarnya bedanya?", "ucap": "Padahal, dua wilayah ini bersebelahan. Seberapa besar sebenarnya bedanya?"}
+      ]
+    },
+    {
+      "id": "ranking",
+      "lines": [
+        {"id": "ranking-1", "teks": "Tahun 2026, UMP tertinggi ada di Jakarta, sekitar Rp5,7 juta.", "ucap": "Tahun dua ribu dua puluh enam, upah minimum provinsi tertinggi ada di Jakarta, sekitar lima koma tujuh juta rupiah."},
+        {"id": "ranking-2", "teks": "Yang terendah ada di Jawa Barat, sekitar Rp2,3 juta.", "ucap": "Yang terendah ada di Jawa Barat, sekitar dua koma tiga juta rupiah."},
+        {"id": "ranking-3", "teks": "Selisihnya sekitar Rp3,4 juta per bulan, lebih besar dari UMP Jawa Barat sendiri.", "ucap": "Selisihnya sekitar tiga koma empat juta rupiah per bulan, lebih besar dari upah minimum Jawa Barat sendiri."}
+      ]
+    },
+    {
+      "id": "stacks",
+      "lines": [
+        {"id": "stacks-1", "teks": "Kalau upah setahun ditukar lembaran Rp100.000 lalu ditumpuk, bedanya terlihat.", "ucap": "Kalau upah minimum setahun ditukar lembaran seratus ribu, lalu ditumpuk, bedanya mulai terlihat."},
+        {"id": "stacks-2", "teks": "Jakarta sekitar 688 lembar. Jawa Barat sekitar 278 lembar.", "ucap": "Jakarta sekitar enam ratus delapan puluh delapan lembar. Jawa Barat, sekitar dua ratus tujuh puluh delapan lembar."},
+        {"id": "stacks-3", "teks": "Dalam setahun, selisihnya hampir Rp41 juta.", "ucap": "Dalam setahun, selisihnya hampir empat puluh satu juta rupiah."}
+      ]
+    },
+    {
+      "id": "tabungan",
+      "lines": [
+        {"id": "tabungan-1", "teks": "Sekarang bayangkan kamu ingin mengumpulkan Rp100 juta, dan seluruh gaji ditabung.", "ucap": "Sekarang bayangkan kamu ingin mengumpulkan seratus juta rupiah, dan seluruh gaji ditabung."},
+        {"id": "tabungan-2", "teks": "Di Jakarta butuh sekitar 17,5 bulan. Di Jawa Barat, lebih dari 43 bulan.", "ucap": "Di Jakarta butuh sekitar tujuh belas setengah bulan. Di Jawa Barat, lebih dari empat puluh tiga bulan."},
+        {"id": "tabungan-3", "teks": "Tentu ini hanya hitungan, karena tidak ada yang hidup tanpa makan dan bayar kos.", "ucap": "Tentu ini hanya hitungan, karena tidak ada yang hidup tanpa makan dan bayar kos."}
+      ]
+    },
+    {
+      "id": "map",
+      "lines": [
+        {"id": "map-1", "teks": "Jakarta berbatasan langsung dengan Jawa Barat, tapi angkanya sangat berbeda.", "ucap": "Jakarta berbatasan langsung dengan Jawa Barat, tapi angkanya sangat berbeda."},
+        {"id": "map-2", "teks": "Perlu diingat, UMP hanya batas provinsi. UMK kota dan kabupaten bisa lebih tinggi.", "ucap": "Perlu diingat, upah minimum provinsi hanya batas tingkat provinsi. Upah minimum kota dan kabupaten bisa lebih tinggi."}
+      ]
+    },
+    {
+      "id": "outro",
+      "lines": [
+        {"id": "outro-1", "teks": "Biaya hidup tiap daerah juga berbeda, jadi gaji besar belum tentu sisa banyak.", "ucap": "Biaya hidup tiap daerah juga berbeda, jadi gaji besar belum tentu sisa banyak."},
+        {"id": "outro-2", "teks": "Kalau kamu, provinsimu ada di angka berapa? Tulis di kolom komentar.", "ucap": "Kalau kamu, provinsimu ada di angka berapa? Tulis di kolom komentar."}
+      ]
+    }
+  ]
+}

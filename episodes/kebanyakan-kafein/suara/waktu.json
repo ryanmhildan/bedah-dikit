@@ -1,0 +1,66 @@
+{
+  "buka-1": {
+    "hash": "1c267e1efdcdc5fe89f9374bf00daaf30b2aeea8",
+    "detik": 4.493061
+  },
+  "buka-2": {
+    "hash": "93580f8d742af3c597790555a2d4a664e0f3f960",
+    "detik": 3.239184
+  },
+  "otak-1": {
+    "hash": "2af075fe90f533e4b7a7f08042c95c5ce3fbcc7c",
+    "detik": 3.709388
+  },
+  "otak-2": {
+    "hash": "e261bf988837e9e9e94813e61710972f55fccde8",
+    "detik": 2.533878
+  },
+  "otak-3": {
+    "hash": "a38c9013bb69e94b43eea347e24a45be54c4826b",
+    "detik": 4.362449
+  },
+  "batas-1": {
+    "hash": "1f65e6e13814a4254e2c114a0d2e7136cac8493e",
+    "detik": 11.128163
+  },
+  "batas-2": {
+    "hash": "b4e8e5dbbcdf2dee4332c54f376e7dc898ff5bf5",
+    "detik": 5.982041
+  },
+  "gejala-1": {
+    "hash": "f0268a21443aeb967613927cb061c8f813e49d46",
+    "detik": 3.291429
+  },
+  "gejala-2": {
+    "hash": "385ee90a4ebcc51dc639904293a874915371c017",
+    "detik": 2.037551
+  },
+  "gejala-3": {
+    "hash": "209152e9103a3ed635095eb6c4b52791e33c81ab",
+    "detik": 5.198367
+  },
+  "peka-1": {
+    "hash": "d900e803f5d5b346d15f5de75cb808f096d0a75d",
+    "detik": 4.675918
+  },
+  "peka-2": {
+    "hash": "b255d91bea64ab037a831d088425e0872357ab3c",
+    "detik": 5.929796
+  },
+  "pekat-1": {
+    "hash": "c38657df2cbd48b96fe9fcf1ce4145f3ada14fd7",
+    "detik": 4.832653
+  },
+  "pekat-2": {
+    "hash": "18e2cb8ed59673e660ca594fdf105ffffa8ccff0",
+    "detik": 4.675918
+  },
+  "tutup-1": {
+    "hash": "8664deeea3449b1d30558a2b5074ae56335d0122",
+    "detik": 6.29551
+  },
+  "tutup-2": {
+    "hash": "27e4b6b9478c09c1905ef4a3c954d22e3431f46d",
+    "detik": 3.526531
+  }
+}

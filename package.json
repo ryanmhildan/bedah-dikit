@@ -1,0 +1,29 @@
+{
+  "name": "motion-shorts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pipeline video motion vertikal berbasis data",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render src/index.ts DataShort out/ump-2026.mp4 --overwrite --bundle-cache=false",
+    "still": "remotion still src/index.ts DataShort",
+    "render:ilustrasi": "remotion render src/index.ts Ilustrasi out/ilustrasi.mp4 --overwrite --bundle-cache=false",
+    "render:sinematik": "node scripts/render.mjs",
+    "render:3d": "remotion render src/index.ts Contoh3D out/contoh-3d.mp4 --gl=angle --overwrite --bundle-cache=false"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.2",
+    "@remotion/cli": "4.0.540",
+    "@remotion/google-fonts": "4.0.540",
+    "@remotion/three": "4.0.540",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.540",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/three": "0.187.0",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "metric": "UMP 2026",
+  "unitLabel": "per bulan",
+  "highlightCaption": "8 provinsi pilihan",
+  "items": [
+    {"label": "DKI Jakarta", "value": 5729876},
+    {"label": "Papua Pegunungan", "value": 4508714},
+    {"label": "Bali", "value": 3207459},
+    {"label": "Banten", "value": 3100881},
+    {"label": "Jawa Timur", "value": 2446880},
+    {"label": "DI Yogyakarta", "value": 2417495},
+    {"label": "Jawa Tengah", "value": 2327386},
+    {"label": "Jawa Barat", "value": 2317601}
+  ],
+  "savingsTarget": 100000000,
+  "caveat": "UMP hanya batas tingkat provinsi. UMK di kota dan kabupaten bisa lebih tinggi.",
+  "question": "Provinsimu di angka berapa?",
+  "source": "Sumber: rekap UMP 2026 Pajakku dan Dealls",
+  "host": {
+    "hook": [
+      {"text": "Halo, aku Kalku!", "mood": "wave"},
+      {"text": "Hobiku menghitung hal yang bikin kaget.", "mood": "wink"}
+    ],
+    "ranking": [
+      {"text": "Ini UMP 2026 di 8 provinsi.", "mood": "happy"},
+      {"text": "Jakarta paling tinggi di Indonesia.", "mood": "shock"},
+      {"text": "Jawa Barat paling rendah, beda tipis dengan Jawa Tengah.", "mood": "think"}
+    ],
+    "compare": [
+      {"text": "Selisihnya lebih besar dari UMP Jawa Barat sendiri!", "mood": "shock"},
+      {"text": "Sebentar, kuhitung ulang. Hasilnya tetap sama.", "mood": "think"}
+    ],
+    "year": [
+      {"text": "Sekarang kita kali 12 bulan.", "mood": "happy"},
+      {"text": "Selisihnya makin menumpuk!", "mood": "shock"}
+    ],
+    "savings": [
+      {"text": "Tes terakhir: tabung semua gaji.", "mood": "happy"},
+      {"text": "Tanpa makan, tanpa bayar kos. Jangan ditiru!", "mood": "wink"}
+    ],
+    "outro": [
+      {"text": "Tapi jangan langsung iri. Biaya hidup tiap daerah juga beda.", "mood": "think"},
+      {"text": "Tulis provinsimu di komentar!", "mood": "happy"},
+      {"text": "Sampai hitungan berikutnya!", "mood": "wave"}
+    ]
+  }
+}
