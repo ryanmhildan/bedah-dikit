@@ -9,6 +9,8 @@ const slug = process.argv.slice(2).find((arg) => !arg.startsWith('--'));
 if (!slug) throw new Error('Pemakaian: node scripts/lint-episode.mjs <slug>');
 
 const ep = muatEpisode(slug);
+const mentah = fs.readFileSync(`episodes/${slug}/episode.json`, 'utf8');
+const formatBoros = mentah.length > JSON.stringify(ep).length * 1.3;
 const {props, alasan} = muatProps(slug);
 const salah = [];
 const awas = [];
@@ -17,6 +19,8 @@ const awas = [];
 const SET = JSON.parse(fs.readFileSync('scripts/episode.mjs', 'utf8').match(/const SET = (\[[^\]]*\])/)[1].replace(/'/g, '"'));
 const suara = baca('data/suara.json');
 const musikNyala = ep.musik !== false && baca('data/efek-suara.json').musik?.aktif !== false;
+
+if (formatBoros) awas.push(`episode.json berformat boros, jalankan node scripts/rapikan-naskah.mjs ${slug}`);
 
 // Naskah dasar
 if (!suara.tokoh[ep.tokoh]) salah.push(`tokoh ${ep.tokoh} tidak terdaftar di data/suara.json`);

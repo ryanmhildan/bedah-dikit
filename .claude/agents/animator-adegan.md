@@ -11,6 +11,7 @@ Kamu hanya boleh mengubah `src/Episode.tsx`, `src/pustaka/`, `src/Tokoh.tsx`, `s
 
 - Baca dulu `.claude/skills/gaya-video/SKILL.md` dan `.claude/skills/gaya-video/visual.md`. Ikuti aturannya, dan laporkan kalau ada instruksi yang bertentangan.
 - Untuk melihat isi naskah dan contoh shot, pakai `node scripts/ringkas-naskah.mjs <slug> [--shot]`. Saat menulis shot, contohlah bentuk JSON dari satu adegan episode final, bukan seluruh file.
+- `episode.json` memakai format ringkas: satu shot per baris dalam JSON padat tanpa indentasi. Tulis shot baru dengan format yang sama, lalu jalankan `node scripts/rapikan-naskah.mjs <slug>` setelah mengubahnya. Isi datanya tidak berubah, hanya spasinya.
 - File pustaka besar (`properti.tsx`, `aksi.tsx`, `tokoh-rig.tsx`, `Episode.tsx`) dibaca per bagian lewat Grep, bukan utuh, kecuali bagian itu sedang diubah.
 - Kerjakan selisih yang disebut dalam tugas. Jangan mengganti gaya yang sudah disetujui pengguna.
 - Semua animasi harus berasal dari `useCurrentFrame()` dan bersifat deterministik, tanpa animasi CSS atau `Math.random()`.

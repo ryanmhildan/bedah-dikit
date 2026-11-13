@@ -18,8 +18,8 @@ Lint tidak menggantikan mata. Ekspresi, simbol yang ambigu, keterbacaan, dan kec
 
 ## Render
 
-1. Render penuh dengan `node scripts/episode.mjs <slug>`, hasilnya `out/episode/<slug>/video.mp4`. Skrip ini merender per 450 frame, mengulang bagian yang gagal, lalu menyusun audio dari MP3 tanpa Chrome. Jangan kembali ke render sekali jalan: Chrome pernah berhenti diam-diam saat memori kosong sekitar 400 MB.
-2. Cek exit code, stempel waktu, durasi, dan aliran audio MP4. Jika gagal di tengah, lanjutkan dengan `node scripts/episode.mjs <slug> --lanjut`, tetapi hanya jika kode belum berubah. Jangan memeriksa frame dari file lama.
+1. Render penuh dengan `node scripts/render-episode.mjs <slug>` di latar belakang. Skrip ini mengecek ruang disk dan render yang sedang berjalan, menjalankan `scripts/episode.mjs`, menyimpan log ke `out/episode/<slug>/render.log`, lalu memeriksa exit code, stempel waktu, durasi, dan aliran video serta audio AAC. Hasilnya satu ringkasan LOLOS atau GAGAL, dan videonya `out/episode/<slug>/video.mp4`. `scripts/episode.mjs` ini merender per 450 frame, mengulang bagian yang gagal, lalu menyusun audio dari MP3 tanpa Chrome. Jangan kembali ke render sekali jalan: Chrome pernah berhenti diam-diam saat memori kosong sekitar 400 MB.
+2. Jika gagal di tengah, lanjutkan dengan `node scripts/render-episode.mjs <slug> --lanjut`, tetapi hanya jika kode belum berubah. Jika gagal lagi, panggil agent `operator-render`. Jangan memeriksa frame dari file lama.
 
 ## Pemeriksaan kualitas
 

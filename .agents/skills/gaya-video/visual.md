@@ -64,6 +64,7 @@ Sel atau benda bulat dengan satu inti gelap berkilau mudah terbaca sebagai wajah
 
 ## Shot di episode.json
 
+- `episode.json` disimpan dalam format ringkas, satu shot per baris tanpa indentasi dalam, sekitar sepertiga ukuran format biasa. Setelah mengubah, jalankan `node scripts/rapikan-naskah.mjs <slug>`. Isi data dicek identik sebelum file ditulis.
 - Adegan bisa memakai set: setiap baris diberi `shot` (lihat tipe `Shot` di `src/pustaka/set/tipe.ts`). Jika satu baris di adegan punya `shot`, semua baris di adegan itu wajib punya `shot`. Nama set yang dikenal skrip ada di `SET` pada `scripts/episode.mjs`.
 - Latar luar ruang lama ada di `src/pustaka/dunia.tsx`: `kota`, `malam`, `senja`, `langit`, `alam`. Pakai hanya jika topiknya memang di luar ruang.
 - Ikon ada di `src/pustaka/ikon.tsx`. Tambahkan ikon baru di sana jika belum ada yang cocok.
