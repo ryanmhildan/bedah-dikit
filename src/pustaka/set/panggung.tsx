@@ -1,17 +1,21 @@
 import {useMemo, type ReactNode} from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
-import {Properti, type KeadaanProperti, type NamaProperti} from '../properti';
+import {Properti, miringMinum, type KeadaanProperti, type NamaProperti} from '../properti';
 import {TokohRig, naskahRig, type Bawaan, type KeadaanRig, type NaskahRig} from '../tokoh-rig';
 import type {LookName} from '../../Tokoh';
 import {KEDALAMAN, Lapis, kameraDi, type Kamera} from './kamera';
 import {popSkala} from './gerak';
 import type {NamaBahan} from '../../tema';
-import {geserTokohAksi, isiAksi, kameraAksi} from './aksi';
+import {geserTokohAksi, isiAksi, kameraAksi, olengTokohAksi} from './aksi';
 import {setInterior} from './interior';
 import {setMejaAtas, setMejaSamping} from './meja';
 import {setMikro} from './mikro';
 import {setOrgan, setOrganPabrik} from './organ';
 import {setTembus} from './tembus';
+import {setWahana} from './wahana';
+import {setBelah} from './belah';
+import {setLab} from './lab';
+import type {OrganGiliran} from './tembus';
 import {Cahaya, LatarRuang, Lensa, type Sorot, type SuasanaKini} from './ruang';
 import type {HasilSet, PropertiShot, Shot, Slot, SuasanaShot, TokohShot} from './tipe';
 
@@ -73,11 +77,21 @@ const bahanDari = (shot: Shot, awal: NamaBahan): NamaBahan => (shot.opsi?.bahan 
 export const buatSet = (shot: Shot, id = 'set'): HasilSet => {
   if (shot.set === 'meja' && shot.varian === 'samping') return setMejaSamping({bahan: bahanDari(shot, 'kayu')});
   if (shot.set === 'meja') return setMejaAtas({bahan: bahanDari(shot, 'kayu'), rapi: Boolean(shot.opsi?.rapi), luas: Boolean(shot.opsi?.luas)});
-  if (shot.set === 'interior') return setInterior(shot.varian ?? 'kerja', {malam: Boolean(shot.opsi?.malam)});
+  if (shot.set === 'interior') return setInterior(shot.varian ?? 'kerja', {malam: Boolean(shot.opsi?.malam), plafon: Boolean(shot.opsi?.plafon)});
   if (shot.set === 'organ' && shot.varian === 'pabrik') return setOrganPabrik('hati', {belah: shot.opsi?.belah === undefined ? undefined : Number(shot.opsi.belah)});
   if (shot.set === 'organ') return setOrgan(shot.varian === 'hati' ? 'hati' : 'jantung', {denyut: Number(shot.opsi?.denyut ?? 72), tidakTeratur: Boolean(shot.opsi?.tidakTeratur)});
-  if (shot.set === 'mikro') return setMikro();
-  if (shot.set === 'tembus') return setTembus({denyut: Number(shot.opsi?.denyut ?? 72), nyala: Number(shot.opsi?.nyala ?? 1), tidakTeratur: Boolean(shot.opsi?.tidakTeratur), id: `${id}-tembus`});
+  if (shot.set === 'mikro') return setMikro({lidah: Boolean(shot.opsi?.lidah), otak: Boolean(shot.opsi?.otak)});
+  if (shot.set === 'lab') return setLab();
+  if (shot.set === 'wahana') return setWahana();
+  if (shot.set === 'belah') return setBelah();
+  if (shot.set === 'tembus') {
+    // `giliran` daftar organ dipisah koma, menyala mulai frame `giliranMulai` dengan jarak `giliranJeda`.
+    const giliran =
+      typeof shot.opsi?.giliran === 'string'
+        ? {daftar: shot.opsi.giliran.split(',').map((n) => n.trim()) as OrganGiliran[], mulai: Number(shot.opsi?.giliranMulai ?? 0), jeda: Number(shot.opsi?.giliranJeda ?? 24)}
+        : undefined;
+    return setTembus({denyut: Number(shot.opsi?.denyut ?? 72), nyala: Number(shot.opsi?.nyala ?? 1), tidakTeratur: Boolean(shot.opsi?.tidakTeratur), id: `${id}-tembus`, giliran});
+  }
   // Ruang polos, dengan atau tanpa meja kecil di bawah sorot.
   if (shot.opsi?.meja) return setMejaSamping({bahan: bahanDari(shot, 'batu')});
   // Slot `tengah` berada di lantai ruang, tepat di genangan cahaya.
@@ -111,14 +125,15 @@ const MIRING_MINUM = 38;
 
 // Benda di tangan rig. Gagang di genggaman, badan benda mengarah ke dalam badan tokoh.
 // Saat tangan naik ke mulut (pose `minum`), benda dimiringkan ke arah wajah mengikuti sudut tangan.
-export const bawaanProperti = ({nama, keadaan, bagian = 'utama', skala = 0.5, teks}: {nama: NamaProperti; keadaan?: KeadaanProperti; bagian?: 'utama' | 'bantu'; skala?: number; teks?: string}): Bawaan => ({
+export const bawaanProperti = ({nama, keadaan, bagian = 'utama', skala = 0.5, teks, varian, balik = false}: {nama: NamaProperti; keadaan?: KeadaanProperti; bagian?: 'utama' | 'bantu'; skala?: number; teks?: string; varian?: string; balik?: boolean}): Bawaan => ({
   bagian,
   isi: (k: KeadaanRig) => {
-    const side = bagian === 'utama' ? k.arah : -k.arah;
+    // `balik` membalik benda yang badannya berada di sisi luar gagang, misalnya sendok, supaya ujungnya mengarah ke badan tokoh.
+    const side = (bagian === 'utama' ? k.arah : -k.arah) * (balik ? -1 : 1);
     const miring = interpolate(k[bagian].tangan, [135, 210], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
     // Uap mereda saat benda dimiringkan ke wajah, supaya garis uap tidak melintasi muka.
     const kini = keadaan?.uap === undefined ? keadaan : {...keadaan, uap: keadaan.uap * (1 - miring)};
-    return <Properti nama={nama} keadaan={kini} skala={skala} digenggam cermin={side < 0} putar={-side * miring * MIRING_MINUM} teks={teks} />;
+    return <Properti nama={nama} keadaan={kini} skala={skala} digenggam cermin={side < 0} putar={-side * miring * miringMinum(nama, MIRING_MINUM)} teks={teks} varian={varian} />;
   },
 });
 
@@ -154,6 +169,7 @@ const naskahTokoh = (tokoh: TokohShot, id: string, baris?: [number, number]) => 
     mata: tokoh.mata,
     mulut: tokoh.mulut,
     bicara: tokoh.bicara && baris ? [baris] : undefined,
+    ekspresi: tokoh.ekspresi,
   });
 };
 
@@ -195,8 +211,9 @@ export const AdeganSet = ({
     (() => {
       const titik = cariSlot(set, shot.tokoh.slot);
       const getar = geserTokohAksi(aksi, frame);
+      const oleng = olengTokohAksi(aksi, frame);
       return (
-        <g transform={`translate(${getar.x} ${getar.y})`}>
+        <g transform={`translate(${getar.x} ${getar.y})${oleng ? ` rotate(${oleng} ${titik.x} ${titik.y})` : ''}`}>
           <TokohDiDunia
             x={titik.x}
             y={titik.y}

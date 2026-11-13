@@ -1,10 +1,12 @@
 import type {ReactNode} from 'react';
-import {interpolate, random} from 'remotion';
-import {MIKRO, PABRIK, WHITE} from '../../tema';
-import {AliranTuang, GelasUkur, LabelUkur, Properti, getarGeser, titikPegang, type KeadaanProperti, type NamaProperti, type Tampak} from '../properti';
-import {LenganLepas} from '../tokoh-rig';
+import {Easing, interpolate, random} from 'remotion';
+import {BATANG, BATANG_TERANG, BAYANG_KONTAK, CORET, MIKRO, MOLEKUL, OTAK, PABRIK, SINYAL, WAHANA, WHITE} from '../../tema';
+import {AliranTuang, GelasUkur, GerbongBagian, LabelUkur, Properti, SEL_OTAK, geometriSelOtak, getarGeser, titikPegang, type KeadaanProperti, type NamaProperti, type Tampak} from '../properti';
+import {Kapsaisin, Kasein, R_KAPSAISIN} from '../molekul';
+import {LenganLepas, TokohRig, naskahRig, type BentukMata, type BentukMulutRig, type KunciEkspresi, type NamaPoseRig} from '../tokoh-rig';
+import {titikRel} from './wahana';
 import type {LookName} from '../../Tokoh';
-import type {Kamera} from './kamera';
+import {keLayar, type Kamera} from './kamera';
 import {campur, campurTitik, lesat, mulus, pergi, popSkala} from './gerak';
 import {SOKET, SOKET_X, puncakSoket} from './mikro';
 import type {HasilSet, Slot} from './tipe';
@@ -24,6 +26,7 @@ export type AksiTaruh = {
   skala?: number;
   keadaan?: KeadaanProperti;
   teks?: string;
+  varian?: string;
   // Lebar lengan dalam piksel dunia.
   tebal?: number;
   tekuk?: number;
@@ -61,8 +64,108 @@ export type AksiTuang = {
   sembunyiWadah?: boolean;
 };
 
-// Butir adenosin turun dan menancap ke soket satu per satu.
-export type AksiTancap = {aksi: 'tancap'; soket: number[]; mulai?: number; jeda?: number; lepas?: number};
+// Ligan turun dan menancap ke soket satu per satu. `ligan` bawaan `adenosin` (nyala ungu),
+// atau `kapsaisin` (nyala merah dengan gelombang panas). `selesai` semua sudah menancap sejak awal shot, tanpa bunyi.
+export type AksiTancap = {aksi: 'tancap'; soket: number[]; mulai?: number; jeda?: number; lepas?: number; ligan?: 'adenosin' | 'kapsaisin'; selesai?: boolean};
+// Kasein susu turun, mengikat kapsaisin yang menancap, lalu keduanya terangkat lepas dari soket dan nyala padam.
+export type AksiIkat = {aksi: 'ikat'; soket: number[]; mulai?: number; jeda?: number};
+// Sinyal saraf: denyut terang berjalan di jalur lengkung dari `dari` ke `ke`, lalu kilat di tujuan.
+export type AksiSinyal = {aksi: 'sinyal'; dari: string | Slot; ke: string | Slot; mulai?: number; jumlah?: number; jeda?: number; lama?: number; lengkung?: number; tebal?: number};
+// Properti yang keadaannya berubah mulus dari `dari` ke `ke`, misalnya isi gelas naik, jarum meter turun, atau alarm mulai berbunyi.
+// `mulai` berbunyi pop. Perubahan yang mengecil atau turun (jarum meter, api padam) memakai `sejak`, yang sama tetapi tanpa bunyi,
+// karena pop terdengar seperti benda muncul. `bayang: false` untuk benda yang melayang.
+export type AksiUbah = {
+  aksi: 'ubah';
+  nama: NamaProperti;
+  slot: string | Slot;
+  dari: KeadaanProperti;
+  ke: KeadaanProperti;
+  mulai?: number;
+  sejak?: number;
+  bayang?: boolean;
+  lama?: number;
+  tampak?: Tampak;
+  skala?: number;
+  putar?: number;
+  varian?: string;
+  teks?: string;
+  lapis?: 'belakang' | 'tengah' | 'depan';
+  // Perubahan bertahap dalam sejumlah langkah yang sama besar, misalnya angka hari yang naik satu per satu.
+  // Dengan `langkah`, waktu berjalan rata (tanpa pelan di ujung) dan tiap langkah berpindah cepat lalu ditahan.
+  langkah?: number;
+};
+// Batang ukur vertikal yang dasarnya nol. Tinggi isi = nilai / `maks` x `tinggi`. Dengan `turun: true`, nilai dibaca sebagai
+// penurunan dari penuh, jadi isi = (`maks` - nilai), misalnya kemampuan berpikir yang turun setara 1 atau 2 malam tanpa tidur.
+// `garis` menandai nilai acuan dengan label di sampingnya. Bayangan isi awal tetap terlihat supaya penurunan terbaca jujur.
+// Untuk data "setara sekian", pakai mode naik (tanpa `turun`) dengan `maks` sama dengan nilai acuan terbesar dan `garis` di tiap acuan,
+// supaya tinggi jalur tidak terbaca sebagai persen. `alas: 'terang'` menggelapkan jalur dan garis di set yang terang, misalnya dinding lab.
+// `mulai` berbunyi pop, `sejak` tanpa bunyi (untuk isi yang turun).
+export type AksiBatang = {
+  aksi: 'batang';
+  slot: string | Slot;
+  maks: number;
+  dari: number;
+  ke: number;
+  turun?: boolean;
+  garis?: {nilai: number; label?: string; muncul?: number}[];
+  mulai?: number;
+  sejak?: number;
+  lama?: number;
+  langkah?: number;
+  tinggi?: number;
+  lebar?: number;
+  warna?: 'kemampuan' | 'kantuk' | 'bahaya';
+  // Sisi label garis: 1 kanan, -1 kiri.
+  sisi?: 1 | -1;
+  // Ukuran label tetap di layar walau kamera zoom.
+  ukuranLabel?: number;
+  alas?: 'gelap' | 'terang';
+};
+// Benda berjajar dalam grid, jumlahnya dihitung dari data: ceil(nilai / perBenda). Muncul satu per satu dengan jeda `lag`.
+// `kelompok` membagi benda menjadi beberapa kelompok sama besar berurutan, masing-masing memakai varian `0`, `1`, `2`, dan seterusnya.
+export type AksiJajar = {
+  aksi: 'jajar';
+  nama: NamaProperti;
+  pusat: string | Slot;
+  nilai: number;
+  perBenda?: number;
+  kolom: number;
+  jarak: number;
+  jarakBaris?: number;
+  kelompok?: number;
+  // Jarak tambahan antar-kelompok, dalam piksel dunia, bila kelompok dipisah per baris.
+  celahKelompok?: number;
+  mulai?: number;
+  sejak?: number;
+  lag?: number;
+  skala?: number;
+  varian?: string;
+  tampak?: Tampak;
+};
+// Garis coret merah yang ditarik melintang di atas label, misalnya anggapan yang keliru. Dengan `tetap`, `lebar` dan `geser` dalam piksel layar,
+// sama seperti label `tetap` yang dicoret: label setinggi `ukuran` berpusat `ukuran` x 0,72 + 6 piksel di atas titik slot.
+export type AksiCoret = {aksi: 'coret'; slot: string | Slot; geser?: Titik; lebar: number; mulai?: number; sejak?: number; lama?: number; tetap?: boolean; miring?: number};
+// Aliran cairan di celah sel otak (properti `selOtak` di slot yang sama). Limbah di celah terbawa ke kanan dengan laju `laju`,
+// jadi laju 2 membersihkan celah dua kali lebih cepat. `celah` faktor celah yang sama dengan `isi` properti selOtak.
+// `besar` memperbesar butir limbah, misalnya saat petak sel digambar kecil di layar belah.
+export type AksiAlir = {aksi: 'alir'; slot: string | Slot; skala?: number; celah?: number; laju?: number; jumlah?: number; besar?: number; mulai?: number; sejak?: number; selesai?: boolean};
+// Tokoh oleng pelan ke kiri dan kanan, misalnya mengantuk atau setengah sadar. Tanpa bunyi.
+export type AksiOleng = {aksi: 'oleng'; kuat: number; sejak?: number; lama?: number};
+// Gerbong di set `wahana` meluncur sepanjang rel dari posisi `dari` ke `ke` (0..1), makin cepat seperti jatuh.
+// Tokoh duduk di dalam gerbong dengan pose, mata, mulut, dan ekspresi sendiri.
+export type AksiMeluncur = {
+  aksi: 'meluncur';
+  dari: number;
+  ke: number;
+  mulai: number;
+  lama: number;
+  skala?: number;
+  pose?: NamaPoseRig;
+  mata?: BentukMata;
+  mulut?: BentukMulutRig;
+  ekspresi?: KunciEkspresi[];
+  variant?: LookName;
+};
 // Kafein menyerobot soket yang sudah terisi adenosin, adenosin terpental.
 export type AksiSerobot = {aksi: 'serobot'; soket: number[]; mulai?: number; jeda?: number};
 // Ban berjalan dengan mesin pemecah. `laju` 1 cepat, makin kecil makin lambat sehingga antrean menumpuk.
@@ -84,8 +187,8 @@ export type AksiDeret = {
   skala?: number;
   tampak?: Tampak;
 };
-// Getar halus pada kamera atau tokoh.
-export type AksiGetar = {aksi: 'getar'; sasaran: 'kamera' | 'tokoh'; kuat: number; mulai?: number; lama?: number};
+// Getar halus pada kamera atau tokoh. `mulai` berbunyi pop, `sejak` mulai tanpa bunyi, misalnya getar yang menyertai hentak.
+export type AksiGetar = {aksi: 'getar'; sasaran: 'kamera' | 'tokoh'; kuat: number; mulai?: number; sejak?: number; lama?: number};
 // Benda muncul dengan pop 8 frame di frame `mulai`, dan bersuara pop. Untuk benda yang tidak bersuara, pakai `properti` dengan `muncul`.
 export type AksiMuncul = {aksi: 'muncul'; nama: NamaProperti; slot: string | Slot; mulai: number; tampak?: Tampak; skala?: number; putar?: number; varian?: string; teks?: string; keadaan?: KeadaanProperti};
 // Hentakan kamera singkat di momen benturan.
@@ -95,9 +198,30 @@ export type AksiDebu = {aksi: 'debu'; x?: number; y?: number; lebar?: number; ti
 // Label angka yang menempel di samping benda, dalam koordinat dunia. Ikut kamera, tidak terwarnai suasana.
 // `tetap: true` menjaga ukuran label di layar walau kamera mundur: label berpusat di titik slot + `geser` (dunia)
 // dan berdiri tepat di atas titik itu.
-export type AksiLabel = {aksi: 'label'; teks: string; slot: string | Slot; geser?: Titik; ukuran?: number; muncul?: number; tetap?: boolean};
+// `aman: true` (bersama `tetap`) memudarkan label yang mulai keluar dari area aman x 80..950 di layar, misalnya label bilik saat kamera zoom.
+export type AksiLabel = {aksi: 'label'; teks: string; slot: string | Slot; geser?: Titik; ukuran?: number; muncul?: number; tetap?: boolean; aman?: boolean};
 
-export type Aksi = AksiTaruh | AksiTuang | AksiTancap | AksiSerobot | AksiPecah | AksiDeret | AksiGetar | AksiHentak | AksiDebu | AksiLabel | AksiMuncul;
+export type Aksi =
+  | AksiTaruh
+  | AksiTuang
+  | AksiTancap
+  | AksiSerobot
+  | AksiPecah
+  | AksiDeret
+  | AksiGetar
+  | AksiHentak
+  | AksiDebu
+  | AksiLabel
+  | AksiMuncul
+  | AksiIkat
+  | AksiSinyal
+  | AksiUbah
+  | AksiMeluncur
+  | AksiBatang
+  | AksiJajar
+  | AksiCoret
+  | AksiAlir
+  | AksiOleng;
 export type NamaAksi = Aksi['aksi'];
 
 export type IsiAksi = {belakangTokoh?: ReactNode; tengah?: ReactNode; depan?: ReactNode; label?: ReactNode};
@@ -124,7 +248,8 @@ export const kameraAksi = (daftar: Aksi[], kamera: Kamera, frame: number): Kamer
   return {x, y, zoom};
 };
 
-const aktif = (a: {mulai?: number; lama?: number}, frame: number) => frame >= (a.mulai ?? 0) && (a.lama === undefined || frame < (a.mulai ?? 0) + a.lama);
+const awalAksi = (a: {mulai?: number; sejak?: number}) => a.mulai ?? a.sejak ?? 0;
+const aktif = (a: {mulai?: number; sejak?: number; lama?: number}, frame: number) => frame >= awalAksi(a) && (a.lama === undefined || frame < awalAksi(a) + a.lama);
 
 // Geser tokoh dalam piksel dunia akibat getar.
 export const geserTokohAksi = (daftar: Aksi[], frame: number): Titik => {
@@ -138,6 +263,31 @@ export const geserTokohAksi = (daftar: Aksi[], frame: number): Titik => {
   }
   return {x, y};
 };
+
+// Sudut oleng tokoh dalam derajat, berputar di titik pinggang.
+export const olengTokohAksi = (daftar: Aksi[], frame: number) => {
+  let sudut = 0;
+  for (const a of daftar) {
+    if (a.aksi === 'oleng' && aktif(a, frame)) {
+      const masuk = Math.min(1, (frame - (a.sejak ?? 0)) / 12);
+      sudut += Math.sin((frame - (a.sejak ?? 0)) / 13) * a.kuat * 4 * masuk;
+    }
+  }
+  return sudut;
+};
+
+// Waktu bertahap: `t` 0..1 dipecah menjadi `langkah` anak tangga. Tiap anak tangga berpindah dalam seperempat waktunya, lalu ditahan.
+export const bertahap = (t: number, langkah: number) => {
+  if (t >= 1) return 1;
+  if (t <= 0) return 0;
+  const s = t * langkah;
+  const k = Math.floor(s);
+  const sisa = Math.min(1, (s - k) * 4);
+  return (k + (1 - Math.pow(1 - sisa, 3))) / langkah;
+};
+
+const waktuUbah = (frame: number, awal: number, lama: number, langkah?: number) =>
+  langkah ? bertahap(interpolate(frame, [awal, awal + lama], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}), langkah) : mulus(frame, awal, lama);
 
 // ---------------- Taruh ----------------
 const isiTaruh = (a: AksiTaruh, {frame, cariSlot}: Konteks): IsiAksi => {
@@ -168,7 +318,7 @@ const isiTaruh = (a: AksiTaruh, {frame, cariSlot}: Konteks): IsiAksi => {
   const goyang = getarGeser(a.keadaan?.getar ?? 0, frame);
   const pergelangan = dipegang ? campurTitik(luar, pergelanganTaruh, tMasuk) : campurTitik(pergelanganTaruh, a.bahu, tPergi);
   const angkat = dipegang && lepas !== null ? 1 - lesat(frame - mulai - 6) : 0;
-  const benda = <Properti nama={a.nama} tampak={tampak} keadaan={a.keadaan} skala={s * (1 + angkat * 0.06)} putar={putar} cermin={cermin} teks={a.teks} digenggam />;
+  const benda = <Properti nama={a.nama} tampak={tampak} keadaan={a.keadaan} skala={s * (1 + angkat * 0.06)} putar={putar} cermin={cermin} teks={a.teks} varian={a.varian} digenggam />;
   const bekas = a.bekas;
   const popBekas = bekas ? popSkala(frame - (bekas.muncul ?? (lepas ?? 1e9) + 3)) : 0;
   return {
@@ -177,7 +327,7 @@ const isiTaruh = (a: AksiTaruh, {frame, cariSlot}: Konteks): IsiAksi => {
     ),
     tengah: (
       <g>
-        {!dipegang && <Properti nama={a.nama} tampak={tampak} keadaan={a.keadaan} x={titik.x} y={titik.y} skala={s} putar={putar} cermin={cermin} teks={a.teks} />}
+        {!dipegang && <Properti nama={a.nama} tampak={tampak} keadaan={a.keadaan} x={titik.x} y={titik.y} skala={s} putar={putar} cermin={cermin} teks={a.teks} varian={a.varian} />}
         {(frame >= mulai || mulai < 0) && tPergi < 1 && (
           <LenganLepas dari={a.bahu} ke={{x: pergelangan.x + goyang.x, y: pergelangan.y + goyang.y}} tebal={tebal} tekuk={a.tekuk ?? -0.06} variant={a.variant} bawaan={dipegang ? benda : undefined} />
         )}
@@ -326,11 +476,61 @@ const NyalaSoket = ({i, warna, kuat, pekat = 0.55}: {i: number; warna: string; k
   kuat <= 0 ? null : <ellipse cx={SOKET_X[i]} cy={puncakSoket(i) + 56} rx={SOKET.lebar * 0.42} ry={36} fill={warna} opacity={pekat * kuat} />;
 
 const tancapDi = (i: number) => ({x: SOKET_X[i], y: puncakSoket(i) - R_ADENOSIN - 2});
+const tancapKapsaisin = (i: number) => ({x: SOKET_X[i], y: puncakSoket(i) - R_KAPSAISIN * 0.8 - 4});
 
 const LAMA_TANCAP = 16;
 
-const isiTancap = (a: AksiTancap, {frame}: Konteks): IsiAksi => {
-  const mulai = a.mulai ?? 10;
+// Gelombang panas yang naik dari soket yang menyala merah.
+const GelombangPanas = ({i, kuat, frame}: {i: number; kuat: number; frame: number}) =>
+  kuat <= 0 ? null : (
+    <g fill="none" stroke={MOLEKUL.panas} strokeWidth={8} strokeLinecap="round" opacity={kuat}>
+      {[-1, 0, 1].map((k) => {
+        const t = ((frame * 0.035 + (k + 1) / 3) % 1 + 1) % 1;
+        const x = SOKET_X[i] + k * 46;
+        const y = puncakSoket(i) - 120 - t * 160;
+        return <path key={k} d={`M${x} ${y + 50} q-14 -12 0 -25 t0 -25`} opacity={1 - t} />;
+      })}
+    </g>
+  );
+
+const isiTancapKapsaisin = (a: AksiTancap, {frame}: Konteks): IsiAksi => {
+  const mulai = a.selesai ? -1e4 : (a.mulai ?? 10);
+  const jeda = a.jeda ?? 18;
+  const ligan = a.soket.map((i, k) => {
+    const t = frame - (mulai + k * jeda);
+    const awal = {x: SOKET_X[i] + (k % 2 ? 80 : -70), y: 520 + k * 60 + Math.sin(frame / 14 + k) * 14};
+    const p = lesat(t * 1.2);
+    const pos = campurTitik(awal, tancapKapsaisin(i), p);
+    const pipih = t >= LAMA_TANCAP && t < LAMA_TANCAP + 6 ? 1 - 0.1 * Math.sin((Math.PI * (t - LAMA_TANCAP)) / 6) : 1;
+    return {i, k, pos, pipih, putar: (1 - p) * (k % 2 ? 40 : -40), nyala: interpolate(t, [LAMA_TANCAP - 4, LAMA_TANCAP + 8], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})};
+  });
+  const melayang = [0, 1].map((k) => ({x: 160 + k * 720 + Math.sin(frame / 25 + k * 2) * 30, y: 700 - k * 160 + Math.cos(frame / 30 + k) * 20}));
+  return {
+    belakangTokoh: (
+      <g>
+        {melayang.map((p, k) => (
+          <Kapsaisin key={`l${k}`} x={p.x} y={p.y} skala={0.8} putar={frame * 0.8 + k * 70} opacity={0.75} goyang={frame * 2} />
+        ))}
+        {ligan.map(({k, pos, pipih, putar}) => (
+          <g key={k} transform={`translate(${pos.x} ${pos.y}) scale(${2 - pipih} ${pipih}) translate(${-pos.x} ${-pos.y})`}>
+            <Kapsaisin x={pos.x} y={pos.y} putar={putar} kaki goyang={frame * 2 + k * 40} />
+          </g>
+        ))}
+      </g>
+    ),
+    tengah: ligan.map(({i, nyala}) => (
+      <g key={i}>
+        <NyalaSoket i={i} warna={MOLEKUL.nyalaKapsaisin} kuat={nyala} pekat={0.85} />
+        <GelombangPanas i={i} kuat={nyala} frame={frame} />
+      </g>
+    )),
+  };
+};
+
+const isiTancap = (a: AksiTancap, k: Konteks): IsiAksi => {
+  if (a.ligan === 'kapsaisin') return isiTancapKapsaisin(a, k);
+  const {frame} = k;
+  const mulai = a.selesai ? -1e4 : (a.mulai ?? 10);
   const jeda = a.jeda ?? 18;
   const ligan = a.soket.map((i, k) => {
     const t = frame - (mulai + k * jeda);
@@ -583,16 +783,332 @@ const isiLabel = (a: AksiLabel, {frame, cariSlot, kamera}: Konteks): IsiAksi => 
   const y = titik.y + (a.geser?.y ?? 0);
   const ukuran = a.ukuran ?? 40;
   if (a.tetap) {
+    // Label yang keluar area aman memudar dalam 24 piksel layar, jadi tidak pernah tampil terpotong di tepi.
+    let tampak = 1;
+    if (a.aman) {
+      const lebar = a.teks.length * ukuran * 0.58 + ukuran * 0.7;
+      const pusat = keLayar(kamera, {x, y});
+      const lewat = Math.max(80 - (pusat.x - lebar / 2), pusat.x + lebar / 2 - 950);
+      tampak = Math.min(1, Math.max(0, 1 - lewat / 24));
+      if (tampak <= 0) return {};
+    }
     // Skala 1/zoom membatalkan zoom lapisan tengah, jadi tinggi label di layar selalu `ukuran`.
     return {
       label: (
-        <g transform={`translate(${x} ${y}) scale(${1 / kamera.zoom})`}>
+        <g transform={`translate(${x} ${y}) scale(${1 / kamera.zoom})`} opacity={tampak}>
           <LabelUkur x={0} y={-ukuran * 0.72 - 6} teks={a.teks} ukuran={ukuran} skala={pop} rata="tengah" />
         </g>
       ),
     };
   }
   return {label: <LabelUkur x={x} y={y} teks={a.teks} ukuran={ukuran} skala={pop} />};
+};
+
+// ---------------- Ikat: kasein melepas kapsaisin ----------------
+const LAMA_TURUN_KASEIN = 16;
+const LAMA_ANGKAT = 34;
+
+const isiIkat = (a: AksiIkat, {frame}: Konteks): IsiAksi => {
+  const mulai = a.mulai ?? 10;
+  const jeda = a.jeda ?? 14;
+  const isi = a.soket.map((i, k) => {
+    const t = frame - (mulai + k * jeda);
+    const sisi = k % 2 ? 1 : -1;
+    const dok = tancapKapsaisin(i);
+    const temu = {x: dok.x + sisi * 34, y: dok.y - 88};
+    const dari = {x: dok.x + sisi * 260, y: dok.y - 760};
+    const turun = lesat(t * 1.1);
+    const angkat = pergi(t - LAMA_TURUN_KASEIN, LAMA_ANGKAT);
+    const geser = {x: sisi * 220 * angkat, y: -820 * angkat};
+    const kasein = t < LAMA_TURUN_KASEIN ? campurTitik(dari, temu, turun) : {x: temu.x + geser.x, y: temu.y + geser.y};
+    const kapsaisin = {x: dok.x + geser.x, y: dok.y + geser.y};
+    const lepas = interpolate(t, [LAMA_TURUN_KASEIN, LAMA_TURUN_KASEIN + 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+    return {i, k, t, kasein, kapsaisin, lepas, angkat};
+  });
+  return {
+    belakangTokoh: (
+      <g>
+        {isi.map(({k, kapsaisin, angkat}) => (angkat >= 1 ? null : <Kapsaisin key={`c${k}`} x={kapsaisin.x} y={kapsaisin.y} putar={angkat * 30} kaki goyang={frame * 2 + k * 40} />))}
+        {isi.map(({k, t, kasein, angkat}) => (t < 0 || angkat >= 1 ? null : <Kasein key={`k${k}`} x={kasein.x} y={kasein.y} skala={1.05} putar={Math.sin(frame / 12 + k) * 6} />))}
+      </g>
+    ),
+    tengah: isi.map(({i, lepas, angkat}) => (
+      <g key={i}>
+        <NyalaSoket i={i} warna={MOLEKUL.nyalaKapsaisin} kuat={1 - lepas} pekat={0.85} />
+        <GelombangPanas i={i} kuat={1 - Math.min(1, lepas + angkat)} frame={frame} />
+      </g>
+    )),
+  };
+};
+
+// ---------------- Sinyal saraf ----------------
+const LAMA_KILAT = 16;
+
+const isiSinyal = (a: AksiSinyal, {frame, cariSlot}: Konteks): IsiAksi => {
+  const dari = cariSlot(a.dari);
+  const ke = cariSlot(a.ke);
+  const mulai = a.mulai ?? 8;
+  const jumlah = a.jumlah ?? 3;
+  const jeda = a.jeda ?? 10;
+  const lama = a.lama ?? 20;
+  const lengkung = a.lengkung ?? 0.25;
+  const tebal = a.tebal ?? 12;
+  const panjang = Math.hypot(ke.x - dari.x, ke.y - dari.y) || 1;
+  const kendali = {x: (dari.x + ke.x) / 2 - ((ke.y - dari.y) / panjang) * panjang * lengkung, y: (dari.y + ke.y) / 2 + ((ke.x - dari.x) / panjang) * panjang * lengkung};
+  const titik = (t: number) => ({
+    x: (1 - t) * (1 - t) * dari.x + 2 * (1 - t) * t * kendali.x + t * t * ke.x,
+    y: (1 - t) * (1 - t) * dari.y + 2 * (1 - t) * t * kendali.y + t * t * ke.y,
+  });
+  const jalur = interpolate(frame, [mulai - 10, mulai], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const denyut = Array.from({length: jumlah}, (_, k) => (frame - mulai - k * jeda) / lama);
+  const kilat = Array.from({length: jumlah}, (_, k) => frame - (mulai + k * jeda + lama));
+  return {
+    tengah: (
+      <g>
+        <path d={`M${dari.x} ${dari.y} Q${kendali.x} ${kendali.y} ${ke.x} ${ke.y}`} stroke={SINYAL.jalur} strokeWidth={tebal} strokeLinecap="round" fill="none" opacity={jalur} />
+        {kilat.map((t, k) =>
+          t < 0 || t >= LAMA_KILAT ? null : (
+            <circle key={`f${k}`} cx={ke.x} cy={ke.y} r={40 + (t / LAMA_KILAT) * 150} fill={SINYAL.kilat} opacity={0.55 * (1 - t / LAMA_KILAT)} />
+          ),
+        )}
+        {denyut.map((t, k) => {
+          if (t < 0 || t > 1) return null;
+          const p = titik(Easing.inOut(Easing.quad)(t));
+          return (
+            <g key={k}>
+              <circle cx={p.x} cy={p.y} r={tebal * 3} fill={SINYAL.denyut} opacity={0.35} />
+              <circle cx={p.x} cy={p.y} r={tebal * 1.4} fill={SINYAL.denyut} />
+            </g>
+          );
+        })}
+      </g>
+    ),
+  };
+};
+
+// ---------------- Ubah keadaan properti ----------------
+const campurKeadaan = (dari: KeadaanProperti, ke: KeadaanProperti, t: number): KeadaanProperti => {
+  const hasil: KeadaanProperti = {};
+  for (const nama of new Set([...Object.keys(dari), ...Object.keys(ke)]) as Set<keyof KeadaanProperti>) {
+    const a = dari[nama] ?? ke[nama] ?? 0;
+    const b = ke[nama] ?? a;
+    hasil[nama] = campur(a, b, t);
+  }
+  return hasil;
+};
+
+const isiUbah = (a: AksiUbah, {frame, cariSlot}: Konteks): IsiAksi => {
+  const titik = cariSlot(a.slot);
+  const t = waktuUbah(frame, awalAksi(a), a.lama ?? 30, a.langkah);
+  const benda =<Properti nama={a.nama} tampak={a.tampak} keadaan={campurKeadaan(a.dari, a.ke, t)} x={titik.x} y={titik.y} skala={a.skala ?? titik.skala ?? 1} putar={a.putar} varian={a.varian} teks={a.teks} bayang={a.bayang} />;
+  const lapis = a.lapis ?? 'tengah';
+  return lapis === 'belakang' ? {belakangTokoh: benda} : lapis === 'depan' ? {depan: benda} : {tengah: benda};
+};
+
+// ---------------- Meluncur di rel wahana ----------------
+const posisiMeluncur = (a: AksiMeluncur, frame: number) => {
+  const t = interpolate(frame, [a.mulai, a.mulai + a.lama], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.in(Easing.quad)});
+  return {t, s: campur(a.dari, a.ke, t)};
+};
+
+const isiMeluncur = (a: AksiMeluncur, {frame, id}: Konteks): IsiAksi => {
+  const {s} = posisiMeluncur(a, frame);
+  const p = titikRel(s);
+  const laju = Math.abs(posisiMeluncur(a, frame).s - posisiMeluncur(a, frame - 1).s) * 1000;
+  const skala = a.skala ?? 0.5;
+  const naskah = naskahRig({
+    seed: `${id}-gerbong`,
+    gestur: [{mulai: 0, pose: a.pose ?? 'kaget', potong: true}],
+    mata: [{mulai: 0, bentuk: a.mata ?? 'kaget'}],
+    mulut: a.mulut ? [{mulai: 0, bentuk: a.mulut}] : undefined,
+    ekspresi: a.ekspresi,
+    dongak: 0.1,
+  });
+  return {
+    tengah: (
+      <g transform={`translate(${p.x} ${p.y}) rotate(${p.sudut})`}>
+        {/* Garis laju di belakang gerbong, makin terang saat makin cepat. */}
+        <g stroke={WAHANA.garisLaju} strokeWidth={8} strokeLinecap="round" opacity={Math.min(1, laju / 4)}>
+          {[-150, -100, -50].map((y, i) => (
+            <path key={y} d={`M${-240 - i * 40} ${y} h${-120 - laju * 30}`} />
+          ))}
+        </g>
+        <GerbongBagian bagian="belakang" />
+        {/* Tokoh dipotong di dasar gerbong, jadi kaki tidak menembus ke bawah rel. */}
+        <clipPath id={`${id}-kursi`} clipPathUnits="userSpaceOnUse">
+          <rect x={-600} y={-1200} width={1200} height={1200 - 60} />
+        </clipPath>
+        <g clipPath={`url(#${id}-kursi)`}>
+          <g transform={`translate(${-210 * skala} ${-104 - 320 * skala})`}>
+            <TokohRig naskah={naskah} size={420 * skala} id={`${id}-penumpang`} variant={a.variant ?? 'raka'} />
+          </g>
+        </g>
+        <GerbongBagian bagian="depan" frame={frame} />
+      </g>
+    ),
+  };
+};
+
+// ---------------- Batang ukur ----------------
+const WARNA_BATANG = {kemampuan: BATANG.kemampuan, kantuk: BATANG.kantuk, bahaya: BATANG.bahaya};
+
+const isiBatang = (a: AksiBatang, {frame, cariSlot, kamera}: Konteks): IsiAksi => {
+  const titik = cariSlot(a.slot);
+  const tinggi = a.tinggi ?? 440;
+  const lebar = a.lebar ?? 96;
+  const sisi = a.sisi ?? 1;
+  const t = waktuUbah(frame, awalAksi(a), a.lama ?? 40, a.langkah);
+  const nilai = campur(a.dari, a.ke, t);
+  // Tinggi isi dari dasar (nol). Mode turun membaca nilai sebagai penurunan dari penuh.
+  const tinggiDari = (v: number) => (Math.min(a.maks, Math.max(0, a.turun ? a.maks - v : v)) / a.maks) * tinggi;
+  const isi = tinggiDari(nilai);
+  const awal = tinggiDari(a.dari);
+  const kiri = titik.x - lebar / 2;
+  const dasar = titik.y;
+  const ukuran = a.ukuranLabel ?? 34;
+  const alas = a.alas === 'terang' ? BATANG_TERANG : BATANG;
+  return {
+    tengah: (
+      <g>
+        <ellipse cx={titik.x} cy={dasar + 4} rx={lebar * 0.75} ry={lebar * 0.12} fill={BAYANG_KONTAK} />
+        <rect x={kiri - 8} y={dasar - tinggi - 8} width={lebar + 16} height={tinggi + 16} rx={lebar / 2 + 8} fill={alas.jalur} />
+        <rect x={kiri - 8} y={dasar - tinggi - 8} width={lebar + 16} height={tinggi + 16} rx={lebar / 2 + 8} fill="none" stroke={alas.tepi} strokeWidth={5} />
+        {isi > 1 && <rect x={kiri} y={dasar - isi} width={lebar} height={isi} rx={Math.min(lebar * 0.2, isi / 2)} fill={WARNA_BATANG[a.warna ?? 'kemampuan']} />}
+        {/* Bayangan batas isi awal. */}
+        {Math.abs(awal - isi) > 2 && <rect x={kiri - 14} y={dasar - awal - 3} width={lebar + 28} height={6} rx={3} fill={BATANG.awal} />}
+        {(a.garis ?? []).map((g) => {
+          const pop = g.muncul === undefined ? 1 : popSkala(frame - g.muncul);
+          if (pop <= 0) return null;
+          const y = dasar - tinggiDari(g.nilai);
+          return <rect key={g.nilai} x={kiri - 22} y={y - 4} width={(lebar + 44) * pop} height={8} rx={4} fill={alas.garis} />;
+        })}
+      </g>
+    ),
+    label: (
+      <g>
+        {(a.garis ?? []).map((g) => {
+          const pop = g.muncul === undefined ? 1 : popSkala(frame - g.muncul);
+          if (pop <= 0 || !g.label) return null;
+          const y = dasar - tinggiDari(g.nilai);
+          const lebarLabel = (g.label.length * ukuran * 0.58 + ukuran * 0.7) / kamera.zoom;
+          const x = sisi > 0 ? titik.x + lebar / 2 + 30 + lebarLabel / 2 : titik.x - lebar / 2 - 30 - lebarLabel / 2;
+          return (
+            <g key={g.nilai} transform={`translate(${x} ${y}) scale(${1 / kamera.zoom})`}>
+              <LabelUkur x={0} y={0} teks={g.label} ukuran={ukuran} skala={pop} rata="tengah" />
+            </g>
+          );
+        })}
+      </g>
+    ),
+  };
+};
+
+// ---------------- Jajar ----------------
+export const jumlahJajar = (a: AksiJajar) => Math.ceil(a.nilai / (a.perBenda ?? 1));
+
+const isiJajar = (a: AksiJajar, {frame, cariSlot}: Konteks): IsiAksi => {
+  const pusat = cariSlot(a.pusat);
+  const jumlah = jumlahJajar(a);
+  const kolom = Math.max(1, a.kolom);
+  const baris = Math.ceil(jumlah / kolom);
+  const jarakBaris = a.jarakBaris ?? a.jarak;
+  const perKelompok = a.kelompok ? Math.ceil(jumlah / a.kelompok) : jumlah;
+  const barisPerKelompok = Math.ceil(perKelompok / kolom);
+  const celah = a.celahKelompok ?? 0;
+  const jumlahCelah = a.kelompok ? a.kelompok - 1 : 0;
+  const tinggiTotal = (baris - 1) * jarakBaris + jumlahCelah * celah;
+  const mulai = a.mulai ?? a.sejak ?? 6;
+  const lag = a.lag ?? 2;
+  const benda: ReactNode[] = [];
+  for (let i = 0; i < jumlah; i++) {
+    const pop = popSkala(frame - (mulai + i * lag));
+    if (pop <= 0) continue;
+    const r = Math.floor(i / kolom);
+    const c = i % kolom;
+    const diBaris = Math.min(kolom, jumlah - r * kolom);
+    const kelompok = a.kelompok ? Math.floor(i / perKelompok) : undefined;
+    const x = pusat.x + (c - (diBaris - 1) / 2) * a.jarak;
+    const y = pusat.y - tinggiTotal / 2 + r * jarakBaris + (a.kelompok ? Math.floor(r / barisPerKelompok) * celah : 0);
+    benda.push(
+      <g key={i} transform={`translate(${x} ${y}) scale(${pop})`}>
+        <Properti nama={a.nama} tampak={a.tampak} skala={a.skala ?? 1} varian={kelompok === undefined ? a.varian : String(kelompok)} bayang={false} />
+      </g>,
+    );
+  }
+  return {tengah: <g>{benda}</g>};
+};
+
+// ---------------- Coret ----------------
+const isiCoret = (a: AksiCoret, {frame, cariSlot, kamera}: Konteks): IsiAksi => {
+  const titik = cariSlot(a.slot);
+  const awal = awalAksi(a);
+  const t = interpolate(frame, [awal, awal + (a.lama ?? 10)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  if (t <= 0) return {};
+  const skala = a.tetap ? 1 / kamera.zoom : 1;
+  const miring = a.miring ?? -6;
+  const setengah = a.lebar / 2;
+  return {
+    label: (
+      <g transform={`translate(${titik.x} ${titik.y}) scale(${skala}) translate(${a.geser?.x ?? 0} ${a.geser?.y ?? 0}) rotate(${miring})`}>
+        <path d={`M${-setengah} 0 L${-setengah + a.lebar * t} 0`} stroke={CORET} strokeWidth={14} strokeLinecap="round" />
+      </g>
+    ),
+  };
+};
+
+// ---------------- Alir di celah sel otak ----------------
+const LAJU_ALIR = 9;
+
+const Limbah = ({x, y, r, putar}: {x: number; y: number; r: number; putar: number}) => (
+  <g transform={`translate(${x} ${y}) rotate(${putar})`}>
+    <circle cx={-r * 0.4} cy={0} r={r * 0.7} fill={OTAK.limbahGelap} />
+    <circle cx={r * 0.35} cy={-r * 0.2} r={r * 0.65} fill={OTAK.limbah} />
+    <circle cx={0} cy={r * 0.4} r={r * 0.5} fill={OTAK.limbah} />
+  </g>
+);
+
+const isiAlir = (a: AksiAlir, {frame, cariSlot}: Konteks): IsiAksi => {
+  const titik = cariSlot(a.slot);
+  const s = a.skala ?? 1;
+  const geo = geometriSelOtak(a.celah ?? 1);
+  const laju = a.laju ?? 1;
+  const mulai = a.selesai ? -1e4 : awalAksi(a);
+  const jalan = Math.max(0, frame - mulai);
+  const kiri = -SEL_OTAK.lebar / 2;
+  const kanan = SEL_OTAK.lebar / 2;
+  const jumlah = a.jumlah ?? 24;
+  // Kanal di dalam petak saja, celah tepi atas dan bawah tidak dipakai.
+  const kanal = geo.kanal.slice(1, -1);
+  const r = Math.min(16, geo.g * 0.42) * (a.besar ?? 1);
+  // Garis aliran muncul pelan saat aliran mulai.
+  const kuatAlir = interpolate(frame - mulai, [0, 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  return {
+    tengah: (
+      <g transform={`translate(${titik.x} ${titik.y}) scale(${s})`}>
+        <g stroke={OTAK.aliran} strokeWidth={Math.max(3, geo.g * 0.16)} strokeLinecap="round" fill="none" opacity={kuatAlir}>
+          {kanal.map((y, i) =>
+            [0, 1, 2].map((k) => {
+              const panjang = 120;
+              const x = kiri + ((((k * 420 + i * 150 + frame * LAJU_ALIR * laju * 1.4) % (SEL_OTAK.lebar + panjang)) + SEL_OTAK.lebar + panjang) % (SEL_OTAK.lebar + panjang)) - panjang;
+              return <path key={`${i}-${k}`} d={`M${Math.max(kiri, x)} ${y} L${Math.min(kanan, x + panjang)} ${y}`} opacity={x + panjang < kiri || x > kanan ? 0 : 1} />;
+            }),
+          )}
+        </g>
+        {Array.from({length: jumlah}, (_, i) => {
+          const y = kanal[i % kanal.length] + (random(`limbah-y-${i}`) - 0.5) * geo.g * 0.3;
+          const x0 = kiri + 40 + random(`limbah-x-${i}`) * (SEL_OTAK.lebar - 80);
+          const x = x0 + jalan * LAJU_ALIR * laju + Math.sin(frame / 9 + i) * 3;
+          if (x > kanan + r) return null;
+          const pudar = interpolate(x, [kanan - 60, kanan], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+          return (
+            <g key={i} opacity={pudar}>
+              <Limbah x={x} y={y} r={r} putar={i * 47 + frame * 2} />
+            </g>
+          );
+        })}
+      </g>
+    ),
+  };
 };
 
 export const isiAksi = (a: Aksi, k: Konteks): IsiAksi => {
@@ -615,6 +1131,22 @@ export const isiAksi = (a: Aksi, k: Konteks): IsiAksi => {
       return isiLabel(a, k);
     case 'muncul':
       return isiMuncul(a, k);
+    case 'ikat':
+      return isiIkat(a, k);
+    case 'sinyal':
+      return isiSinyal(a, k);
+    case 'ubah':
+      return isiUbah(a, k);
+    case 'meluncur':
+      return isiMeluncur(a, k);
+    case 'batang':
+      return isiBatang(a, k);
+    case 'jajar':
+      return isiJajar(a, k);
+    case 'coret':
+      return isiCoret(a, k);
+    case 'alir':
+      return isiAlir(a, k);
     default:
       return {};
   }

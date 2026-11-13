@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import {Easing, interpolate, random, useCurrentFrame} from 'remotion';
 import {LOOKS, POSE, rencanaPose, type Look, type LookName} from '../Tokoh';
-import {RIG_HIJAB_LIPAT, RIG_KILAU as WARNA_KILAU, RIG_MATA, RIG_MULUT, RIG_SENYUM} from '../tema';
+import {RIG_HIJAB_LIPAT, RIG_KANTUNG, RIG_KERINGAT, RIG_KERINGAT_KILAU, RIG_KILAU as WARNA_KILAU, RIG_LAYAR, RIG_LIDAH, RIG_MATA, RIG_MERAH, RIG_MULUT, RIG_SENYUM} from '../tema';
 
 // Rig boneka untuk semua tokoh. Seluruh keadaan tubuh dihitung dari frame oleh `hitungRig`,
 // jadi adegan cukup menulis naskah kunci gerak, tanpa animasi tangan per adegan.
@@ -105,6 +105,8 @@ export const SILUET_RIG = {
 // Tangan tumpul tanpa garis jari. Sumbu tangan mengarah ke +y, ibu jari di sisi +x.
 const TANGAN_TUMPUL: Bentuk = [[-14, 1], [-17, 14], [-13, 28], [0, 34], [13, 28], [16, 16], [23, 9], [14, 1]];
 const TANGAN_TUNJUK: Bentuk = [[-14, 1], [-15, 14], [-9, 34], [0, 41], [9, 34], [14, 20], [22, 11], [14, 1]];
+// Kepalan dengan ibu jari tegak di sisi +x. Saat lengan bawah mendatar ke luar, ibu jari menunjuk ke atas.
+const TANGAN_JEMPOL: Bentuk = [[-14, 1], [-16, 13], [-12, 25], [0, 28], [12, 25], [18, 17], [42, 13, 0.6], [16, 3]];
 
 // Kurva gestur dari studi referensi: melesat sekitar 5 frame, lalu melambat.
 export const KURVA_GESTUR = [0.02, 0.08, 0.24, 0.4, 0.52, 0.63, 0.71, 0.78, 0.83, 0.88, 0.92, 0.95, 0.97, 0.99, 1, 1];
@@ -120,7 +122,7 @@ const progresGestur = (t: number) => (t < 0 ? 0 : t >= KURVA_GESTUR.length ? 1 :
 const lewat = (t: number) => (t <= LEWAT_MULAI || t >= LAMA_GESTUR ? 0 : Math.sin((Math.PI * (t - LEWAT_MULAI)) / LEWAT_LAMA) * LEWAT_DERAJAT);
 
 // Sudut lengan: 0 lurus ke bawah, 90 mendatar ke luar, 180 ke atas. `tangan` memakai ukuran yang sama.
-type Lengan = {atas: number; bawah: number; tangan: number; tunjuk?: number; depan?: boolean};
+type Lengan = {atas: number; bawah: number; tangan: number; tunjuk?: number; jempol?: number; depan?: boolean};
 
 export type PoseRig = {
   utama: Lengan;
@@ -153,6 +155,11 @@ export const POSE_RIG = {
   perut: {utama: {atas: 12, bawah: -62, tangan: -76}, bantu: {atas: 10, bawah: -58, tangan: -72}, miring: 3, dongak: -0.2, condong: 0.5},
   // Menunjuk serong ke atas, misalnya ke papan penunjuk di atas kepala. Lengan lain menggantung.
   tunjukAtas: {utama: {atas: 124, bawah: 150, tangan: 148, tunjuk: 1}, bantu: {atas: 11, bawah: 4, tangan: 2}, miring: 2, dongak: 0.25, condong: 0.2},
+  // Mengibas asap atau panas di atas kepala: berganti antara `kibas` (tangan tinggi) dan `kibasRendah`.
+  kibas: {utama: {atas: 150, bawah: 178, tangan: 192}, bantu: {atas: 12, bawah: 8, tangan: 6}, miring: -3, dongak: 0.2, condong: -0.2},
+  kibasRendah: {utama: {atas: 112, bawah: 128, tangan: 112}, bantu: {atas: 12, bawah: 8, tangan: 6}, miring: 2, dongak: 0.12, condong: -0.1},
+  // Jempol: lengan bawah mendatar ke luar setinggi dada, kepalan dengan ibu jari tegak, misalnya merasa baik-baik saja.
+  jempol: {utama: {atas: 26, bawah: 96, tangan: 92, jempol: 1}, bantu: {atas: 8, bawah: 14, tangan: 10}, miring: 3, dongak: 0.08, condong: 0.2},
 } satisfies Record<string, PoseRig>;
 
 export type NamaPoseRig = keyof typeof POSE_RIG;
@@ -167,9 +174,17 @@ const POSE_DEKAT: Record<NamaPoseRig, PoseRig> = {
   bahu: {...POSE_RIG.bahu, utama: {atas: 22, bawah: 140, tangan: 150}, bantu: {atas: 22, bawah: 140, tangan: 150}},
   toleh: {...POSE_RIG.toleh, bantu: {atas: 22, bawah: 140, tangan: 150}},
 };
-export type BentukMata = 'titik' | 'senang' | 'kaget' | 'datar';
-// `cemas` lengkung turun untuk wajah serius atau khawatir.
-export type BentukMulutRig = BentukMulut | 'senyum' | 'cemas';
+// `pejam` mata terpejam rapat seperti menahan sakit atau pedas. `sayu` kelopak berat setengah turun dengan kantung di bawah, untuk lelah atau mengantuk.
+export type BentukMata = 'titik' | 'senang' | 'kaget' | 'datar' | 'pejam' | 'sayu';
+// `cemas` lengkung turun untuk wajah serius atau khawatir. `megap` mulut terbuka lebar dengan lidah (bersama mata `pejam` terbaca tertawa).
+// `kepanasan` mulut kecil terbuka dengan ujung lidah menjulur, seperti terengah kepanasan, untuk kepedasan atau kesakitan.
+export type BentukMulutRig = BentukMulut | 'senyum' | 'cemas' | 'megap' | 'kepanasan';
+
+// Ekspresi tubuh di atas wajah, masing-masing 0..1: wajah memerah, keringat menetes, dan air mata.
+// Kunci yang tidak menulis sebuah nilai mewarisi nilai kunci sebelumnya. Perpindahan antar-kunci 12 frame.
+// `layar` cahaya layar ponsel yang menyinari wajah dari bawah.
+export type KunciEkspresi = {mulai: number; merah?: number; keringat?: number; airMata?: number; layar?: number};
+type NilaiEkspresi = {merah: number; keringat: number; airMata: number; layar: number};
 
 // `potong: true` langsung memasang pose atau arah, dipakai tepat di potongan shot.
 type KunciGestur = {mulai: number; pose: NamaPoseRig; potong?: boolean};
@@ -192,6 +207,7 @@ export type NaskahRig = {
   dongak?: number;
   // Memakai sudut pose untuk shot dekat. Kurva gerak tetap sama.
   dekat?: boolean;
+  ekspresi?: KunciEkspresi[];
 };
 
 // Menolak naskah yang memotong gestur sebelum sempat ditahan minimal 8 frame.
@@ -334,6 +350,33 @@ const lenganDiDepan = (naskah: NaskahRig, frame: number, bagian: 'utama' | 'bant
   return Boolean(sebelum && !kini.potong && frame - kini.mulai < LAMA_GESTUR && pose(sebelum.pose)[bagian].depan);
 };
 
+const LAMA_EKSPRESI = 12;
+const EKSPRESI_NOL: NilaiEkspresi = {merah: 0, keringat: 0, airMata: 0, layar: 0};
+
+const nilaiEkspresi = (daftar: KunciEkspresi[] | undefined, frame: number): NilaiEkspresi => {
+  if (!daftar?.length) return EKSPRESI_NOL;
+  const hasil = {...EKSPRESI_NOL};
+  for (const nama of ['merah', 'keringat', 'airMata', 'layar'] as const) {
+    let sebelum = 0;
+    let kini = 0;
+    let mulai = -1e9;
+    let pertama = true;
+    for (const k of daftar) {
+      if (k.mulai > frame) break;
+      const v = k[nama];
+      if (v === undefined) continue;
+      sebelum = pertama ? v : kini;
+      kini = v;
+      mulai = k.mulai;
+      pertama = false;
+    }
+    // Kunci di frame 0 atau lebih awal langsung terpasang, supaya potongan shot tidak diawali transisi.
+    const t = mulai <= 0 ? 1 : interpolate(frame, [mulai, mulai + LAMA_EKSPRESI], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.sin)});
+    hasil[nama] = campur(sebelum, kini, t);
+  }
+  return hasil;
+};
+
 export type KeadaanRig = ReturnType<typeof hitungRig>;
 
 export const hitungRig = (naskah: NaskahRig, frame: number, closeup = false) => {
@@ -347,6 +390,7 @@ export const hitungRig = (naskah: NaskahRig, frame: number, closeup = false) => 
     bawah: nilaiPose(naskah, frame - 1, (p) => p[bagian].bawah, true) + goyang * 1.6,
     tangan: nilaiPose(naskah, frame - 2, (p) => p[bagian].tangan, true) + goyang * 2,
     tunjuk: nilaiPose(naskah, frame - 2, (p) => p[bagian].tunjuk ?? 0, false),
+    jempol: nilaiPose(naskah, frame - 2, (p) => p[bagian].jempol ?? 0, false),
     depan: lenganDiDepan(naskah, frame, bagian),
   });
 
@@ -387,6 +431,7 @@ export const hitungRig = (naskah: NaskahRig, frame: number, closeup = false) => 
     mata: mata as BentukMata,
     kedip: tinggiKedip(naskah.seed, frame),
     mulut: bentukMulut(naskah, frame, mata),
+    ekspresi: nilaiEkspresi(naskah.ekspresi, frame),
   };
 };
 
@@ -451,15 +496,31 @@ const Lengan = ({k, side, data, gaya, bawaan}: {k: KeadaanRig; side: 1 | -1; dat
       {/* Benda bawaan berada di antara lengan dan tangan, jadi jari menutupi gagangnya. Benda tetap tegak walau badan condong. */}
       {bawaan && <g transform={`translate(${genggam.x} ${genggam.y}) rotate(${-k.condong * 3 * k.arah})`}>{bawaan}</g>}
       <g transform={`translate(${pergelangan[0]} ${pergelangan[1]}) scale(${side} 1) rotate(${-data.tangan})`}>
-        <path d={kurva(campurBentuk(TANGAN_TUMPUL, TANGAN_TUNJUK, data.tunjuk))} fill={gaya.skin} />
+        <path d={kurva(data.jempol > 0 ? campurBentuk(campurBentuk(TANGAN_TUMPUL, TANGAN_TUNJUK, data.tunjuk), TANGAN_JEMPOL, data.jempol) : campurBentuk(TANGAN_TUMPUL, TANGAN_TUNJUK, data.tunjuk))} fill={gaya.skin} />
       </g>
     </g>
   );
 };
 
-const Mata = ({x, y, bentuk, kedip, lebar}: {x: number; y: number; bentuk: BentukMata; kedip: number; lebar: number}) => {
+const Mata = ({x, y, bentuk, kedip, lebar, sisi = 1}: {x: number; y: number; bentuk: BentukMata; kedip: number; lebar: number; sisi?: 1 | -1}) => {
+  if (bentuk === 'pejam') {
+    // Mata kiri layar menunjuk ke kanan, mata kanan ke kiri, seperti mata yang diperas rapat.
+    const s = sisi * lebar;
+    return <path d={`M${x - 11 * s} ${y - 10} L${x + 9 * s} ${y} L${x - 11 * s} ${y + 10}`} stroke={RIG_MATA} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" fill="none" />;
+  }
   if (bentuk === 'senang') {
     return <path d={`M${x - 14 * lebar} ${y + 5} Q${x} ${y - 15} ${x + 14 * lebar} ${y + 5}`} stroke={RIG_MATA} strokeWidth={7} strokeLinecap="round" fill="none" />;
+  }
+  if (bentuk === 'sayu') {
+    // Kelopak tebal yang turun melewati tengah mata, sisa bola mata setengah lingkaran kecil, dan kantung tipis di bawahnya.
+    const tinggi = 7 * kedip;
+    return (
+      <g>
+        <path d={`M${x - 9 * lebar} ${y + 1} Q${x} ${y + 1 + tinggi * 1.3} ${x + 9 * lebar} ${y + 1} Z`} fill={RIG_MATA} />
+        <path d={`M${x - 12 * lebar} ${y + 1} Q${x} ${y - 3} ${x + 12 * lebar} ${y + 1}`} stroke={RIG_MATA} strokeWidth={5} strokeLinecap="round" fill="none" />
+        <path d={`M${x - 9 * lebar} ${y + 17} Q${x} ${y + 23} ${x + 9 * lebar} ${y + 17}`} stroke={RIG_KANTUNG} strokeWidth={4} strokeLinecap="round" fill="none" />
+      </g>
+    );
   }
   if (bentuk === 'datar') {
     return <path d={`M${x - 10 * lebar} ${y - 3} H${x + 10 * lebar} Q${x + 9 * lebar} ${y + 9 * kedip} ${x} ${y + 9 * kedip} Q${x - 9 * lebar} ${y + 9 * kedip} ${x - 10 * lebar} ${y - 3} Z`} fill={RIG_MATA} />;
@@ -479,6 +540,19 @@ const Mulut = ({x, y, bentuk, lebar}: {x: number; y: number; bentuk: BentukMulut
     kecil: <path d={`M${-9 * w} -5 Q0 -7 ${9 * w} -5 Q${10 * w} 8 0 9 Q${-10 * w} 8 ${-9 * w} -5 Z`} fill={RIG_MULUT} />,
     lebar: <path d={`M${-16 * w} -8 Q0 -11 ${16 * w} -8 Q${15 * w} 13 0 14 Q${-15 * w} 13 ${-16 * w} -8 Z`} fill={RIG_MULUT} />,
     bulat: <ellipse rx={9.5 * w} ry={12} fill={RIG_MULUT} />,
+    megap: (
+      <g>
+        <path d={`M${-17 * w} -9 Q0 -13 ${17 * w} -9 Q${16 * w} 18 0 19 Q${-16 * w} 18 ${-17 * w} -9 Z`} fill={RIG_MULUT} />
+        <ellipse cx={2 * w} cy={11} rx={10 * w} ry={7} fill={RIG_LIDAH} />
+      </g>
+    ),
+    // Tepi atas melengkung naik dan tepi bawah hampir datar, jadi tidak terbaca sebagai tawa. Ujung lidah keluar melewati bibir bawah.
+    kepanasan: (
+      <g>
+        <path d={`M${-13 * w} 8 Q${-12 * w} -11 0 -11 Q${12 * w} -11 ${13 * w} 8 Q0 10 ${-13 * w} 8 Z`} fill={RIG_MULUT} />
+        <path d={`M${-7 * w} 4 Q${-7 * w} 17 ${1 * w} 17 Q${8 * w} 17 ${8 * w} 4 Z`} fill={RIG_LIDAH} />
+      </g>
+    ),
   }[bentuk];
   return <g transform={`translate(${x} ${y})`}>{gambar}</g>;
 };
@@ -618,6 +692,85 @@ export const LenganLepas = ({
   );
 };
 
+// Wajah memerah: rona merata dari dagu sampai dahi, dipotong bentuk kepala. Bukan bulatan pipi.
+// Kepekatan hampir sama di seluruh wajah dan hanya sedikit menipis ke ubun-ubun, supaya tidak terbaca sebagai pipi merona.
+const Rona = ({id, garis, kuat}: {id: string; garis: string; kuat: number}) => (
+  <g>
+    <defs>
+      <clipPath id={`${id}-rona`}>
+        <path d={garis} />
+      </clipPath>
+      <linearGradient id={`${id}-rona-g`} x1="0" y1="-300" x2="0" y2="-90" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor={RIG_MERAH} stopOpacity={0.7} />
+        <stop offset="35%" stopColor={RIG_MERAH} stopOpacity={0.8} />
+        <stop offset="100%" stopColor={RIG_MERAH} stopOpacity={0.8} />
+      </linearGradient>
+    </defs>
+    <rect x={-160} y={-320} width={320} height={260} fill={`url(#${id}-rona-g)`} clipPath={`url(#${id}-rona)`} opacity={0.5 * kuat} />
+  </g>
+);
+
+// Cahaya layar ponsel dari bawah: rona biru muda yang paling kuat di dagu dan memudar ke dahi, dipotong bentuk kepala.
+const CahayaLayar = ({id, garis, kuat}: {id: string; garis: string; kuat: number}) => (
+  <g>
+    <defs>
+      <clipPath id={`${id}-layar`}>
+        <path d={garis} />
+      </clipPath>
+      <linearGradient id={`${id}-layar-g`} x1="0" y1="-300" x2="0" y2="-80" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor={RIG_LAYAR} stopOpacity={0} />
+        <stop offset="55%" stopColor={RIG_LAYAR} stopOpacity={0.35} />
+        <stop offset="100%" stopColor={RIG_LAYAR} stopOpacity={0.75} />
+      </linearGradient>
+    </defs>
+    <rect x={-160} y={-320} width={320} height={260} fill={`url(#${id}-layar-g)`} clipPath={`url(#${id}-layar)`} opacity={0.9 * kuat} />
+  </g>
+);
+
+const TETES = 'M0 -16 Q11 2 0 10 Q-11 2 0 -16 Z';
+
+// Keringat: butir di dahi dan pelipis yang meluncur turun, berulang dengan jadwal tetap dari frame.
+const Keringat = ({yaw, kuat, frame}: {yaw: number; kuat: number; frame: number}) => {
+  const titik = [
+    {x: tigaNilai(-118, -112, -70, yaw), y: -214, fase: 0, besar: 1.15},
+    {x: tigaNilai(70, 112, 118, yaw), y: -206, fase: 17, besar: 1},
+    {x: tigaNilai(-40, 40, 92, yaw), y: -262, fase: 31, besar: 0.85},
+  ];
+  return (
+    <g opacity={Math.min(1, kuat * 1.4)}>
+      {titik.map((t, i) => {
+        const siklus = ((frame + t.fase) % 44) / 44;
+        const turun = siklus * siklus * 70;
+        const hilang = siklus > 0.8 ? 1 - (siklus - 0.8) / 0.2 : 1;
+        const s = t.besar * (0.85 + kuat * 0.3);
+        return (
+          <g key={i} transform={`translate(${t.x} ${t.y + turun}) scale(${s})`} opacity={hilang}>
+            <path d={TETES} fill={RIG_KERINGAT} />
+            <circle cx={-3} cy={0} r={3} fill={RIG_KERINGAT_KILAU} />
+          </g>
+        );
+      })}
+    </g>
+  );
+};
+
+// Air mata: tetes yang jatuh dari bawah mata, berulang.
+const AirMata = ({xs, y, kuat, frame}: {xs: number[]; y: number; kuat: number; frame: number}) => (
+  <g opacity={kuat}>
+    {xs.map((x, i) => {
+      const siklus = ((frame + i * 19) % 38) / 38;
+      return (
+        <g key={i}>
+          <path d={`M${x} ${y} V${y + 6 + siklus * 30}`} stroke={RIG_KERINGAT} strokeWidth={6} strokeLinecap="round" opacity={0.7} />
+          <g transform={`translate(${x} ${y + 14 + siklus * 46}) scale(0.8)`} opacity={1 - siklus * 0.6}>
+            <path d={TETES} fill={RIG_KERINGAT} />
+          </g>
+        </g>
+      );
+    })}
+  </g>
+);
+
 export const TokohRig = ({
   naskah,
   size,
@@ -728,8 +881,11 @@ export const TokohRig = ({
             {kananDekat && <Telinga x={telingaKananX} y={telingaY} besar={telingaBesar} warna={gaya.shade} />}
           </>
         )}
-        <Mata x={mataKiriX} y={-156 + wajahY} bentuk={k.mata} kedip={k.kedip} lebar={lebarKiri} />
-        <Mata x={mataKananX} y={-156 + wajahY} bentuk={k.mata} kedip={k.kedip} lebar={lebarKanan} />
+        {k.ekspresi.merah > 0 && <Rona id={id} garis={hijab ? garisWajah : garisKepala} kuat={k.ekspresi.merah} />}
+        {k.ekspresi.layar > 0 && <CahayaLayar id={id} garis={hijab ? garisWajah : garisKepala} kuat={k.ekspresi.layar} />}
+        <Mata x={mataKiriX} y={-156 + wajahY} bentuk={k.mata} kedip={k.kedip} lebar={lebarKiri} sisi={1} />
+        <Mata x={mataKananX} y={-156 + wajahY} bentuk={k.mata} kedip={k.kedip} lebar={lebarKanan} sisi={-1} />
+        {k.ekspresi.airMata > 0 && <AirMata xs={[mataKiriX, mataKananX]} y={-142 + wajahY} kuat={k.ekspresi.airMata} frame={frame} />}
         <Mulut x={mulutX} y={-124 + wajahY} bentuk={k.mulut} lebar={lebarMulut} />
         {gaya.glasses && (
           <>
@@ -746,6 +902,7 @@ export const TokohRig = ({
           </g>
         )}
         {gaya.glasses && <Kacamata kiriX={mataKiriX} kananX={mataKananX} y={-156 + wajahY} lebarKiri={lebarKiri} lebarKanan={lebarKanan} />}
+        {k.ekspresi.keringat > 0 && <Keringat yaw={yaw} kuat={k.ekspresi.keringat} frame={frame} />}
       </g>
       {(k.bantu.depan || k.utama.depan) && (
         <g transform={`translate(0 ${k.napas * 1.2}) rotate(${condong * 3 * arah} 0 60)`}>

@@ -1,0 +1,62 @@
+{
+  "buka-1": {
+    "hash": "f314d9e364bd469f1b95753a386fc46c495e8eb4",
+    "detik": 4.440816
+  },
+  "buka-2": {
+    "hash": "f1ed2fdcf0cda717d46b27617a5be0970525eb23",
+    "detik": 3.239184
+  },
+  "kapsaisin-1": {
+    "hash": "48c9d9dc0b54f1c31a5e81a1c06251b6c2689387",
+    "detik": 6.452245
+  },
+  "kapsaisin-2": {
+    "hash": "e65af51bb8e223727a3e63b13d2c735189490c98",
+    "detik": 5.746939
+  },
+  "kapsaisin-3": {
+    "hash": "4c9e18cb9271a02b84c873b2a7802e29d766f424",
+    "detik": 3.996735
+  },
+  "alarm-1": {
+    "hash": "31decbc644bf9ee3bc08f74eaf5f9037857c05a6",
+    "detik": 5.929796
+  },
+  "alarm-2": {
+    "hash": "347f0fbbbd810051dcf56d0b4a77c5e0b5d6831b",
+    "detik": 6.112653
+  },
+  "suka-1": {
+    "hash": "44821bb8b767fb64d30914e959647c6baa5966d1",
+    "detik": 6.582857
+  },
+  "suka-2": {
+    "hash": "a6d7ec63858724b0c01c5d577bccbaf71b12e797",
+    "detik": 3.474286
+  },
+  "level-1": {
+    "hash": "f7f8a374d2f3f10d4a3bafa71563c27d26810655",
+    "detik": 4.780408
+  },
+  "mitos-1": {
+    "hash": "9eb4c9a30307f41e7b326e664d4f300e4611d7cb",
+    "detik": 4.545306
+  },
+  "mitos-2": {
+    "hash": "2c72518e374c0161ea3e37f3c1f7a71ea546b63e",
+    "detik": 4.832653
+  },
+  "redam-1": {
+    "hash": "3984fdc85c97185fe0ffca6d74d400d1db600e8e",
+    "detik": 5.250612
+  },
+  "redam-2": {
+    "hash": "41c16738622c4936410278bfbd4a49921840c805",
+    "detik": 7.523265
+  },
+  "tutup-1": {
+    "hash": "59288411983aba09bf348d02cd73497990063f29",
+    "detik": 4.780408
+  }
+}

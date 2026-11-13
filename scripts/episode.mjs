@@ -58,7 +58,7 @@ const JUMLAH = {
 const JENIS = ['pembuka', 'penutup', ...Object.keys(JUMLAH)];
 const LATAR = ['kota', 'malam', 'senja', 'langit', 'alam'];
 // Set topik dari src/pustaka/set/. Tambahkan nama baru di sini saat set baru dibuat.
-const SET = ['ruang', 'meja', 'interior', 'organ', 'mikro', 'tembus'];
+const SET = ['ruang', 'meja', 'interior', 'organ', 'mikro', 'tembus', 'wahana', 'belah', 'lab'];
 
 const periksa = () => {
   const salah = [];
@@ -180,7 +180,9 @@ const efekSet = (baris, awal) => {
       if (shot.balon) hasil.push({jenis: 'pop', frame: awal + mulaiShot + (shot.balon.mulai ?? 0) + 4, nada: 1.1});
     }
   }
-  return hasil;
+  // Efek sejenis yang jatuh berdekatan (kurang dari 4 frame) digabung supaya tidak menumpuk volumenya.
+  hasil.sort((a, b) => a.frame - b.frame);
+  return hasil.filter((item, i) => !hasil.slice(0, i).some((lain) => lain.jenis === item.jenis && item.frame - lain.frame < 4));
 };
 
 const buatJadwal = (waktu) => {
@@ -228,7 +230,8 @@ const buatAudio = (jadwal, file) => {
     must(`ffmpeg -y -v error -i ${sumber} -ar ${RATE} -ac 2 -c:a pcm_s16le ${work}/musik.wav`, 'baca musik');
     return fs.readFileSync(`${work}/musik.wav`);
   };
-  campurLatar({pcm, rate: RATE, scenes, bacaMusik, efekJadi: jadwal.efek});
+  // Episode boleh mematikan musik sendiri lewat "musik": false di episode.json.
+  campurLatar({pcm, rate: RATE, scenes, bacaMusik, efekJadi: jadwal.efek, tanpaMusik: episode.musik === false});
   const header = Buffer.alloc(44);
   header.write('RIFF', 0);
   header.writeUInt32LE(36 + pcm.length, 4);

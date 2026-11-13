@@ -131,7 +131,7 @@ const daftarEfek = (scenes, konfigurasi) => {
 };
 
 // Mencampur narasi di pcm (16-bit stereo) dengan musik dan efek, lalu menulis hasilnya ke pcm.
-export const campurLatar = ({pcm, rate, scenes, bacaMusik, efekJadi}) => {
+export const campurLatar = ({pcm, rate, scenes, bacaMusik, efekJadi, tanpaMusik = false}) => {
   const konfigurasi = JSON.parse(fs.readFileSync('data/efek-suara.json', 'utf8'));
   const volume = konfigurasi.volume;
   const n = pcm.length / 4;
@@ -154,7 +154,7 @@ export const campurLatar = ({pcm, rate, scenes, bacaMusik, efekJadi}) => {
   }
 
   // User memilih tanpa musik latar (2026-11-12). Set `musik.aktif` ke true untuk menyalakannya lagi.
-  const pakaiMusik = konfigurasi.musik?.aktif !== false;
+  const pakaiMusik = !tanpaMusik && konfigurasi.musik?.aktif !== false;
   const [musikKiri, musikKanan] = pakaiMusik ? siapkanMusik(bacaMusik(konfigurasi.musik.file), n) : [new Float32Array(n), new Float32Array(n)];
   const efekKiri = new Float32Array(n);
   const efekKanan = new Float32Array(n);

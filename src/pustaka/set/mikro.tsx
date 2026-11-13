@@ -1,5 +1,5 @@
 import {random, useCurrentFrame} from 'remotion';
-import {MIKRO} from '../../tema';
+import {LIDAH, MIKRO, OTAK} from '../../tema';
 import type {HasilSet, Slot} from './tipe';
 
 // Celah saraf skala mikro: membran sel di bawah dengan soket reseptor berbentuk colokan,
@@ -68,6 +68,29 @@ export const Soket = ({x}: {x: number}) => {
   );
 };
 
+// Permukaan lidah: daging merah muda dengan papila bulat di antara soket, tanpa membran pengirim di atas.
+const PermukaanLidah = () => {
+  const frame = useCurrentFrame();
+  const titik = Array.from({length: 40}, (_, i) => {
+    const x = -700 + i * 65;
+    return `${i === 0 ? 'M' : 'L'}${x} ${(permukaanMembran(x) + Math.sin(frame / 30 + i * 0.7) * 3).toFixed(1)}`;
+  }).join(' ');
+  // Papila di antara soket, tidak menutupi soket.
+  const papila = Array.from({length: 22}, (_, i) => -560 + i * 100).filter((x) => SOKET_X.every((sx) => Math.abs(sx - x) > 110));
+  return (
+    <g>
+      {papila.map((x, i) => (
+        <ellipse key={x} cx={x} cy={permukaanMembran(x) + 6} rx={40 + (i % 3) * 6} ry={52 + (i % 2) * 14} fill={LIDAH.papila} />
+      ))}
+      <path d={`${titik} L1900 3200 L-700 3200 Z`} fill={LIDAH.permukaan} />
+      <path d={titik} transform="translate(0 22)" fill="none" stroke={LIDAH.terang} strokeWidth={12} opacity={0.5} />
+      {Array.from({length: 9}, (_, i) => (
+        <circle key={i} cx={-200 + random(`lidah-x-${i}`) * 1500} cy={PERMUKAAN + 180 + random(`lidah-y-${i}`) * 700} r={50 + random(`lidah-r-${i}`) * 90} fill={LIDAH.gelap} opacity={0.35} />
+      ))}
+    </g>
+  );
+};
+
 // Partikel kecil yang melayang di depan, buram oleh lapisan depan.
 const Serpih = () => {
   const frame = useCurrentFrame();
@@ -80,13 +103,43 @@ const Serpih = () => {
   );
 };
 
+// Jaringan otak di kejauhan: gumpalan sel besar yang samar di sekeliling petak sel utama (properti `selOtak` di slot `sel`).
+const JaringanOtak = () => {
+  const frame = useCurrentFrame();
+  return (
+    <g>
+      {Array.from({length: 16}, (_, i) => {
+        const x = -300 + random(`otak-j-x-${i}`) * 1700;
+        const y = 80 + random(`otak-j-y-${i}`) * 1600;
+        const r = 90 + random(`otak-j-r-${i}`) * 120;
+        return <ellipse key={i} cx={x + Math.sin(frame / 50 + i) * 8} cy={y} rx={r * 1.3} ry={r} fill={i % 3 ? OTAK.jaringan : OTAK.selGelap} opacity={0.35} />;
+      })}
+    </g>
+  );
+};
+
 const SLOT_MIKRO: Record<string, Slot> = {
   ...Object.fromEntries(SOKET_X.map((x, i) => [`soket.${i}`, {x, y: permukaanMembran(x) - SOKET.tonjol}])),
   celah: {x: 540, y: 760},
+  // Pusat petak sel otak pada varian `otak`.
+  sel: {x: 540, y: 800},
 };
 
-export const setMikro = (): HasilSet => ({
-  tengahBelakang: (
+// `otak` mengganti celah saraf dengan jaringan otak samar tanpa soket. Petak sel digambar oleh properti `selOtak` di slot `sel`,
+// supaya celahnya bisa diubah lewat aksi `ubah` dan disapu aksi `alir`.
+const setMikroOtak = (): HasilSet => ({
+  belakang: <JaringanOtak />,
+  depan: <Serpih />,
+  slot: SLOT_MIKRO,
+  sorot: {x: 540, y: 800, lebar: 600, jenis: 'titik'},
+  pakaiLatar: true,
+});
+
+// `lidah` mengganti celah saraf dengan permukaan lidah: soket yang sama menjadi reseptor di lidah.
+export const setMikro = ({lidah = false, otak = false}: {lidah?: boolean; otak?: boolean} = {}): HasilSet => (otak ? setMikroOtak() : {
+  tengahBelakang: lidah ? (
+    <PermukaanLidah />
+  ) : (
     <g>
       <MembranAtas />
       <Membran />

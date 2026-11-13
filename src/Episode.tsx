@@ -7,7 +7,7 @@ import {Ikon, type NamaIkon} from './pustaka/ikon';
 import {AdeganSet} from './pustaka/set/panggung';
 import type {MasukShot, Shot as ShotSet} from './pustaka/set/tipe';
 import {TokohRig, naskahAdegan, type BatasTangan, type NamaPoseRig} from './pustaka/tokoh-rig';
-import {BAR, CAIR, FADE, KARTU, NAVY, PETA_DARAT, PETA_LAUT, PETA_PANTAI, PETA_PANTAI_LUAR, PITA, PITA_TENANG, PROPERTI, REDUP, ROSE, SUMBER_LATAR, WHITE} from './tema';
+import {BAR, CAIR_BAHAN, FADE, KARTU, NAVY, PETA_DARAT, PETA_LAUT, PETA_PANTAI, PETA_PANTAI_LUAR, PITA, PITA_TENANG, REDUP, ROSE, SUMBER_LATAR, WHITE, type NamaCair} from './tema';
 import type {LookName} from './Tokoh';
 
 // `pose` opsional menimpa pilihan otomatis untuk baris itu. `shot` membuat adegan digambar dengan set topik.
@@ -269,8 +269,8 @@ const Captions = ({adegan, top = 1390}: {adegan: Adegan; top?: number}) => {
 };
 
 // `top` bawaan 1500 hanya untuk adegan lama. Adegan set memakai `SUMBER_SET` supaya tetap di dalam area aman.
-const Sumber = ({teks, top = 1500, lineHeight}: {teks: string; top?: number; lineHeight?: number}) => (
-  <div style={{position: 'absolute', left: 80, top, width: 860, fontSize: 24, fontWeight: 500, color: WHITE, lineHeight}}>
+const Sumber = ({teks, top = 1500, lineHeight, ukuran = 24}: {teks: string; top?: number; lineHeight?: number; ukuran?: number}) => (
+  <div style={{position: 'absolute', left: 80, top, width: 860, fontSize: ukuran, fontWeight: 500, color: WHITE, lineHeight}}>
     <span style={{backgroundColor: SUMBER_LATAR, padding: '4px 12px', borderRadius: 8}}>{teks}</span>
   </div>
 );
@@ -325,17 +325,22 @@ const Dada = ({adegan, tokoh, size, left, top, look = 0, up = 0, arah = 1, rapat
   );
 };
 
-const Balon = ({start, teks, sub, ekor = true, ukuran = 76}: {start: number; teks: string; sub?: string; ekor?: boolean; ukuran?: number}) => {
+// Balon adegan set selebar 860 supaya tepi kanan berhenti di x 950, batas area aman.
+// Adegan lama tanpa set tetap 900 supaya judul pembuka video lama tidak terlipat ulang.
+const LEBAR_BALON_SET = 860;
+const LEBAR_BALON_LAMA = 900;
+
+const Balon = ({start, teks, sub, ekor = true, ukuran = 76, lebar = LEBAR_BALON_LAMA}: {start: number; teks: string; sub?: string; ekor?: boolean; ukuran?: number; lebar?: number}) => {
   const frame = useCurrentFrame();
   const p = keluar(frame, start, start + 14);
   return (
-    <div style={{position: 'absolute', left: 90, top: 260, width: 900, opacity: Math.min(1, p * 2), transform: `scale(${p})`, transformOrigin: '50% 100%'}}>
+    <div style={{position: 'absolute', left: 90, top: 260, width: lebar, opacity: Math.min(1, p * 2), transform: `scale(${p})`, transformOrigin: '50% 100%'}}>
       <div style={{backgroundColor: WHITE, borderRadius: 64, padding: '38px 44px', textAlign: 'center', color: NAVY}}>
         <div style={{fontSize: ukuran, fontWeight: 900, lineHeight: 1.1}}>{teks}</div>
         {sub && <div style={{fontSize: 36, fontWeight: 500, marginTop: 12}}>{sub}</div>}
       </div>
       {ekor && (
-        <svg width={120} height={70} style={{position: 'absolute', left: 390, bottom: -60}}>
+        <svg width={120} height={70} style={{position: 'absolute', left: lebar / 2 - 60, bottom: -60}}>
           <path d="M6 0 H96 L62 66 Z" fill={WHITE} />
         </svg>
       )}
@@ -706,6 +711,10 @@ const SUMBER_SET = 1462;
 
 const ADA_ANGKA = /\d/;
 
+// Baris sumber di adegan set harus satu baris supaya tidak melewati y 1500. Sumber yang panjang dikecilkan.
+const MUAT_SUMBER = 70;
+const ukuranSumber = (teks: string) => (teks.length > MUAT_SUMBER ? Math.floor((24 * MUAT_SUMBER) / teks.length) : 24);
+
 // Sumber tampil di setiap shot yang menampilkan angka, atau bila shot menulis `sumber: true`.
 // Angka dibaca dari label gelas ukur, label aksi, teks properti, teks benda di tangan, dan balon.
 export const shotBerangka = (shot: ShotSet): boolean => {
@@ -725,14 +734,14 @@ const AdeganBerset = ({adegan, tokoh, sumber}: Isi) => {
       {jadwal.map((item) => (
         <Sequence key={item.kode} from={item.mulai} durationInFrames={item.akhir - item.mulai}>
           <AdeganSet shot={item.shot} id={`${adegan.id}-${item.kode}`} durasi={item.akhir - item.mulai} baris={item.baris} tokohUtama={tokoh} />
-          {item.shot.balon && <Balon start={item.shot.balon.mulai} teks={item.shot.balon.teks} ukuran={60} />}
+          {item.shot.balon && <Balon start={item.shot.balon.mulai} teks={item.shot.balon.teks} ukuran={60} lebar={LEBAR_BALON_SET} />}
         </Sequence>
       ))}
       <Captions adegan={adegan} top={NARASI_SET} />
       {jadwal.map((item) =>
         shotBerangka(item.shot) ? (
           <Sequence key={`sumber-${item.kode}`} from={item.mulai} durationInFrames={item.akhir - item.mulai}>
-            <Sumber teks={sumber} top={SUMBER_SET} lineHeight={1} />
+            <Sumber teks={sumber} top={SUMBER_SET} lineHeight={1} ukuran={ukuranSumber(sumber)} />
           </Sequence>
         ) : null,
       )}
@@ -753,6 +762,8 @@ const JENIS: Record<string, (props: Isi) => ReactNode> = {
 
 // Cara masuk sebuah adegan. Adegan lama tanpa set selalu memakai sapuan pita.
 const masukAdegan = (adegan: Adegan): MasukShot => (pakaiSet(adegan) ? (adegan.baris.find((line) => line.shot?.length)?.shot?.[0].masuk ?? 'sapu') : 'sapu');
+// Bahan cairan untuk adegan yang masuk lewat `cair`.
+const cairAdegan = (adegan: Adegan): NamaCair => (pakaiSet(adegan) ? (adegan.baris.find((line) => line.shot?.length)?.shot?.[0].cair ?? 'kopi') : 'kopi');
 
 const LAMA_TUTUP = 12;
 const LAMA_BUKA = 14;
@@ -820,10 +831,12 @@ const permukaanCair = (frame: number, durasi: number, awal: boolean, akhir: bool
   return null;
 };
 
-const Cair = ({durasi, awal, akhir}: {durasi: number; awal: boolean; akhir: boolean}) => {
+// `bahanAwal` warna cairan yang surut di awal adegan, `bahanAkhir` warna cairan yang naik di akhir adegan.
+const Cair = ({durasi, awal, akhir, bahanAwal = 'kopi', bahanAkhir = 'kopi'}: {durasi: number; awal: boolean; akhir: boolean; bahanAwal?: NamaCair; bahanAkhir?: NamaCair}) => {
   const frame = useCurrentFrame();
   const permukaan = permukaanCair(frame, durasi, awal, akhir);
   if (permukaan === null) return null;
+  const warna = CAIR_BAHAN[frame < durasi / 2 ? bahanAwal : bahanAkhir];
   const gelombang = (geser: number, tinggi: number, fase: number) =>
     Array.from({length: 73}, (_, i) => {
       const x = i * 15;
@@ -842,14 +855,14 @@ const Cair = ({durasi, awal, akhir}: {durasi: number; awal: boolean; akhir: bool
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-        <path d={`${gelombang(-34, 20, 1.7)} L1080 2100 L0 2100 Z`} fill={PROPERTI.kopiTerang} opacity={0.75} />
-        <path d={`${gelombang(0, AMPLITUDO_CAIR, 0)} L1080 2100 L0 2100 Z`} fill={PROPERTI.kopi} />
-        <path d={gelombang(4, AMPLITUDO_CAIR, 0)} fill="none" stroke={CAIR.buih} strokeWidth={10} strokeLinecap="round" opacity={0.8} />
+        <path d={`${gelombang(-34, 20, 1.7)} L1080 2100 L0 2100 Z`} fill={warna.terang} opacity={0.75} />
+        <path d={`${gelombang(0, AMPLITUDO_CAIR, 0)} L1080 2100 L0 2100 Z`} fill={warna.isi} />
+        <path d={gelombang(4, AMPLITUDO_CAIR, 0)} fill="none" stroke={warna.buih} strokeWidth={10} strokeLinecap="round" opacity={0.8} />
         {kilau.map((k, i) => (
-          <ellipse key={i} cx={k.x} cy={k.y} rx={150 + (i % 2) * 70} ry={9 + (i % 3) * 3} fill={CAIR.kilau} transform={`rotate(-8 ${k.x} ${k.y})`} />
+          <ellipse key={i} cx={k.x} cy={k.y} rx={150 + (i % 2) * 70} ry={9 + (i % 3) * 3} fill={warna.kilau} transform={`rotate(-8 ${k.x} ${k.y})`} />
         ))}
         {gelembung.map((g, i) => (
-          <circle key={i} cx={g.x} cy={g.y} r={g.r} fill="none" stroke={CAIR.gelembung} strokeWidth={4} />
+          <circle key={i} cx={g.x} cy={g.y} r={g.r} fill="none" stroke={warna.gelembung} strokeWidth={4} />
         ))}
       </svg>
     </AbsoluteFill>
@@ -896,7 +909,7 @@ export const Episode = ({tokoh, sumber, adegan}: EpisodeProps) => {
               paletAkhir={nomor < adegan.length - 1 && pakaiSet(adegan[nomor + 1]) ? PITA_TENANG : PITA}
             />
             {(masuk === 'kartu' || keluar === 'kartu') && <Kartu durasi={item.durasi} awal={masuk === 'kartu'} akhir={keluar === 'kartu'} />}
-            {(masuk === 'cair' || keluar === 'cair') && <Cair durasi={item.durasi} awal={masuk === 'cair'} akhir={keluar === 'cair'} />}
+            {(masuk === 'cair' || keluar === 'cair') && <Cair durasi={item.durasi} awal={masuk === 'cair'} akhir={keluar === 'cair'} bahanAwal={cairAdegan(item)} bahanAkhir={nomor < adegan.length - 1 ? cairAdegan(adegan[nomor + 1]) : 'kopi'} />}
           </Sequence>
         );
       })}

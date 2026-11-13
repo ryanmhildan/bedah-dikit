@@ -116,6 +116,8 @@ export const INTERIOR = {
   dapur: {dinding: '#EFE3CC', dindingBawah: '#E2D2B4', lantai: '#B58E6A', lantaiGaris: 'rgba(60,40,20,0.16)', list: '#D4C1A0', aksen: ['#6E8F8A', '#E8734F', '#F4EEE2']},
   kafe: {dinding: '#6B4A3C', dindingBawah: '#563A2F', lantai: '#3E2A22', lantaiGaris: 'rgba(0,0,0,0.2)', list: '#4A3128', aksen: ['#E9B36A', '#2F4A45', '#F4EEE2']},
   klinik: {dinding: '#E6F3F0', dindingBawah: '#BFE0DA', lantai: '#9CC9C1', lantaiGaris: 'rgba(30,90,85,0.16)', list: '#7DB9AF', aksen: ['#2E8C84', '#FFFFFF', '#F2B84B']},
+  // Warung makan: dinding kuning hangat, lambri hijau, aksen merah.
+  warung: {dinding: '#F2C46B', dindingBawah: '#5E9F8E', lantai: '#9A6A48', lantaiGaris: 'rgba(40,20,10,0.18)', list: '#4E8577', aksen: ['#2E6E66', '#E5483D', '#FFF6EA']},
 } satisfies Record<string, WarnaInterior>;
 
 // Kaca jendela: langit luar sore dan bingkai.
@@ -151,6 +153,9 @@ export const PROPERTI = {
   pilGaris: 'rgba(90,100,120,0.35)',
   jam: '#E8734F',
   jamMuka: '#FFF6EA',
+  // Juring jam yang sudah dilewati jarum jam (varian `sapu`), dan garis pemisah per jam.
+  jamSapu: '#F7B99C',
+  jamSapuGaris: '#FFF6EA',
   jarum: '#262B52',
   laptop: '#B7BFCB',
   laptopGelap: '#7D8796',
@@ -242,3 +247,207 @@ export const PITA_TENANG = ['#262B52', '#343C6E', '#4A5288'];
 
 // Transisi cair: kilau, gelembung, dan buih di permukaan kopi.
 export const CAIR = {kilau: 'rgba(255,236,214,0.32)', gelembung: 'rgba(255,226,196,0.5)', buih: '#C99A6E'};
+
+// ---------------------------------------------------------------------------
+// Tambahan pustaka untuk topik makanan dan rasa (dipakai pertama di episode pedas).
+// ---------------------------------------------------------------------------
+
+// Ekspresi rig: wajah memerah, keringat, air mata, dan lidah saat mulut megap.
+export const RIG_MERAH = '#E5484D';
+export const RIG_KERINGAT = '#BFE6FF';
+export const RIG_KERINGAT_KILAU = '#FFFFFF';
+export const RIG_LIDAH = '#E8707A';
+
+// Makanan dan dapur.
+export const MAKANAN = {
+  cabai: '#D93A2F',
+  cabaiGelap: '#A8261F',
+  cabaiKilau: 'rgba(255,220,210,0.55)',
+  cabaiHijau: '#5E9F3E',
+  tangkai: '#4E7D3A',
+  biji: '#F6D77A',
+  daging: '#F4E3C8',
+  sambal: '#C8321F',
+  sambalTerang: '#E5583A',
+  sambalBiji: '#F2C46B',
+  cobek: '#5B5552',
+  cobekGelap: '#3E3936',
+  cobekTerang: '#7A726D',
+  mangkok: '#F4EEE2',
+  mangkokBayang: '#D8CBB6',
+  mangkokAksen: '#4F86A8',
+  kuah: '#E9A04A',
+  kuahGelap: '#C97E30',
+  mi: '#F5D27A',
+  miGelap: '#DDB253',
+  nasi: '#FBF8F0',
+  nasiBayang: '#E6DFCF',
+  sayur: '#6F9F5E',
+  air: 'rgba(160,215,240,0.5)',
+  airPermukaan: 'rgba(220,245,255,0.8)',
+  susu: '#FBF7EE',
+  susuBayang: '#E6DCC8',
+  roti: '#E9B36A',
+  rotiKerak: '#B07A3E',
+  rotiGosong: '#4A2E22',
+  rotiGosongKerak: '#2E1C15',
+  asap: 'rgba(110,108,116,0.5)',
+  logamTerang: '#E3E8EE',
+  pemanggang: '#6FAFA8',
+  pemanggangGelap: '#4E8C86',
+  alarm: '#F4F7F6',
+  alarmBayang: '#C9D2D6',
+  alarmLampu: '#FF3B30',
+  alarmLampuMati: '#8A4A46',
+  alarmGelombang: '#FF6A5C',
+  termoIsi: '#E5484D',
+  termoSkala: 'rgba(38,43,82,0.55)',
+  termoAman: 'rgba(124,224,163,0.55)',
+  tv: '#262B35',
+  tvRangka: '#3E4E6E',
+  tvLayar: ['#3A5488', '#1C2848'],
+  tvCahaya: '#9EC3FF',
+  tvHujan: 'rgba(200,220,255,0.55)',
+  tvSosok: '#0F1730',
+  api: '#FF8A2A',
+  apiInti: '#FFD45A',
+  apiLuar: '#E5432C',
+  batas: '#FF3B30',
+  meter: '#F4EEE2',
+  meterJalur: '#C9D2D6',
+  meterIsi: '#E5583A',
+  meterJarum: '#262B52',
+  meterBayang: 'rgba(38,43,82,0.28)',
+};
+
+// Molekul rasa di skala mikro: kapsaisin merah dengan ekor, kasein susu putih bergumpal.
+export const MOLEKUL = {
+  kapsaisin: '#E8453C',
+  kapsaisinDalam: '#FF9A6A',
+  kapsaisinEkor: '#F28C38',
+  nyalaKapsaisin: '#FF3B2F',
+  panas: 'rgba(255,140,90,0.7)',
+  kasein: '#FFF6EA',
+  kaseinBayang: '#E6DCC8',
+};
+
+// Lidah di skala mikro: permukaan merah muda dengan papila.
+export const LIDAH = {permukaan: '#E98A9A', terang: '#FFC2CC', gelap: '#B9566C', papila: '#F2A3B0'};
+
+// Sinyal saraf: jalur samar, denyut terang, dan kilat di tujuan.
+export const SINYAL = {jalur: 'rgba(255,214,190,0.4)', denyut: '#FFE08A', kilat: '#FF6A3D'};
+
+// Wahana roller coaster di luar ruang: langit siang, awan, rel, tiang, dan gerbong.
+export const WAHANA = {
+  langit: ['#7FC8EC', '#CDEBF5'],
+  awan: '#FFFFFF',
+  bukit: ['#8CC77E', '#6FAE68'],
+  rel: '#E5483D',
+  relGelap: '#A8302A',
+  bantalan: '#5E6878',
+  tiang: '#F4EEE2',
+  tiangBayang: '#C9CED6',
+  gerbong: '#2E8C84',
+  gerbongGelap: '#1F6660',
+  gerbongAksen: '#FFD76A',
+  garisLaju: 'rgba(255,255,255,0.7)',
+};
+
+// Layar belah: dua dunia berdampingan, kiri bahaya dan kanan aman.
+export const BELAH = {kiri: ['#8E2A2C', '#4C1015'], kanan: ['#A9DDD3', '#5BA9A0'], garis: '#FFF6EA'};
+
+// Warna transisi cair per bahan. `kopi` sama dengan transisi lama.
+export const CAIR_BAHAN = {
+  kopi: {isi: PROPERTI.kopi, terang: PROPERTI.kopiTerang, buih: CAIR.buih, kilau: CAIR.kilau, gelembung: CAIR.gelembung},
+  sambal: {isi: '#C8321F', terang: '#E5583A', buih: '#F2C46B', kilau: 'rgba(255,220,200,0.3)', gelembung: 'rgba(255,200,170,0.5)'},
+  susu: {isi: '#FBF7EE', terang: '#E6DCC8', buih: '#FFFFFF', kilau: 'rgba(255,255,255,0.5)', gelembung: 'rgba(200,190,170,0.5)'},
+  // Cairan otak: bening kebiruan, untuk transisi ke skala sel otak.
+  otak: {isi: '#5FA9CC', terang: '#9AD3EA', buih: '#DDF4FC', kilau: 'rgba(235,250,255,0.4)', gelembung: 'rgba(225,248,255,0.55)'},
+};
+export type NamaCair = keyof typeof CAIR_BAHAN;
+
+// ---------------------------------------------------------------------------
+// Tambahan pustaka untuk topik tidur dan otak (dipakai pertama di episode begadang).
+// ---------------------------------------------------------------------------
+
+// Wajah rig: cahaya layar ponsel dari bawah, dan kantung mata untuk mata sayu.
+export const RIG_LAYAR = '#9FD4FF';
+export const RIG_KANTUNG = 'rgba(120,70,90,0.35)';
+
+// Barang kamar dan tidur.
+export const TIDUR = {
+  ponsel: '#262B35',
+  ponselTepi: '#3E4E6E',
+  layar: '#2B4C7E',
+  layarTerang: '#9FD4FF',
+  cahaya: '#BFE3FF',
+  bantal: '#F4F7FB',
+  bantalBayang: '#C9D3E3',
+  selimut: '#6F8FB8',
+  selimutTerang: '#8FAAD0',
+  selimutGelap: '#4E6E98',
+  kalender: '#FBF6EC',
+  kalenderKepala: '#E5483D',
+  kalenderCincin: '#8E98A8',
+  kalenderBayang: '#D8CBB6',
+  bulan: '#F2D59B',
+  bulanBayang: '#D9B670',
+  tikus: '#B8B0C2',
+  tikusGelap: '#8F869C',
+  tikusTelinga: '#F2A3B0',
+  tikusEkor: '#E8A0A8',
+};
+
+// Papan penghitung: papan gelap, angka terang, dan kata satuan.
+export const PENGHITUNG = {papan: '#1F2438', bingkai: '#3E4E6E', angka: '#FFF6EA', satuan: '#9FD4FF', segmen: 'rgba(159,212,255,0.25)', segmenNyala: '#9FD4FF'};
+
+// Laboratorium tidur: dinding toska pucat, bilik bertirai, monitor gelombang tidur.
+export const LAB = {
+  dinding: '#DCEFEC',
+  dindingBawah: '#B7DCD5',
+  panel: '#EEF7F5',
+  panelGaris: 'rgba(46,140,132,0.18)',
+  tirai: '#7DB9AF',
+  tiraiGelap: '#5BA9A0',
+  rel: '#8E98A8',
+  lantai: '#9CC9C1',
+  lantaiGaris: 'rgba(30,90,85,0.16)',
+  list: '#7DB9AF',
+  monitor: '#262B35',
+  monitorLayar: '#1D3B44',
+  gelombang: '#7CE0A3',
+  lampu: '#FFFFFF',
+};
+
+// Batang ukur vertikal: jalur kosong, isi per jenis ukuran, garis acuan, dan bayangan isi awal.
+export const BATANG = {jalur: 'rgba(225,244,250,0.28)', tepi: 'rgba(240,252,255,0.85)', kemampuan: '#4FC3A1', kantuk: '#A98BE0', bahaya: '#E5583A', awal: 'rgba(255,255,255,0.55)', garis: '#FFFFFF'};
+// Jalur batang di set yang terang (dinding lab), supaya batang kosong tetap terbaca sebagai nol. Garis acuan ikut gelap.
+export const BATANG_TERANG = {jalur: 'rgba(38,43,82,0.08)', tepi: 'rgba(38,43,82,0.32)', garis: 'rgba(38,43,82,0.45)'};
+
+// Pikotogram orang dalam grid, warna per kelompok.
+export const ORANG = {kelompok: ['#7CE0A3', '#F2C46B', '#F28C6A'], polos: '#E6F0FF'};
+
+// Coretan merah di atas label yang keliru.
+export const CORET = '#E5483D';
+
+// Tabung sampel darah di rak, tanpa botol minuman.
+export const TABUNG = {kaca: 'rgba(225,244,250,0.35)', kacaTepi: 'rgba(240,252,255,0.9)', darah: '#B8323F', darahTerang: '#D9475C', tutup: '#6F8FB8', rak: '#C9D2D6', rakGelap: '#8E98A8'};
+
+// Sel otak skala mikro: sel glia bercabang lila dengan satu inti, cairan di celah, dan limbah beta-amiloid yang disapu aliran.
+export const OTAK = {
+  sel: '#C3B1EC',
+  selTerang: '#EDE6FF',
+  selGelap: '#7C62B8',
+  inti: '#4E3A86',
+  cairan: '#6FB7D6',
+  cairanTerang: '#B4E2F2',
+  aliran: 'rgba(220,246,255,0.7)',
+  limbah: '#F2B84B',
+  limbahGelap: '#C98A2A',
+  jaringan: '#7A3F75',
+  // Garis ukur kecil di celah antar sel.
+  ukur: '#FFFFFF',
+};
+
+// Organ yang menyala bergiliran di siluet tembus pandang.
+export const TEMBUS_GILIRAN = {nyala: '#FFD27A', pembuluh: '#FF6A7A', pankreas: '#F2B84B', perut: '#F7C08A'};

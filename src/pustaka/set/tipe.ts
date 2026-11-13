@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
-import type {NamaSuasana} from '../../tema';
+import type {NamaCair, NamaSuasana} from '../../tema';
 import type {KeadaanProperti, NamaProperti, Tampak} from '../properti';
-import type {BentukMata, BentukMulutRig, NamaPoseRig} from '../tokoh-rig';
+import type {BentukMata, BentukMulutRig, KunciEkspresi, NamaPoseRig} from '../tokoh-rig';
 import type {LookName} from '../../Tokoh';
 import type {Aksi} from './aksi';
 import type {Kamera, KurvaKamera} from './kamera';
@@ -31,17 +31,22 @@ export type HasilSet = {
 // ---------------------------------------------------------------------------
 
 // Set yang dikenal. Nama baru juga harus ditambahkan ke `SET` di scripts/episode.mjs.
-export type NamaSet = 'ruang' | 'meja' | 'interior' | 'organ' | 'mikro' | 'tembus';
+// `wahana` roller coaster di luar ruang, `belah` layar dibelah dua dunia (kiri bahaya, kanan aman),
+// `lab` laboratorium tidur dengan tiga bilik berkasur untuk eksperimen berkelompok.
+export type NamaSet = 'ruang' | 'meja' | 'interior' | 'organ' | 'mikro' | 'tembus' | 'wahana' | 'belah' | 'lab';
 
-// Varian per set: meja `atas` | `samping`, interior `kerja` | `kamar` | `dapur` | `kafe` | `klinik`,
+// Varian per set: meja `atas` | `samping`, interior `kerja` | `kamar` | `dapur` | `kafe` | `klinik` | `warung`,
 // organ `jantung` | `hati` | `pabrik` (hati sebagai pabrik, organ jadi dinding buram).
 export type VarianSet = {
   ruang: undefined;
   meja: 'atas' | 'samping';
-  interior: 'kerja' | 'kamar' | 'dapur' | 'kafe' | 'klinik';
+  interior: 'kerja' | 'kamar' | 'dapur' | 'kafe' | 'klinik' | 'warung';
   organ: 'jantung' | 'hati' | 'pabrik';
   mikro: undefined;
   tembus: undefined;
+  wahana: undefined;
+  belah: undefined;
+  lab: undefined;
 };
 
 export type KameraShot = {
@@ -77,13 +82,15 @@ export type TokohShot = {
   pose: NamaPoseRig;
   // Pose berikutnya, misalnya dari `pegang` ke `minum`. Frame lokal shot.
   gestur?: {mulai: number; pose: NamaPoseRig}[];
-  pegang?: {nama: NamaProperti; keadaan?: KeadaanProperti; bagian?: 'utama' | 'bantu'; skala?: number; teks?: string};
+  pegang?: {nama: NamaProperti; keadaan?: KeadaanProperti; bagian?: 'utama' | 'bantu'; skala?: number; teks?: string; varian?: string; balik?: boolean};
   arah?: 1 | -1;
   // Arah wajah awal, atau daftar toleh berwaktu.
   toleh?: number | {mulai: number; ke: number; lama?: 'cepat' | 'pelan'}[];
   dongak?: number;
   mata?: {mulai: number; bentuk: BentukMata}[];
   mulut?: {mulai: number; bentuk: BentukMulutRig}[];
+  // Wajah memerah, keringat, dan air mata, masing-masing 0..1, misalnya saat kepedasan atau menangis.
+  ekspresi?: KunciEkspresi[];
   // Mulut bergerak selama baris narasi, hanya bila tokoh memang berbicara di layar.
   bicara?: boolean;
   // Tanpa nilai ini dipakai tokoh episode.
@@ -119,6 +126,8 @@ export type Shot = {
     pada?: number;
     porsi?: number;
     masuk?: MasukShot;
+    // Bahan cairan untuk `masuk: "cair"`. Bawaan `kopi`.
+    cair?: NamaCair;
     // Balon ucapan putih di atas, misalnya pertanyaan penutup.
     balon?: BalonShot;
     // Baris sumber kecil di bawah. Tanpa nilai ini sumber tampil otomatis bila shot menampilkan angka

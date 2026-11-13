@@ -1,13 +1,14 @@
 {
   "musik": {
-    "aktif": true,
+    "aktif": false,
     "file": "assets/musik/vitmatnotes-pizzicato-flow-558613.mp3",
     "judul": "Pizzicato Flow",
     "pembuat": "VitMatNotes",
     "sumber": "https://pixabay.com/music/cartoons-pizzicato-flow-558613/",
     "lisensi": "Pixabay Content License",
     "contentId": false,
-    "dicek": "2026-11-12, halaman tanpa label Content ID Registered"
+    "dicek": "2026-11-12, halaman tanpa label Content ID Registered",
+    "catatan": "Dimatikan 2026-11-12: user gagal upload ke YouTube dengan musik. Episode baru tanpa musik."
   },
   "volume": {
     "narasi": 0.8,

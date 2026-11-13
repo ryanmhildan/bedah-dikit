@@ -1,5 +1,5 @@
-import {useCurrentFrame} from 'remotion';
-import {TEMBUS} from '../../tema';
+import {interpolate, useCurrentFrame} from 'remotion';
+import {TEMBUS, TEMBUS_GILIRAN} from '../../tema';
 import {SILUET_RIG} from '../tokoh-rig';
 import {OrganTengah, detak, ketukanDi} from './organ';
 import type {HasilSet, Slot} from './tipe';
@@ -41,8 +41,49 @@ const Otak = () => (
 
 const Lambung = () => <path d="M-30 14 C-44 40 -14 58 14 46 C34 38 30 18 18 10 Z" fill={TEMBUS.lambung} opacity={0.4} />;
 
+// Organ yang bisa menyala bergiliran, dalam satuan rig. `jantung` digambar di titik jantung dunia.
+export type OrganGiliran = 'jantung' | 'pembuluh' | 'pankreas' | 'perut' | 'otak';
+export type Giliran = {daftar: OrganGiliran[]; mulai: number; jeda: number};
+
+const PEMBULUH = 'M16 -40 Q6 -70 2 -96 V-128 M16 -40 Q4 -10 0 14 Q-6 40 -20 62 M0 14 Q8 40 20 62 M8 -60 Q-30 -70 -48 -60 Q-62 -20 -64 30 M14 -58 Q40 -70 50 -60 Q62 -20 64 30';
+const PANKREAS = 'M-30 44 Q-10 30 18 36 Q34 38 36 48 Q30 56 14 52 Q-8 50 -26 56 Q-36 54 -30 44 Z';
+
+// Kekuatan nyala organ ke-i: naik 8 frame, ditahan, lalu meredup 14 frame. Organ berikutnya menyala sebelum yang lama padam penuh.
+const nyalaGiliran = (frame: number, g: Giliran, i: number) => {
+  const awal = g.mulai + i * g.jeda;
+  return interpolate(frame, [awal, awal + 8, awal + g.jeda + 4, awal + g.jeda + 18], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+};
+
+const NyalaOrgan = ({nama, kuat, id}: {nama: OrganGiliran; kuat: number; id: string}) => {
+  if (kuat <= 0) return null;
+  const isi =
+    nama === 'pembuluh' ? (
+      <path d={PEMBULUH} stroke={TEMBUS_GILIRAN.pembuluh} strokeWidth={4} strokeLinecap="round" fill="none" />
+    ) : nama === 'pankreas' ? (
+      <path d={PANKREAS} fill={TEMBUS_GILIRAN.pankreas} />
+    ) : nama === 'perut' ? (
+      <ellipse cx={0} cy={34} rx={44} ry={28} fill={TEMBUS_GILIRAN.perut} />
+    ) : nama === 'otak' ? (
+      <g fill={TEMBUS_GILIRAN.nyala}>
+        <ellipse cx={-34} cy={-218} rx={58} ry={44} />
+        <ellipse cx={34} cy={-218} rx={58} ry={44} />
+        <ellipse cx={0} cy={-176} rx={46} ry={22} />
+      </g>
+    ) : (
+      <circle cx={16} cy={-40} r={22} fill={TEMBUS.pulsa} />
+    );
+  return (
+    <g opacity={kuat}>
+      <g filter={`url(#${id}-nyala)`} opacity={0.75}>
+        {isi}
+      </g>
+      <g opacity={0.35}>{isi}</g>
+    </g>
+  );
+};
+
 // Siluet, organ, dan cahaya denyut. `denyut` dalam denyut per menit, `nyala` 0..1 kekuatan organ.
-const Siluet = ({denyut, nyala, tidakTeratur, id}: {denyut: number; nyala: number; tidakTeratur: boolean; id: string}) => {
+const Siluet = ({denyut, nyala, tidakTeratur, id, giliran}: {denyut: number; nyala: number; tidakTeratur: boolean; id: string; giliran?: Giliran}) => {
   const frame = useCurrentFrame();
   const d = detak(frame, denyut, tidakTeratur);
   // Gelombang cahaya merah yang menyebar dari jantung di setiap ketukan, mengikuti ketukan yang tidak beraturan.
@@ -58,6 +99,11 @@ const Siluet = ({denyut, nyala, tidakTeratur, id}: {denyut: number; nyala: numbe
         <filter id={`${id}-pendar`} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation={18} />
         </filter>
+        {giliran && (
+          <filter id={`${id}-nyala`} x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation={7} />
+          </filter>
+        )}
       </defs>
       <g transform={`translate(${ASAL.x} ${ASAL.y}) scale(${SKALA})`}>
         {/* Tepi bercahaya lembut dari salinan siluet yang dikaburkan, bukan garis tepi. */}
@@ -74,6 +120,9 @@ const Siluet = ({denyut, nyala, tidakTeratur, id}: {denyut: number; nyala: numbe
           <Paru />
           <Lambung />
         </g>
+        {giliran?.daftar.map((nama, i) => (
+          <NyalaOrgan key={`${nama}-${i}`} nama={nama} kuat={nyalaGiliran(frame, giliran, i)} id={id} />
+        ))}
       </g>
       {/* Pulsa merah: pendar di jantung dan gelombang yang meluas. */}
       <circle cx={TITIK_JANTUNG.x} cy={TITIK_JANTUNG.y} r={200 + d * 60} fill={`url(#${id}-pulsa)`} opacity={(0.25 + d * 0.75) * nyala} />
@@ -87,11 +136,15 @@ const SLOT_TEMBUS: Record<string, Slot> = {
   jantung: TITIK_JANTUNG,
   otak: dunia(0, -210),
   dada: dunia(0, -40),
+  // Mulut dan lidah tokoh di siluet, untuk sinyal dari lidah ke otak.
+  mulut: dunia(0, -122),
+  perut: dunia(0, 34),
 };
 
 // `denyut` denyut per menit, `nyala` 0..1 seberapa terang organ samar, `tidakTeratur` jarak ketukan acak.
-export const setTembus = ({denyut = 72, nyala = 1, tidakTeratur = false, id = 'tembus'}: {denyut?: number; nyala?: number; tidakTeratur?: boolean; id?: string} = {}): HasilSet => ({
-  tengah: <Siluet denyut={denyut} nyala={nyala} tidakTeratur={tidakTeratur} id={id} />,
+// `giliran` menyalakan organ satu per satu, misalnya daftar penyakit yang dikaitkan dengan kurang tidur.
+export const setTembus = ({denyut = 72, nyala = 1, tidakTeratur = false, id = 'tembus', giliran}: {denyut?: number; nyala?: number; tidakTeratur?: boolean; id?: string; giliran?: Giliran} = {}): HasilSet => ({
+  tengah: <Siluet denyut={denyut} nyala={nyala} tidakTeratur={tidakTeratur} id={id} giliran={giliran} />,
   slot: SLOT_TEMBUS,
   sorot: {x: TITIK_JANTUNG.x, y: TITIK_JANTUNG.y, lebar: 520, jenis: 'titik'},
   pakaiLatar: true,

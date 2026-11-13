@@ -1,0 +1,58 @@
+{
+  "buka-1": {
+    "hash": "87ee7ddb2a278b2349857c19aba40a013ae1c808",
+    "detik": 4.179592
+  },
+  "buka-2": {
+    "hash": "fe3b5cb541e5623fbadddd2724312bd4253c3e1c",
+    "detik": 2.220408
+  },
+  "butuh-1": {
+    "hash": "0e3ff1e83ab2069ce58fab62376a489b07b64d42",
+    "detik": 3.892245
+  },
+  "eksperimen-1": {
+    "hash": "6e866ef992765a72bc7ae36a4c32f3d243cd719c",
+    "detik": 7.78449
+  },
+  "eksperimen-2": {
+    "hash": "d744273f49600ee7a4d259251d991279ed0bb94f",
+    "detik": 6.112653
+  },
+  "eksperimen-3": {
+    "hash": "52999a7e6dfc71a898798b2ae7af2308010a624f",
+    "detik": 3.526531
+  },
+  "sadar-1": {
+    "hash": "43e55b2d385c37cde53d5c51ba68225ce7e467f0",
+    "detik": 3.343673
+  },
+  "sadar-2": {
+    "hash": "91f7fcb87cdf56134be6ccd19ae1bf0a59019622",
+    "detik": 4.780408
+  },
+  "sadar-3": {
+    "hash": "72625ce9ecc202b6e4ccfa9c9681a8a2fa79ebcb",
+    "detik": 3.709388
+  },
+  "alkohol-1": {
+    "hash": "dd3c78f7b750ab953f8627f225ce967c40577856",
+    "detik": 5.746939
+  },
+  "otak-1": {
+    "hash": "c397651e58724c617f665cde586430a7e07ab5e8",
+    "detik": 5.250612
+  },
+  "otak-2": {
+    "hash": "eafc56abeda016f5c62242847941183cf1ecf27d",
+    "detik": 6.530612
+  },
+  "tutup-1": {
+    "hash": "34dfd869ef862ba09c575efa799d9d4a97eafaae",
+    "detik": 5.851429
+  },
+  "tutup-2": {
+    "hash": "afbaac154f6e5eb7a49ccac583f426dbec56f90c",
+    "detik": 3.186939
+  }
+}

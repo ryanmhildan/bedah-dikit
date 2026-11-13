@@ -1,0 +1,2687 @@
+{
+  "judul": "Kenapa Makan Pedas Bikin Ketagihan padahal Sakit?",
+  "tokoh": "raka",
+  "musik": false,
+  "sumber": [
+    {
+      "nama": "Nobel Prize",
+      "url": "https://www.nobelprize.org/prizes/medicine/2021/press-release/"
+    },
+    {
+      "nama": "Rozin dkk. (2013)",
+      "url": "https://www.cambridge.org/core/journals/judgment-and-decision-making/article/glad-to-be-sad-and-other-examples-of-benign-masochism/48C0EC2F04412F3CB6EBC18B5E539BE8"
+    },
+    {
+      "nama": "Penn Today",
+      "url": "https://penntoday.upenn.edu/news/spicy-foods-eat-or-not-eat"
+    },
+    {
+      "nama": "RSC Education",
+      "url": "https://edu.rsc.org/everyday-chemistry/why-chilli-burns-your-mouth/4014152.article"
+    },
+    {
+      "nama": "Nolden dkk. (2019)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6620146/"
+    }
+  ],
+  "adegan": [
+    {
+      "id": "buka",
+      "jenis": "pembuka",
+      "data": {
+        "judul": "Kenapa pedas bikin ketagihan?",
+        "sub": "Sudah kepedasan, tapi tambah sambal lagi..."
+      },
+      "baris": [
+        {
+          "id": "buka-1",
+          "teks": "Mulut kepanasan, keringat menetes, tapi sambalnya malah ditambah lagi.",
+          "ucap": "Mulut kepanasan, keringat menetes, tapi sambalnya malah ditambah lagi.",
+          "shot": [
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                }
+              ],
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 960,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 545,
+                  "y": 925,
+                  "zoom": 1.1
+                },
+                "kurva": "dorong"
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "netral",
+                "gestur": [
+                  {
+                    "mulai": 30,
+                    "pose": "kepala"
+                  }
+                ],
+                "toleh": 0.1,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "pejam"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "kepanasan"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 1,
+                    "keringat": 1
+                  }
+                ]
+              },
+              "aksi": [
+                {
+                  "aksi": "getar",
+                  "sasaran": "tokoh",
+                  "kuat": 0.5
+                }
+              ]
+            },
+            {
+              "set": "meja",
+              "varian": "atas",
+              "suasana": "hangat",
+              "opsi": {
+                "rapi": true
+              },
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 270,
+                    "y": 610
+                  },
+                  "tampak": "atas",
+                  "skala": 0.85
+                },
+                {
+                  "nama": "cabai",
+                  "slot": {
+                    "x": 860,
+                    "y": 650
+                  },
+                  "tampak": "atas",
+                  "skala": 0.9,
+                  "putar": 24
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 570,
+                    "y": 1050
+                  },
+                  "tampak": "atas",
+                  "skala": 1.25,
+                  "varian": "mi",
+                  "keadaan": {
+                    "uap": 0.6
+                  }
+                }
+              ],
+              "pada": 72,
+              "kamera": {
+                "dari": {
+                  "x": 560,
+                  "y": 1000,
+                  "zoom": 1.05
+                },
+                "ke": {
+                  "x": 575,
+                  "y": 1020,
+                  "zoom": 1.16
+                },
+                "kurva": "dorong"
+              },
+              "aksi": [
+                {
+                  "aksi": "taruh",
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "ke": {
+                    "x": 610,
+                    "y": 1080
+                  },
+                  "tampak": "atas",
+                  "skala": 1.2,
+                  "bahu": {
+                    "x": 1320,
+                    "y": 1900
+                  },
+                  "tebal": 96,
+                  "mulai": 4,
+                  "lepas": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "buka-2",
+          "teks": "Kalau pedas itu sakit, kenapa kita malah ketagihan?",
+          "ucap": "Kalau pedas itu sakit, kenapa kita malah ketagihan?",
+          "shot": [
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                }
+              ],
+              "kamera": {
+                "dari": {
+                  "x": 520,
+                  "y": 905,
+                  "zoom": 1.3
+                },
+                "ke": {
+                  "x": 525,
+                  "y": 890,
+                  "zoom": 1.38
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "skala": 0.42,
+                  "balik": true
+                },
+                "gestur": [
+                  {
+                    "mulai": 6,
+                    "pose": "minum"
+                  },
+                  {
+                    "mulai": 38,
+                    "pose": "pegang"
+                  }
+                ],
+                "toleh": 0.05,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "titik"
+                  },
+                  {
+                    "mulai": 14,
+                    "bentuk": "pejam"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "tutup"
+                  },
+                  {
+                    "mulai": 40,
+                    "bentuk": "kepanasan"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 0.7,
+                    "keringat": 0.7
+                  },
+                  {
+                    "mulai": 20,
+                    "merah": 1,
+                    "keringat": 1
+                  }
+                ]
+              }
+            },
+            {
+              "pada": 52,
+              "set": "ruang",
+              "suasana": "gelap",
+              "opsi": {
+                "meja": true,
+                "bahan": "batu"
+              },
+              "sorot": {
+                "x": 540,
+                "y": 1180,
+                "lebar": 400,
+                "jenis": "atas"
+              },
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1080,
+                  "zoom": 1.15
+                },
+                "ke": {
+                  "x": 545,
+                  "y": 1100,
+                  "zoom": 1.3
+                },
+                "kurva": "dorong"
+              },
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 540,
+                    "y": 1205
+                  },
+                  "skala": 1.05
+                },
+                {
+                  "nama": "cabai",
+                  "slot": {
+                    "x": 770,
+                    "y": 1214
+                  },
+                  "skala": 0.9,
+                  "putar": 8,
+                  "muncul": 14
+                },
+                {
+                  "nama": "cabai",
+                  "slot": {
+                    "x": 680,
+                    "y": 1236
+                  },
+                  "skala": 0.75,
+                  "varian": "hijau",
+                  "putar": -14,
+                  "muncul": 20
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "muncul",
+                  "nama": "cabai",
+                  "slot": {
+                    "x": 330,
+                    "y": 1218
+                  },
+                  "skala": 0.85,
+                  "putar": -6,
+                  "mulai": 8
+                },
+                {
+                  "aksi": "debu"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kapsaisin",
+      "jenis": "rantai",
+      "data": {
+        "judul": "Alarm palsu di mulut",
+        "langkah": [
+          {
+            "ikon": "tabung",
+            "teks": "Kapsaisin menempel di TRPV1"
+          },
+          {
+            "ikon": "getar",
+            "teks": "Sensor panas menyala"
+          },
+          {
+            "ikon": "otak",
+            "teks": "Otak mengira mulut terbakar"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "kapsaisin-1",
+          "teks": "Pedas cabai datang dari kapsaisin, yang menempel ke reseptor TRPV1 di lidah.",
+          "ucap": "Pedas cabai datang dari kapsaisin, yang menempel ke reseptor T R P V satu di mulut dan lidah.",
+          "shot": [
+            {
+              "masuk": "cair",
+              "cair": "sambal",
+              "set": "ruang",
+              "suasana": "gelap",
+              "opsi": {
+                "meja": true,
+                "bahan": "batu"
+              },
+              "sorot": {
+                "x": 540,
+                "y": 1180,
+                "lebar": 380,
+                "jenis": "atas"
+              },
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1080,
+                  "zoom": 1.25
+                },
+                "ke": {
+                  "x": 555,
+                  "y": 1100,
+                  "zoom": 1.5
+                },
+                "kurva": "dorong"
+              },
+              "properti": [
+                {
+                  "nama": "cabai",
+                  "slot": {
+                    "x": 560,
+                    "y": 1212
+                  },
+                  "varian": "belah",
+                  "skala": 2.3
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "label",
+                  "teks": "kapsaisin",
+                  "slot": {
+                    "x": 540,
+                    "y": 1060
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 30
+                }
+              ]
+            },
+            {
+              "pada": 66,
+              "set": "mikro",
+              "opsi": {
+                "lidah": true
+              },
+              "suasana": "tubuh",
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 930,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 960,
+                  "zoom": 1.1
+                }
+              },
+              "aksi": [
+                {
+                  "aksi": "tancap",
+                  "ligan": "kapsaisin",
+                  "soket": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "mulai": 6,
+                  "jeda": 14
+                },
+                {
+                  "aksi": "hentak",
+                  "mulai": 22,
+                  "kuat": 0.5
+                },
+                {
+                  "aksi": "label",
+                  "teks": "TRPV1",
+                  "slot": "soket.1",
+                  "geser": {
+                    "x": 0,
+                    "y": -230
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 46
+                }
+              ]
+            },
+            {
+              "pada": 132,
+              "set": "mikro",
+              "opsi": {
+                "lidah": true
+              },
+              "suasana": "tubuh",
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1075,
+                  "zoom": 1.85
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 1085,
+                  "zoom": 2.05
+                }
+              },
+              "aksi": [
+                {
+                  "aksi": "tancap",
+                  "ligan": "kapsaisin",
+                  "soket": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "selesai": true
+                },
+                {
+                  "aksi": "label",
+                  "teks": "TRPV1",
+                  "slot": "soket.1",
+                  "geser": {
+                    "x": 0,
+                    "y": -175
+                  },
+                  "ukuran": 40,
+                  "tetap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kapsaisin-2",
+          "teks": "TRPV1 adalah sensor yang memberi tahu otak: ini terlalu panas, sampai sakit!",
+          "ucap": "T R P V satu adalah sensor yang memberi tahu otak: ini terlalu panas, sampai sakit!",
+          "shot": [
+            {
+              "set": "tembus",
+              "suasana": "gelap",
+              "opsi": {
+                "denyut": 80,
+                "nyala": 0.7
+              },
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 720,
+                  "zoom": 0.95
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 680,
+                  "zoom": 1.05
+                }
+              },
+              "aksi": [
+                {
+                  "aksi": "sinyal",
+                  "dari": "mulut",
+                  "ke": "otak",
+                  "mulai": 26,
+                  "jumlah": 3,
+                  "jeda": 10,
+                  "lama": 22,
+                  "lengkung": 0.3
+                }
+              ]
+            },
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": {
+                "dari": "hangat",
+                "ke": "bahaya",
+                "mulai": 4,
+                "lama": 18
+              },
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                },
+                {
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 790,
+                    "y": 1080
+                  },
+                  "skala": 0.95,
+                  "muncul": 10
+                }
+              ],
+              "pada": 95,
+              "kamera": {
+                "dari": {
+                  "x": 520,
+                  "y": 900,
+                  "zoom": 1.25
+                },
+                "ke": {
+                  "x": 520,
+                  "y": 880,
+                  "zoom": 1.36
+                },
+                "kurva": "dorong"
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "netral",
+                "gestur": [
+                  {
+                    "mulai": 4,
+                    "pose": "kaget"
+                  }
+                ],
+                "dongak": 0.15,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "kaget"
+                  },
+                  {
+                    "mulai": 22,
+                    "bentuk": "pejam"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "kepanasan"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 1,
+                    "keringat": 1
+                  }
+                ]
+              },
+              "aksi": [
+                {
+                  "aksi": "muncul",
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 290,
+                    "y": 1090
+                  },
+                  "skala": 0.85,
+                  "mulai": 6
+                },
+                {
+                  "aksi": "getar",
+                  "sasaran": "tokoh",
+                  "kuat": 0.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kapsaisin-3",
+          "teks": "Jadi otak menerima sinyal terbakar, padahal suhunya tidak panas.",
+          "ucap": "Jadi otak menerima sinyal terbakar, padahal suhunya tidak panas.",
+          "shot": [
+            {
+              "set": "tembus",
+              "suasana": "bahaya",
+              "opsi": {
+                "denyut": 110,
+                "nyala": 1
+              },
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 660,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 650,
+                  "zoom": 1.12
+                },
+                "kurva": "dorong"
+              },
+              "properti": [
+                {
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 330,
+                    "y": 620
+                  },
+                  "skala": 1.1
+                },
+                {
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 760,
+                    "y": 600
+                  },
+                  "skala": 1
+                },
+                {
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 560,
+                    "y": 300
+                  },
+                  "skala": 1.2
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "sinyal",
+                  "dari": "mulut",
+                  "ke": "otak",
+                  "mulai": 4,
+                  "jumlah": 2,
+                  "jeda": 12,
+                  "lama": 18,
+                  "lengkung": -0.3
+                }
+              ]
+            },
+            {
+              "pada": 62,
+              "set": "ruang",
+              "suasana": {
+                "dari": "bahaya",
+                "ke": "hangat",
+                "mulai": 12,
+                "lama": 24
+              },
+              "opsi": {
+                "meja": true,
+                "bahan": "kayu"
+              },
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1040,
+                  "zoom": 1.2
+                },
+                "ke": {
+                  "x": 555,
+                  "y": 1050,
+                  "zoom": 1.32
+                }
+              },
+              "properti": [
+                {
+                  "nama": "termometer",
+                  "slot": {
+                    "x": 390,
+                    "y": 1203
+                  },
+                  "skala": 1.05,
+                  "keadaan": {
+                    "isi": 0.32
+                  }
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 690,
+                    "y": 1203
+                  },
+                  "skala": 0.85,
+                  "varian": "mi-sambal"
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "ubah",
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 690,
+                    "y": 1040
+                  },
+                  "skala": 0.9,
+                  "dari": {
+                    "isi": 1
+                  },
+                  "ke": {
+                    "isi": 0
+                  },
+                  "lama": 26,
+                  "sejak": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alarm",
+      "jenis": "penjelasan",
+      "data": {
+        "gambar": [
+          {
+            "ikon": "getar",
+            "label": "Tubuh mengira bahaya"
+          },
+          {
+            "ikon": "rumah",
+            "label": "Alarm bunyi, rumah tidak terbakar"
+          }
+        ]
+      },
+      "baris": [
+        {
+          "id": "alarm-1",
+          "teks": "Tubuh mengira ini bahaya, padahal pedas di makanan biasa hampir selalu aman.",
+          "ucap": "Tubuh mengira ini bahaya, padahal pedas pada kadar makanan biasa hampir selalu tidak berbahaya.",
+          "shot": [
+            {
+              "masuk": "kartu",
+              "set": "tembus",
+              "suasana": {
+                "dari": "gelap",
+                "ke": "bahaya",
+                "mulai": 6,
+                "lama": 24
+              },
+              "opsi": {
+                "denyut": 130,
+                "nyala": 1
+              },
+              "kamera": {
+                "dari": {
+                  "x": 600,
+                  "y": 980,
+                  "zoom": 1.4
+                },
+                "ke": {
+                  "x": 600,
+                  "y": 975,
+                  "zoom": 1.55
+                }
+              }
+            },
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                }
+              ],
+              "pada": 78,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 960,
+                  "zoom": 1.06
+                },
+                "ke": {
+                  "x": 545,
+                  "y": 940,
+                  "zoom": 1.13
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "skala": 0.42,
+                  "balik": true
+                },
+                "gestur": [
+                  {
+                    "mulai": 16,
+                    "pose": "minum"
+                  },
+                  {
+                    "mulai": 52,
+                    "pose": "pegang"
+                  }
+                ],
+                "toleh": -0.05,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "titik"
+                  },
+                  {
+                    "mulai": 54,
+                    "bentuk": "senang"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "senyum"
+                  },
+                  {
+                    "mulai": 54,
+                    "bentuk": "lebar"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 0.6,
+                    "keringat": 0.6
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "alarm-2",
+          "teks": "Paul Rozin: ibarat alarm asap yang bunyi karena roti gosong. Rumah tak terbakar.",
+          "ucap": "Kata Paul Rozin, ibarat alarm asap yang bunyi karena roti gosong. Rumahnya tidak terbakar.",
+          "shot": [
+            {
+              "set": "interior",
+              "varian": "dapur",
+              "opsi": {
+                "plafon": true
+              },
+              "suasana": "hangat",
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 300,
+                  "zoom": 1.55
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 285,
+                  "zoom": 1.7
+                }
+              },
+              "aksi": [
+                {
+                  "aksi": "ubah",
+                  "nama": "alarmAsap",
+                  "slot": "plafon",
+                  "skala": 1.5,
+                  "dari": {
+                    "getar": 0
+                  },
+                  "ke": {
+                    "getar": 1
+                  },
+                  "lama": 2,
+                  "sejak": 8
+                },
+                {
+                  "aksi": "hentak",
+                  "mulai": 8,
+                  "kuat": 0.6
+                },
+                {
+                  "aksi": "getar",
+                  "sasaran": "kamera",
+                  "kuat": 0.25,
+                  "sejak": 8
+                }
+              ]
+            },
+            {
+              "pada": 68,
+              "set": "interior",
+              "varian": "dapur",
+              "opsi": {
+                "plafon": true
+              },
+              "suasana": "hangat",
+              "kamera": {
+                "dari": {
+                  "x": 560,
+                  "y": 520,
+                  "zoom": 1.15
+                },
+                "ke": {
+                  "x": 560,
+                  "y": 1090,
+                  "zoom": 1.3
+                },
+                "lama": 30,
+                "kurva": "sorot"
+              },
+              "properti": [
+                {
+                  "nama": "alarmAsap",
+                  "slot": "plafon",
+                  "skala": 1.5,
+                  "keadaan": {
+                    "getar": 1
+                  }
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "ubah",
+                  "nama": "pemanggang",
+                  "varian": "gosong",
+                  "slot": {
+                    "x": 560,
+                    "y": 1283
+                  },
+                  "skala": 1.15,
+                  "dari": {
+                    "isi": 0,
+                    "uap": 0.3
+                  },
+                  "ke": {
+                    "isi": 1,
+                    "uap": 0.9
+                  },
+                  "mulai": 28,
+                  "lama": 6
+                }
+              ]
+            },
+            {
+              "pada": 125,
+              "set": "interior",
+              "varian": "dapur",
+              "opsi": {
+                "plafon": true
+              },
+              "suasana": "hangat",
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 810,
+                  "zoom": 0.95
+                },
+                "ke": {
+                  "x": 545,
+                  "y": 790,
+                  "zoom": 1
+                }
+              },
+              "properti": [
+                {
+                  "nama": "alarmAsap",
+                  "slot": "plafon",
+                  "skala": 1.3,
+                  "keadaan": {
+                    "getar": 1
+                  }
+                },
+                {
+                  "nama": "pemanggang",
+                  "varian": "gosong",
+                  "slot": {
+                    "x": 760,
+                    "y": 1283
+                  },
+                  "skala": 1.05,
+                  "keadaan": {
+                    "isi": 1,
+                    "uap": 0.6
+                  }
+                }
+              ],
+              "tokoh": {
+                "slot": {
+                  "x": 360,
+                  "y": 1313
+                },
+                "skala": 2.1,
+                "potong": 1283,
+                "arah": 1,
+                "pose": "kibasRendah",
+                "gestur": [
+                  {
+                    "mulai": 4,
+                    "pose": "kibas"
+                  },
+                  {
+                    "mulai": 34,
+                    "pose": "kibasRendah"
+                  },
+                  {
+                    "mulai": 64,
+                    "pose": "kibas"
+                  }
+                ],
+                "toleh": 0.3,
+                "dongak": 0.2,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "datar"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "cemas"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suka",
+      "jenis": "perbandingan",
+      "data": {
+        "judul": "Benign masochism",
+        "kiri": {
+          "ikon": "getar",
+          "label": "Tubuh merasa",
+          "nilai": "Bahaya!"
+        },
+        "kanan": {
+          "ikon": "otak",
+          "label": "Kita tahu",
+          "nilai": "Aman"
+        }
+      },
+      "baris": [
+        {
+          "id": "suka-1",
+          "teks": "Namanya benign masochism: menikmati rasa bahaya yang kita tahu sebenarnya aman.",
+          "ucap": "Namanya benign masochism: menikmati sensasi yang tubuh anggap bahaya, padahal kita tahu aman.",
+          "shot": [
+            {
+              "masuk": "sapu",
+              "set": "belah",
+              "suasana": "hangat",
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 950,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 935,
+                  "zoom": 1.06
+                }
+              },
+              "properti": [
+                {
+                  "nama": "alarmAsap",
+                  "slot": {
+                    "x": 270,
+                    "y": 330
+                  },
+                  "skala": 1.1,
+                  "keadaan": {
+                    "getar": 1
+                  }
+                },
+                {
+                  "nama": "api",
+                  "slot": {
+                    "x": 270,
+                    "y": 1190
+                  },
+                  "skala": 1.45
+                }
+              ],
+              "tokoh": {
+                "slot": {
+                  "x": 820,
+                  "y": 1340
+                },
+                "skala": 1.5,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "skala": 0.42,
+                  "balik": true
+                },
+                "toleh": -0.15,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "senang"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "lebar"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 0.8,
+                    "keringat": 0.7
+                  }
+                ]
+              },
+              "aksi": [
+                {
+                  "aksi": "label",
+                  "teks": "Tubuh: bahaya!",
+                  "slot": {
+                    "x": 270,
+                    "y": 760
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 8
+                },
+                {
+                  "aksi": "label",
+                  "teks": "Otak: aman",
+                  "slot": {
+                    "x": 810,
+                    "y": 760
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 30
+                }
+              ]
+            },
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                }
+              ],
+              "pada": 100,
+              "kamera": {
+                "dari": {
+                  "x": 520,
+                  "y": 915,
+                  "zoom": 1.25
+                },
+                "ke": {
+                  "x": 525,
+                  "y": 900,
+                  "zoom": 1.32
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "skala": 0.42,
+                  "balik": true
+                },
+                "gestur": [
+                  {
+                    "mulai": 8,
+                    "pose": "minum"
+                  },
+                  {
+                    "mulai": 42,
+                    "pose": "pegang"
+                  }
+                ],
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "titik"
+                  },
+                  {
+                    "mulai": 14,
+                    "bentuk": "pejam"
+                  },
+                  {
+                    "mulai": 46,
+                    "bentuk": "senang"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "tutup"
+                  },
+                  {
+                    "mulai": 46,
+                    "bentuk": "lebar"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 1,
+                    "keringat": 1
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "suka-2",
+          "teks": "Mirip naik roller coaster atau menonton film sedih.",
+          "ucap": "Mirip seperti naik roller coaster, atau menonton film sedih.",
+          "shot": [
+            {
+              "set": "wahana",
+              "suasana": "hangat",
+              "kamera": {
+                "dari": {
+                  "x": 330,
+                  "y": 860,
+                  "zoom": 0.95
+                },
+                "ke": {
+                  "x": 640,
+                  "y": 1020,
+                  "zoom": 1.02
+                },
+                "lama": 52,
+                "kurva": "sorot"
+              },
+              "aksi": [
+                {
+                  "aksi": "meluncur",
+                  "dari": 0.29,
+                  "ke": 0.65,
+                  "mulai": 6,
+                  "lama": 38,
+                  "skala": 0.8,
+                  "pose": "kaget",
+                  "mata": "senang",
+                  "mulut": "lebar"
+                },
+                {
+                  "aksi": "hentak",
+                  "mulai": 44,
+                  "kuat": 0.5
+                }
+              ]
+            },
+            {
+              "porsi": 0.55,
+              "set": "interior",
+              "varian": "kamar",
+              "opsi": {
+                "malam": true
+              },
+              "suasana": "malam",
+              "kamera": {
+                "dari": {
+                  "x": 580,
+                  "y": 1060,
+                  "zoom": 1.05
+                },
+                "ke": {
+                  "x": 585,
+                  "y": 1045,
+                  "zoom": 1.1
+                }
+              },
+              "properti": [
+                {
+                  "nama": "televisi",
+                  "slot": {
+                    "x": 860,
+                    "y": 1245
+                  },
+                  "skala": 0.85
+                }
+              ],
+              "tokoh": {
+                "slot": {
+                  "x": 400,
+                  "y": 1330
+                },
+                "skala": 2,
+                "potong": 1405,
+                "arah": 1,
+                "pose": "netral",
+                "toleh": 0.45,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "datar"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "cemas"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "airMata": 1
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "level-1",
+          "teks": "Banyak penyuka pedas memilih level tepat di bawah batas yang tak tertahankan.",
+          "ucap": "Banyak penyuka pedas memilih level favorit tepat di bawah batas yang tidak tertahankan.",
+          "shot": [
+            {
+              "set": "ruang",
+              "suasana": "gelap",
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1220,
+                  "zoom": 1.3
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 1040,
+                  "zoom": 1.02
+                },
+                "mulai": 8,
+                "lama": 56,
+                "kurva": "sorot"
+              },
+              "sorot": {
+                "x": 540,
+                "y": 1300,
+                "lebar": 420,
+                "jenis": "atas"
+              },
+              "aksi": [
+                {
+                  "aksi": "ubah",
+                  "nama": "gelasBatas",
+                  "slot": {
+                    "x": 540,
+                    "y": 1360
+                  },
+                  "dari": {
+                    "isi": 0,
+                    "tanda": 0.9
+                  },
+                  "ke": {
+                    "isi": 0.84,
+                    "tanda": 0.9
+                  },
+                  "mulai": 10,
+                  "lama": 56
+                },
+                {
+                  "aksi": "label",
+                  "teks": "batas",
+                  "slot": {
+                    "x": 790,
+                    "y": 806
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 6
+                }
+              ]
+            },
+            {
+              "pada": 92,
+              "set": "ruang",
+              "suasana": "hangat",
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 990,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 545,
+                  "y": 970,
+                  "zoom": 1.06
+                }
+              },
+              "sorot": {
+                "x": 480,
+                "y": 1300,
+                "lebar": 520,
+                "jenis": "atas"
+              },
+              "properti": [
+                {
+                  "nama": "gelasBatas",
+                  "slot": {
+                    "x": 330,
+                    "y": 1330
+                  },
+                  "skala": 0.95,
+                  "keadaan": {
+                    "isi": 0.84,
+                    "tanda": 0.9
+                  }
+                }
+              ],
+              "tokoh": {
+                "slot": {
+                  "x": 730,
+                  "y": 1090
+                },
+                "skala": 1.5,
+                "arah": -1,
+                "pose": "netral",
+                "gestur": [
+                  {
+                    "mulai": 6,
+                    "pose": "tunjuk"
+                  }
+                ],
+                "toleh": [
+                  {
+                    "mulai": 0,
+                    "ke": 0
+                  },
+                  {
+                    "mulai": 8,
+                    "ke": -0.35
+                  }
+                ],
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "senang"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 0.7,
+                    "keringat": 0.7
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mitos",
+      "jenis": "perbandingan",
+      "data": {
+        "judul": "Lidah makin kebal?",
+        "kiri": {
+          "ikon": "mata",
+          "label": "Kepekaan lidah",
+          "nilai": "Turun sedikit"
+        },
+        "kanan": {
+          "ikon": "getar",
+          "label": "Alasan utama",
+          "nilai": "Suka rasa terbakar"
+        }
+      },
+      "baris": [
+        {
+          "id": "mitos-1",
+          "teks": "Lidah makin kebal? Kepekaannya memang turun, tapi sangat sedikit.",
+          "ucap": "Lidah makin kebal? Kepekaannya memang turun, tapi sangat sedikit.",
+          "shot": [
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                }
+              ],
+              "masuk": "kartu",
+              "kamera": {
+                "dari": {
+                  "x": 520,
+                  "y": 920,
+                  "zoom": 1.2
+                },
+                "ke": {
+                  "x": 520,
+                  "y": 905,
+                  "zoom": 1.27
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "netral",
+                "gestur": [
+                  {
+                    "mulai": 4,
+                    "pose": "pikir"
+                  }
+                ],
+                "toleh": 0.2,
+                "dongak": 0.15,
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "titik"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "tutup"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 0.3,
+                    "keringat": 0.3
+                  }
+                ]
+              }
+            },
+            {
+              "pada": 48,
+              "set": "ruang",
+              "suasana": "gelap",
+              "opsi": {
+                "meja": true,
+                "bahan": "batu"
+              },
+              "sorot": {
+                "x": 540,
+                "y": 1180,
+                "lebar": 420,
+                "jenis": "atas"
+              },
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1030,
+                  "zoom": 1.12
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 1010,
+                  "zoom": 1.24
+                }
+              },
+              "aksi": [
+                {
+                  "aksi": "ubah",
+                  "nama": "meter",
+                  "slot": {
+                    "x": 540,
+                    "y": 1203
+                  },
+                  "skala": 1.2,
+                  "dari": {
+                    "isi": 0.86,
+                    "tanda": 0.86
+                  },
+                  "ke": {
+                    "isi": 0.81,
+                    "tanda": 0.86
+                  },
+                  "lama": 30,
+                  "sejak": 26
+                },
+                {
+                  "aksi": "label",
+                  "teks": "kepekaan lidah",
+                  "slot": {
+                    "x": 540,
+                    "y": 770
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 6
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mitos-2",
+          "teks": "Bukan itu alasan utamanya. Penyuka pedas justru menikmati rasa terbakarnya.",
+          "ucap": "Bukan itu alasan utamanya. Penyuka pedas justru menikmati rasa terbakarnya.",
+          "shot": [
+            {
+              "set": "mikro",
+              "opsi": {
+                "lidah": true
+              },
+              "suasana": "tubuh",
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1000,
+                  "zoom": 1.5
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 950,
+                  "zoom": 1.08
+                },
+                "kurva": "sorot"
+              },
+              "aksi": [
+                {
+                  "aksi": "tancap",
+                  "ligan": "kapsaisin",
+                  "soket": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "selesai": true
+                },
+                {
+                  "aksi": "label",
+                  "teks": "tetap menyala",
+                  "slot": "soket.1",
+                  "geser": {
+                    "x": 0,
+                    "y": -230
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 14
+                }
+              ]
+            },
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                },
+                {
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 760,
+                    "y": 1070
+                  },
+                  "skala": 0.7,
+                  "muncul": 50
+                }
+              ],
+              "pada": 62,
+              "kamera": {
+                "dari": {
+                  "x": 520,
+                  "y": 890,
+                  "zoom": 1.35
+                },
+                "ke": {
+                  "x": 520,
+                  "y": 878,
+                  "zoom": 1.42
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "skala": 0.42,
+                  "balik": true
+                },
+                "gestur": [
+                  {
+                    "mulai": 6,
+                    "pose": "minum"
+                  },
+                  {
+                    "mulai": 40,
+                    "pose": "pegang"
+                  }
+                ],
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "pejam"
+                  },
+                  {
+                    "mulai": 42,
+                    "bentuk": "senang"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "tutup"
+                  },
+                  {
+                    "mulai": 42,
+                    "bentuk": "lebar"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 1,
+                    "keringat": 1
+                  }
+                ]
+              },
+              "aksi": [
+                {
+                  "aksi": "muncul",
+                  "nama": "api",
+                  "varian": "ilusi",
+                  "slot": {
+                    "x": 300,
+                    "y": 1080
+                  },
+                  "skala": 0.75,
+                  "mulai": 44
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "redam",
+      "jenis": "perbandingan",
+      "data": {
+        "judul": "Air atau susu?",
+        "kiri": {
+          "ikon": "gelombang",
+          "label": "Air",
+          "nilai": "Kurang membantu"
+        },
+        "kanan": {
+          "ikon": "tabung",
+          "label": "Susu",
+          "nilai": "Lebih ampuh"
+        }
+      },
+      "baris": [
+        {
+          "id": "redam-1",
+          "teks": "Kepedasan? Air tak banyak membantu, karena kapsaisin tidak larut dalam air.",
+          "ucap": "Kepedasan? Air tidak banyak membantu, karena kapsaisin tidak larut dalam air.",
+          "shot": [
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                }
+              ],
+              "masuk": "cair",
+              "cair": "susu",
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 960,
+                  "zoom": 1.1
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 940,
+                  "zoom": 1.18
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "gelasMinum",
+                  "varian": "air",
+                  "skala": 0.62,
+                  "keadaan": {
+                    "isi": 0.8
+                  }
+                },
+                "gestur": [
+                  {
+                    "mulai": 16,
+                    "pose": "minum"
+                  },
+                  {
+                    "mulai": 50,
+                    "pose": "pegang"
+                  }
+                ],
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "pejam"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "kepanasan"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 1,
+                    "keringat": 1
+                  }
+                ]
+              }
+            },
+            {
+              "pada": 70,
+              "set": "ruang",
+              "suasana": "gelap",
+              "opsi": {
+                "meja": true,
+                "bahan": "putih"
+              },
+              "sorot": {
+                "x": 540,
+                "y": 1180,
+                "lebar": 400,
+                "jenis": "atas"
+              },
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 990,
+                  "zoom": 1.3
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 975,
+                  "zoom": 1.42
+                }
+              },
+              "properti": [
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 540,
+                    "y": 1203
+                  },
+                  "varian": "air",
+                  "skala": 2,
+                  "keadaan": {
+                    "isi": 0.8,
+                    "partikel": 5
+                  }
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "label",
+                  "teks": "kapsaisin",
+                  "slot": {
+                    "x": 540,
+                    "y": 690
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 18
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "redam-2",
+          "teks": "Susu lebih ampuh. Skim dan full cream sama efektifnya; kasein mungkin berperan.",
+          "ucap": "Susu lebih ampuh. Skim dan full cream sama efektifnya, jadi protein susu bernama kasein mungkin ikut berperan.",
+          "shot": [
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                }
+              ],
+              "kamera": {
+                "dari": {
+                  "x": 520,
+                  "y": 900,
+                  "zoom": 1.25
+                },
+                "ke": {
+                  "x": 520,
+                  "y": 890,
+                  "zoom": 1.3
+                }
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "gelasMinum",
+                  "varian": "susu",
+                  "skala": 0.62,
+                  "keadaan": {
+                    "isi": 0.8
+                  }
+                },
+                "gestur": [
+                  {
+                    "mulai": 4,
+                    "pose": "minum"
+                  },
+                  {
+                    "mulai": 38,
+                    "pose": "pegang"
+                  }
+                ],
+                "mata": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "pejam"
+                  },
+                  {
+                    "mulai": 40,
+                    "bentuk": "senang"
+                  }
+                ],
+                "mulut": [
+                  {
+                    "mulai": 0,
+                    "bentuk": "tutup"
+                  },
+                  {
+                    "mulai": 40,
+                    "bentuk": "lebar"
+                  }
+                ],
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 1,
+                    "keringat": 1
+                  },
+                  {
+                    "mulai": 24,
+                    "merah": 0.25,
+                    "keringat": 0.1
+                  }
+                ]
+              }
+            },
+            {
+              "pada": 60,
+              "set": "ruang",
+              "suasana": "hangat",
+              "opsi": {
+                "meja": true,
+                "bahan": "kayu"
+              },
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 1020,
+                  "zoom": 1.15
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 1005,
+                  "zoom": 1.22
+                }
+              },
+              "properti": [
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 370,
+                    "y": 1203
+                  },
+                  "varian": "susu",
+                  "skala": 1.2,
+                  "keadaan": {
+                    "isi": 0.8
+                  }
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 710,
+                    "y": 1203
+                  },
+                  "varian": "susu",
+                  "skala": 1.2,
+                  "keadaan": {
+                    "isi": 0.8
+                  }
+                }
+              ],
+              "aksi": [
+                {
+                  "aksi": "ubah",
+                  "nama": "meter",
+                  "slot": {
+                    "x": 370,
+                    "y": 880
+                  },
+                  "skala": 0.56,
+                  "bayang": false,
+                  "dari": {
+                    "isi": 0.9,
+                    "tanda": 0.9
+                  },
+                  "ke": {
+                    "isi": 0.3,
+                    "tanda": 0.9
+                  },
+                  "sejak": 22,
+                  "lama": 40
+                },
+                {
+                  "aksi": "ubah",
+                  "nama": "meter",
+                  "slot": {
+                    "x": 710,
+                    "y": 880
+                  },
+                  "skala": 0.56,
+                  "bayang": false,
+                  "dari": {
+                    "isi": 0.9,
+                    "tanda": 0.9
+                  },
+                  "ke": {
+                    "isi": 0.3,
+                    "tanda": 0.9
+                  },
+                  "sejak": 22,
+                  "lama": 40
+                },
+                {
+                  "aksi": "label",
+                  "teks": "rasa terbakar",
+                  "slot": {
+                    "x": 540,
+                    "y": 650
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 4
+                },
+                {
+                  "aksi": "label",
+                  "teks": "skim",
+                  "slot": {
+                    "x": 370,
+                    "y": 1130
+                  },
+                  "ukuran": 34,
+                  "tetap": true,
+                  "muncul": 4
+                },
+                {
+                  "aksi": "label",
+                  "teks": "full cream",
+                  "slot": {
+                    "x": 710,
+                    "y": 1130
+                  },
+                  "ukuran": 34,
+                  "tetap": true,
+                  "muncul": 10
+                }
+              ]
+            },
+            {
+              "pada": 150,
+              "set": "mikro",
+              "opsi": {
+                "lidah": true
+              },
+              "suasana": {
+                "dari": "tubuh",
+                "ke": "hangat",
+                "mulai": 50,
+                "lama": 30
+              },
+              "sumber": true,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 950,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 935,
+                  "zoom": 1.06
+                }
+              },
+              "aksi": [
+                {
+                  "aksi": "tancap",
+                  "ligan": "kapsaisin",
+                  "soket": [
+                    1
+                  ],
+                  "selesai": true
+                },
+                {
+                  "aksi": "ikat",
+                  "soket": [
+                    0,
+                    2
+                  ],
+                  "mulai": 8,
+                  "jeda": 16
+                },
+                {
+                  "aksi": "label",
+                  "teks": "kasein",
+                  "slot": {
+                    "x": 540,
+                    "y": 560
+                  },
+                  "ukuran": 40,
+                  "tetap": true,
+                  "muncul": 30
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tutup",
+      "jenis": "penutup",
+      "data": {
+        "pertanyaan": "Kamu tim level berapa?"
+      },
+      "baris": [
+        {
+          "id": "tutup-1",
+          "teks": "Jadi, kamu tim level berapa? Tulis level sambal favoritmu di komentar.",
+          "ucap": "Jadi, kamu tim level berapa? Tulis level sambal favoritmu di komentar.",
+          "shot": [
+            {
+              "set": "meja",
+              "varian": "atas",
+              "suasana": "hangat",
+              "opsi": {
+                "rapi": true
+              },
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 270,
+                    "y": 610
+                  },
+                  "tampak": "atas",
+                  "skala": 0.85
+                },
+                {
+                  "nama": "cabai",
+                  "slot": {
+                    "x": 860,
+                    "y": 650
+                  },
+                  "tampak": "atas",
+                  "skala": 0.9,
+                  "putar": 24
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 570,
+                    "y": 1050
+                  },
+                  "tampak": "atas",
+                  "skala": 1.25,
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  }
+                },
+                {
+                  "nama": "sendok",
+                  "slot": {
+                    "x": 610,
+                    "y": 1080
+                  },
+                  "tampak": "atas",
+                  "skala": 1.2,
+                  "varian": "sambal",
+                  "keadaan": {
+                    "isi": 0.4
+                  },
+                  "putar": 30
+                }
+              ],
+              "masuk": "sapu",
+              "kamera": {
+                "dari": {
+                  "x": 560,
+                  "y": 1000,
+                  "zoom": 1.1
+                },
+                "ke": {
+                  "x": 565,
+                  "y": 1005,
+                  "zoom": 1.18
+                }
+              }
+            },
+            {
+              "set": "interior",
+              "varian": "warung",
+              "suasana": "hangat",
+              "properti": [
+                {
+                  "nama": "cobek",
+                  "slot": {
+                    "x": 250,
+                    "y": 1192
+                  },
+                  "skala": 0.7
+                },
+                {
+                  "nama": "mangkok",
+                  "slot": {
+                    "x": 770,
+                    "y": 1192
+                  },
+                  "varian": "mi-sambal",
+                  "keadaan": {
+                    "uap": 0.6
+                  },
+                  "skala": 0.95
+                },
+                {
+                  "nama": "gelasMinum",
+                  "slot": {
+                    "x": 950,
+                    "y": 1186
+                  },
+                  "varian": "air",
+                  "skala": 0.8,
+                  "keadaan": {
+                    "isi": 0.7
+                  }
+                }
+              ],
+              "pada": 40,
+              "kamera": {
+                "dari": {
+                  "x": 540,
+                  "y": 905,
+                  "zoom": 1
+                },
+                "ke": {
+                  "x": 540,
+                  "y": 910,
+                  "zoom": 1.03
+                }
+              },
+              "balon": {
+                "teks": "Kamu tim level berapa?",
+                "mulai": 2
+              },
+              "tokoh": {
+                "slot": {
+                  "x": 520,
+                  "y": 1213
+                },
+                "skala": 2.1,
+                "potong": 1196,
+                "arah": -1,
+                "pose": "pegang",
+                "pegang": {
+                  "nama": "sendok",
+                  "varian": "sambal",
+                  "skala": 0.42,
+                  "balik": true
+                },
+                "toleh": 0,
+                "bicara": true,
+                "ekspresi": [
+                  {
+                    "mulai": 0,
+                    "merah": 0.5,
+                    "keringat": 0.5
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

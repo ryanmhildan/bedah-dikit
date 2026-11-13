@@ -1,6 +1,6 @@
 import type {ReactNode} from 'react';
 import {useCurrentFrame} from 'remotion';
-import {BAHAN, BAYANG_KONTAK, BUKU, DAUN, INTERIOR, JENDELA, PROPERTI as W, type NamaBahan, type WarnaInterior} from '../../tema';
+import {BAHAN, BAYANG_KONTAK, BUKU, DAUN, INTERIOR, JENDELA, MAKANAN, PROPERTI as W, type NamaBahan, type WarnaInterior} from '../../tema';
 import {Properti} from '../properti';
 import {DaunDepan, MejaSamping, titikMeja, type GayaKaki, type UkuranMeja} from './meja';
 import type {HasilSet, Slot} from './tipe';
@@ -8,8 +8,8 @@ import type {HasilSet, Slot} from './tipe';
 // Interior tampak samping. Semua varian memakai kerangka yang sama: dinding, lantai, meja, dan perabot.
 // Variasi dibuat dengan menukar daftar perabot, bukan menggambar ulang ruangan.
 
-export type VarianInterior = 'kerja' | 'kamar' | 'dapur' | 'kafe' | 'klinik';
-export const NAMA_INTERIOR: VarianInterior[] = ['kerja', 'kamar', 'dapur', 'kafe', 'klinik'];
+export type VarianInterior = 'kerja' | 'kamar' | 'dapur' | 'kafe' | 'klinik' | 'warung';
+export const NAMA_INTERIOR: VarianInterior[] = ['kerja', 'kamar', 'dapur', 'kafe', 'klinik', 'warung'];
 
 const LANTAI = 1560;
 const KIRI = -700;
@@ -199,6 +199,56 @@ const Lorong = ({warna}: {warna: WarnaInterior}) => {
   );
 };
 
+// Rak toples kerupuk warung: toples kaca bertutup warna dengan kerupuk bulat di dalamnya.
+const RakToples = ({x, y, w, warna}: {x: number; y: number; w: number; warna: WarnaInterior}) => {
+  const jumlah = Math.floor(w / 130);
+  return (
+    <g>
+      {Array.from({length: jumlah}, (_, i) => {
+        const cx = x + 70 + i * 130;
+        return (
+          <g key={i}>
+            <rect x={cx - 50} y={y - 150} width={100} height={150} rx={18} fill={W.kaca} />
+            {[0, 1, 2].map((j) => (
+              <circle key={j} cx={cx - 20 + ((i + j) % 3) * 20} cy={y - 30 - j * 38} r={24} fill={MAKANAN.mi} opacity={0.9} />
+            ))}
+            <rect x={cx - 50} y={y - 150} width={100} height={150} rx={18} fill="none" stroke={W.kacaTepi} strokeWidth={4} />
+            <rect x={cx - 44} y={y - 172} width={88} height={26} rx={8} fill={i % 2 ? warna.aksen[1] : warna.aksen[0]} />
+          </g>
+        );
+      })}
+      <rect x={x} y={y} width={w} height={18} rx={4} fill={BAHAN.kayu.sisi} />
+      <rect x={x} y={y + 18} width={w} height={10} fill={BAYANG_KONTAK} opacity={0.5} />
+    </g>
+  );
+};
+
+// Taplak bergaris yang menjuntai di bibir meja warung.
+const Taplak = ({ukuran, warna}: {ukuran: UkuranMeja; warna: WarnaInterior}) => {
+  const depan = ukuran.atas + (ukuran.kedalaman ?? 46);
+  const lebar = ukuran.kanan - ukuran.kiri;
+  return (
+    <g>
+      <rect x={ukuran.kiri} y={ukuran.atas} width={lebar} height={ukuran.kedalaman ?? 46} fill={warna.aksen[2]} />
+      <rect x={ukuran.kiri - 6} y={depan - 4} width={lebar + 12} height={70} rx={6} fill={warna.aksen[1]} />
+      {Array.from({length: Math.ceil(lebar / 60)}, (_, i) => (
+        <rect key={i} x={ukuran.kiri + i * 60} y={depan - 4} width={30} height={70} fill={warna.aksen[2]} opacity={0.35} />
+      ))}
+      <rect x={ukuran.kiri - 6} y={depan + 60} width={lebar + 12} height={8} fill={BAYANG_KONTAK} opacity={0.5} />
+    </g>
+  );
+};
+
+// Plafon dengan list, untuk benda yang menempel di langit-langit seperti alarm asap. Slot `plafon`.
+const PLAFON = 40;
+const Plafon = ({warna}: {warna: WarnaInterior}) => (
+  <g>
+    <rect x={KIRI} y={-900} width={LEBAR} height={900 + PLAFON} fill={warna.list} />
+    <rect x={KIRI} y={PLAFON - 6} width={LEBAR} height={22} fill={warna.dindingBawah} />
+    <rect x={KIRI} y={PLAFON + 16} width={LEBAR} height={14} fill={BAYANG_KONTAK} opacity={0.35} />
+  </g>
+);
+
 // ---------------- Kerangka ruangan ----------------
 const Dinding = ({warna, garis = 1040}: {warna: WarnaInterior; garis?: number}) => (
   <g>
@@ -234,6 +284,8 @@ const MEJA_KERJA: UkuranMeja = {kiri: -40, kanan: 1120, atas: 1150, lantai: LANT
 const MEJA_DAPUR: UkuranMeja = {kiri: -300, kanan: 1400, atas: 1250, lantai: LANTAI, kedalaman: 60, tebal: 34};
 const MEJA_KAFE: UkuranMeja = {kiri: 120, kanan: 960, atas: 1180, lantai: LANTAI};
 const NAKAS: UkuranMeja = {kiri: 700, kanan: 1000, atas: 1220, lantai: LANTAI};
+// Meja warung sejajar meja kerja, jadi tokoh yang duduk memakai slot dan skala yang sama.
+const MEJA_WARUNG: UkuranMeja = {kiri: -60, kanan: 1140, atas: 1150, lantai: LANTAI};
 
 const VARIAN: Record<VarianInterior, IsiVarian> = {
   kerja: {
@@ -313,6 +365,27 @@ const VARIAN: Record<VarianInterior, IsiVarian> = {
     sorot: {x: 540, y: 900, lebar: 560, jenis: 'atas'},
     slot: {lorong: {x: 540, y: 900}, papan: {x: 540, y: 520}, tokoh: {x: 540, y: 1340}},
   },
+  warung: {
+    belakang: (id, w, malam) => (
+      <g>
+        <Dinding warna={w} garis={1000} />
+        <Jendela x={40} y={330} w={340} h={420} kisi id={id} malam={malam} />
+        <RakToples x={560} y={640} w={560} warna={w} />
+        <RakToples x={560} y={900} w={440} warna={w} />
+      </g>
+    ),
+    lantai: true,
+    meja: {ukuran: MEJA_WARUNG, bahan: 'kayu', gaya: 'lemari'},
+    tengahBelakang: () => <LampuGantung x={560} y={300} panjang={800} id="lampu-warung" />,
+    tengah: (w) => <Taplak ukuran={MEJA_WARUNG} warna={w} />,
+    depan: () => (
+      <g>
+        <Properti nama="botol" x={1020} y={2030} skala={2.4} keadaan={{isi: 0.7}} />
+        <DaunDepan x={-80} y={2100} skala={1.3} putar={30} />
+      </g>
+    ),
+    sorot: {x: 420, y: 1000, lebar: 620, jenis: 'samping', sisi: -1},
+  },
 };
 
 // Slot meja dihitung dari bagian meja yang ada di dalam area aman, jadi meja yang lebih lebar dari layar tetap punya slot terlihat.
@@ -331,7 +404,8 @@ const slotMeja = (m: UkuranMeja): Record<string, Slot> => {
   };
 };
 
-export const setInterior = (varian: VarianInterior, {id = `interior-${varian}`, malam = false}: {id?: string; malam?: boolean} = {}): HasilSet => {
+// `plafon` menggambar langit-langit di atas dinding (slot `plafon`), misalnya untuk alarm asap di dapur.
+export const setInterior = (varian: VarianInterior, {id = `interior-${varian}`, malam = false, plafon = false}: {id?: string; malam?: boolean; plafon?: boolean} = {}): HasilSet => {
   const isi = VARIAN[varian];
   const warna = INTERIOR[varian];
   const belakang = isi.belakang(malam ? `${id}-malam` : id, warna, malam);
@@ -340,6 +414,7 @@ export const setInterior = (varian: VarianInterior, {id = `interior-${varian}`, 
     tengahBelakang: (
       <g>
         {isi.lantai && <Lantai warna={warna} />}
+        {plafon && <Plafon warna={warna} />}
         {isi.tengahBelakang?.(warna)}
       </g>
     ),
@@ -350,7 +425,7 @@ export const setInterior = (varian: VarianInterior, {id = `interior-${varian}`, 
       </g>
     ),
     depan: isi.depan(warna),
-    slot: {...(isi.meja ? slotMeja(isi.meja.ukuran) : {}), ...isi.slot},
+    slot: {...(isi.meja ? slotMeja(isi.meja.ukuran) : {}), ...isi.slot, plafon: {x: 540, y: PLAFON + 16}},
     sorot: isi.sorot,
     pakaiLatar: false,
     lantai: LANTAI,
