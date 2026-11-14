@@ -4,7 +4,7 @@
 //   node scripts/lembar-kontak.mjs <slug> --rapat          tiga frame per shot: 15%, 50%, dan 90%
 //   node scripts/lembar-kontak.mjs <slug> --detik 12.5,30  frame pada detik tertentu
 //   node scripts/lembar-kontak.mjs <slug> --cek            gambar dari out/episode/<slug>/cek/ (hasil --cek)
-// Pilihan: --kolom 4 --baris 2 --lebar 360
+// Pilihan: --kolom 4 --baris 2 --lebar 360, --polos tanpa nomor dan detik (untuk gambar dokumentasi)
 // Hasil: out/frames/<slug>/lembar-NN.png. Setiap sel diberi nomor dan detik di pojok kiri atas; daftar nomor dicetak ke layar.
 // Untuk cacat kecil (salah ketik, label terpotong), ambil frame penuh: --detik <d> --kolom 1 --baris 1 --lebar 1080.
 // ffmpeg bawaan Remotion tidak punya filter tile atau drawtext, jadi grid dan angka disusun di sini.
@@ -125,7 +125,7 @@ for (let i = 0; i < titik.length; i += perLembar) {
     const x0 = (k % kolom) * (W + JARAK);
     const y0 = Math.floor(k / kolom) * (H + JARAK);
     for (let y = 0; y < H; y++) sel.copy(kanvas, ((y0 + y) * lebarLembar + x0) * 3, y * W * 3, (y + 1) * W * 3);
-    tulis(kanvas, lebarLembar, x0 + 4, y0 + 4, `#${i + k + 1} ${t.waktu}`.trim());
+    if (!argv.includes('--polos')) tulis(kanvas, lebarLembar, x0 + 4, y0 + 4, `#${i + k + 1} ${t.waktu}`.trim());
   });
   fs.writeFileSync(path.join(keluar, `lembar-${String(i / perLembar + 1).padStart(2, '0')}.png`), png(kanvas, lebarLembar, tinggiLembar));
 }
